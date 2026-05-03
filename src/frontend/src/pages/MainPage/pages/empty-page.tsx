@@ -1,6 +1,6 @@
 import { ExternalLink } from "lucide-react";
-import { FaDiscord, FaGithub } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import { FaDiscord, FaGithub } from "react-icons/fa";
 import { useShallow } from "zustand/react/shallow";
 import logoDarkPng from "@/assets/logo_dark.png";
 import logoLightPng from "@/assets/logo_light.png";
@@ -61,7 +61,7 @@ export const EmptyPageCommunity = ({
               <div className="z-50 dark:hidden">
                 <img
                   src={logoLightPng}
-                  alt="Langflow Logo Light"
+                  alt="idrflow Logo Light"
                   data-testid="empty_page_logo_light"
                   className="relative top-8 h-40 pointer-events-none select-none"
                 />
@@ -69,7 +69,7 @@ export const EmptyPageCommunity = ({
               <div className="z-50 hidden dark:block">
                 <img
                   src={logoDarkPng}
-                  alt="Langflow Logo Dark"
+                  alt="idrflow Logo Dark"
                   data-testid="empty_page_logo_dark"
                   className="relative top-8 h-40 pointer-events-none select-none"
                 />

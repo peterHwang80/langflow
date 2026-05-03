@@ -1,5 +1,5 @@
-import { Outlet, type To } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Outlet, type To } from "react-router-dom";
 import SideBarButtonsComponent from "@/components/core/sidebarComponent";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { CustomStoreSidebar } from "@/customization/components/custom-store-sidebar";
@@ -51,7 +51,7 @@ export default function SettingsPage(): JSX.Element {
       ),
     },
     {
-      title: "Langflow MCP Client",
+      title: "idrflow MCP Client",
       href: "/settings/mcp-client",
       icon: (
         <ForwardedIconComponent

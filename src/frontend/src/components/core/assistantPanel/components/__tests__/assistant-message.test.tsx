@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { AssistantMessageItem } from "../assistant-message";
 import type { AssistantMessage } from "../../assistant-panel.types";
+import { AssistantMessageItem } from "../assistant-message";
 
 // --- Mocks ---
 
@@ -173,7 +173,7 @@ describe("AssistantMessageItem", () => {
   });
 
   describe("assistant messages", () => {
-    it("should render assistant label with Langflow icon", () => {
+    it("should render assistant label with idrflow icon", () => {
       const message = createMessage({
         role: "assistant",
         content: "Here is your component",
@@ -182,8 +182,8 @@ describe("AssistantMessageItem", () => {
 
       render(<AssistantMessageItem message={message} />);
 
-      expect(screen.getByText("Langflow Assistant")).toBeInTheDocument();
-      expect(screen.getByAltText("Langflow Assistant")).toBeInTheDocument();
+      expect(screen.getByText("idrflow Assistant")).toBeInTheDocument();
+      expect(screen.getByAltText("idrflow Assistant")).toBeInTheDocument();
     });
   });
 

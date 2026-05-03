@@ -5,9 +5,10 @@ import {
   findLastBotMessage,
   updateMessageProperties,
 } from "@/components/core/playgroundComponent/chat-view/utils/message-utils";
-import i18n from "../i18n";
 import { POLLING_MESSAGES } from "@/constants/constants";
 import { performStreamingRequest } from "@/controllers/API/api";
+import { persistMessageProperties } from "@/controllers/API/helpers/persist-message-properties";
+import { transformBuildErrorMessages } from "@/customization/utils/custom-build-error-transform";
 import {
   customBuildUrl,
   customCancelBuildUrl,
@@ -15,11 +16,10 @@ import {
 } from "@/customization/utils/custom-buildUtils";
 import { customPollBuildEvents } from "@/customization/utils/custom-poll-build-events";
 import { getFetchCredentials } from "@/customization/utils/get-fetch-credentials";
-import { transformBuildErrorMessages } from "@/customization/utils/custom-build-error-transform";
 import { BuildStatus, EventDeliveryType } from "../constants/enums";
 import { getVerticesOrder, postBuildVertex } from "../controllers/API";
+import i18n from "../i18n";
 import useAlertStore from "../stores/alertStore";
-import { persistMessageProperties } from "@/controllers/API/helpers/persist-message-properties";
 import useFlowStore from "../stores/flowStore";
 import { useMessagesStore } from "../stores/messagesStore";
 import type { VertexBuildTypeAPI } from "../types/api";
@@ -438,7 +438,7 @@ export async function buildFlowVertices({
     }
     onBuildError!("Error Building Flow", [
       (error as Error).message ||
-        "Langflow was not able to connect to the server. Please make sure your connection is working properly.",
+        "idrflow was not able to connect to the server. Please make sure your connection is working properly.",
     ]);
     throw error;
   }

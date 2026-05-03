@@ -12,5 +12,5 @@ export function getHealthCheckUrl(): string {
 }
 
 export const LangflowButtonRedirectTarget = () => {
-  return "https://langflow.org";
+  return "https://idrflow.com"; // TODO: idrflow 도메인 확정 후 업데이트
 };

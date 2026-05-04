@@ -10,11 +10,16 @@ import {
   CardHeader,
   CardTitle,
 } from "../../../../../components/ui/card";
+import { STORE_URL } from "../../../../../constants/constants";
+import type { inputHandlerEventType } from "../../../../../types/components";
 
 type StoreApiKeyFormComponentProps = {
   apikey: string;
-  handleInput: (event: any) => void;
-  handleSaveKey: (apikey: string, handleInput: any) => void;
+  handleInput: (event: inputHandlerEventType) => void;
+  handleSaveKey: (
+    apikey: string,
+    handleInput: (event: inputHandlerEventType) => void,
+  ) => void;
   loadingApiKey: boolean;
   validApiKey: boolean;
   hasApiKey: boolean;
@@ -71,11 +76,11 @@ const StoreApiKeyFormComponent = ({
                 {t("store.createApiKey")}{" "}
                 <a
                   className="text-high-indigo underline"
-                  href="https://langflow.store/"
+                  href={STORE_URL}
                   target="_blank"
                   rel="noopener"
                 >
-                  langflow.store
+                  idrflow Store
                 </a>
               </span>
             </div>

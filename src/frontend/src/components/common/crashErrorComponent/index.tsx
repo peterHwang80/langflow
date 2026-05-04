@@ -1,4 +1,5 @@
 import { XCircle } from "lucide-react";
+import { BUG_REPORT_URL } from "../../../constants/constants";
 import type { crashComponentPropsType } from "../../../types/components";
 import { Button } from "../../ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "../../ui/card";
@@ -28,7 +29,7 @@ export default function CrashErrorComponent({
                 <p>
                   Please report errors with detailed tracebacks on the{" "}
                   <a
-                    href="https://github.com/langflow-ai/langflow/issues"
+                    href={BUG_REPORT_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-medium hover:underline"
@@ -47,7 +48,7 @@ export default function CrashErrorComponent({
                 <Button onClick={resetErrorBoundary}>Restart idrflow</Button>
 
                 <a
-                  href="https://github.com/langflow-ai/langflow/issues/new"
+                  href={`${BUG_REPORT_URL}/new`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

@@ -1,10 +1,7 @@
 import type React from "react";
-import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Loading from "@/components/ui/loading";
-import IconComponent from "../../../../../../components/common/genericIconComponent";
-import { ICON_STROKE_WIDTH } from "../../../../../../constants/constants";
-import { cn } from "../../../../../../utils/utils";
+import { DOCS_URL } from "../../../../../../constants/constants";
 
 interface NoInputViewProps {
   isBuilding: boolean;
@@ -51,7 +48,7 @@ const NoInputView: React.FC<NoInputViewProps> = ({
           <a
             className="underline underline-offset-4"
             target="_blank"
-            href="https://docs.langflow.org/components-io#chat-input"
+            href={`${DOCS_URL}/components-io#chat-input`}
             rel="noopener"
           >
             Chat Input

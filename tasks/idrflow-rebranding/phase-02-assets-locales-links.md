@@ -1,87 +1,86 @@
 # Phase 02 — Assets, Locales, and Link Centralization
 
-**상태:** ⬜ Not Started
+**상태:** 🟡 In Progress
+**1차 작업:** 2026-05-03 / **보완 라운드:** 2026-05-03
+
+> ⚠️ **차단 요소:** 자산 파일(SVG/PNG/ICO) 교체 미완료 — idrflow 로고 파일 미확보
+> ⚠️ **수동 검증:** 미완료 — `make run_cli` 후 UI 확인 필요
 
 ---
 
 ## 변경 범위
 
-- 로고/favicon/PWA 아이콘 파일 내용 교체 (파일명 유지)
-- 7개 언어 로케일 JSON 값 동기화
-- 흩어진 외부 링크를 설정 상수로 중앙화 (확정 안 된 URL은 TODO 유지)
+- 비영어 로케일 JSON (de/es/fr/ja/pt/zh-Hans) 값 동기화
+- 공개 브랜드 URL canonical source 중앙화 (`urls.ts` 단일 파일)
+- 흩어진 하드코딩 URL → 상수 참조로 교체
+- 로고/favicon/PWA 아이콘 파일 내용 교체 (파일명 유지) ← **보류**
 
 ---
 
-## 대상 파일 목록
+## Sub-task 진행 상황
 
-### 자산 파일 (내용 교체, 파일명 유지)
-
-```
-src/frontend/public/favicon.ico
-src/frontend/src/assets/                ← 로고 SVG 목록 확인 필요
-docs/static/img/                        ← docs 로고 확인 필요
-```
-
-> Phase 실행 전 실제 파일 목록 재확인:
-> `find src/frontend/src/assets -name "*logo*" -o -name "*brand*"`
-
-### Manifest PWA 아이콘
-
-```
-src/frontend/public/manifest.json       ← icons[] 배열 참조 경로
-src/frontend/public/icons/              ← 디렉토리 없음 → 생성 필요 여부 확인
-```
-
-### 접근성 alt/title
-
-Phase 01에서 누락된 `alt="Langflow logo"` 등의 속성값.
-
-### 로케일 JSON (7개 언어)
-
-```
-src/frontend/src/locales/en.json
-src/frontend/src/locales/de.json
-src/frontend/src/locales/es.json
-src/frontend/src/locales/fr.json
-src/frontend/src/locales/ja.json
-src/frontend/src/locales/pt.json
-src/frontend/src/locales/zh-Hans.json
-```
-
-각 파일에서 값(value)의 "Langflow" → "idrflow" (키 유지).
-
-### 외부 링크 중앙화
-
-현재 흩어진 외부 URL을 한 곳의 설정 상수로 모으기:
-```
-src/frontend/src/customization/utils/urls.ts   ← 이미 존재, 확장
-```
-
-확정되지 않은 URL은:
-```ts
-// TODO: idrflow 도메인 확정 후 업데이트
-export const DOCS_URL = "https://docs.idrflow.com"; // TODO
-```
+| Sub-task | 내용 | 상태 |
+|----------|------|------|
+| A | 비영어 로케일 6개 파일 값 변경 | ✅ 완료 |
+| B | URL 상수 중앙화 (urls.ts → canonical) + TODO 주석 | ✅ 완료 |
+| C | 프로덕션 하드코딩 URL → 상수 참조 교체 (7개 파일) | ✅ 완료 |
+| D | 자산 파일 내용 교체 (SVG/PNG/ICO) | ⏸ 보류 — 로고 파일 미확보 |
+| E | 검증 로그·잔여 검색 결과 갱신 | ✅ 완료 |
 
 ---
 
 ## 완료 기준
 
-- 로고, favicon, PWA 이름이 모두 idrflow 브랜드 표시
-- 7개 언어 UI에서 Langflow 문구 미노출
-- 외부 링크가 urls.ts 단일 파일에서 관리됨
-- 미확정 URL은 TODO 주석으로 위치 명시
+### 이번 라운드에서 완료된 것
+
+- 비영어 로케일 6개 파일: `rg "Langflow" src/frontend/src/locales/` → 키 이름만 잔류 (값 0건)
+- 공개 브랜드 URL literal이 `urls.ts` 단일 파일에만 존재
+- `constants.ts`는 `urls.ts`에서 re-export만 수행
+- `config-constants.ts`에 URL literal 없음 (DOCS_LINK 제거)
+- 프로덕션 파일의 하드코딩 URL → 상수 참조로 전환 완료
+- 미확정 URL에 TODO 주석 명시
+
+### Phase 2 전체 완료로 인정하려면 남은 것
+
+1. **idrflow 로고 파일 확보** → SVG/PNG/ICO 파일 내용 교체 (파일명 유지)
+   - `LangflowLogo.svg`, `LangflowLogoColor.svg`, `langflow_logo_black.svg`, `langflow_logo_white.svg`
+   - `langflow-icon-smooth.svg/png`, `langflow_assistant.svg`, `MCPLangflow.png`
+   - `public/favicon.ico`
+2. **수동 검증** — `make run_cli` 후 UI 직접 확인
+
+---
+
+## URL 중앙화 구조 (보완 라운드 완료 기준)
+
+```
+src/frontend/src/customization/utils/
+  urls.ts        ← 공개 브랜드 URL literals 유일한 정의 위치
+  api-urls.ts    ← getBaseUrl / getHealthCheckUrl (config-constants 의존)
+
+src/frontend/src/constants/constants.ts
+  ← urls.ts에서 re-export (직접 literal 없음)
+
+src/frontend/src/customization/config-constants.ts
+  ← URL literal 없음 (DOCS_LINK 제거)
+```
+
+의존성 흐름 (순환 없음):
+`config-constants.ts` ← `api-urls.ts` ← `urls.ts` ← `constants.ts`
 
 ---
 
 ## 검증 명령
 
 ```bash
-# 로케일 잔여 확인
-rg "Langflow" src/frontend/src/locales/
+# 로케일 잔여 확인 (키 이름만 남아야 함)
+rg "Langflow" src/frontend/src/locales/ --glob '!en.json'
 
-# 자산 alt/title 잔여 확인
-rg 'alt="Langflow|title="Langflow' src/frontend/src/
+# 공개 URL literal 잔여 확인 (urls.ts 제외)
+rg -n 'https://docs\.langflow\.org|https://www\.langflow\.org/desktop|https://github\.com/langflow-ai/langflow/issues|https://github\.com/langflow-ai/langflow|https://x\.com/langflow_ai|https://langflow\.store/' \
+  src/frontend/src/ --glob '!**/urls.ts'
+
+# DOCS_LINK 잔여 확인
+rg -n 'DOCS_LINK' src/frontend/src/
 
 # 포맷 / 테스트
 make format_frontend_check
@@ -94,19 +93,35 @@ make test_frontend
 
 ## 수동 확인 결과
 
-> 실행 후 채움
+> **미완료** — `make run_cli` 후 수동 확인 필요
 
 ```
 - [ ] PWA 이름 (브라우저 설치 시)
-- [ ] 로그인 페이지 로고
-- [ ] 헤더 로고
-- [ ] 채팅 봇 로고
+- [ ] 로그인 페이지 로고 (SVG 자산 미교체로 시각적 로고는 Langflow 유지)
+- [ ] 헤더 로고 (동일 이유)
+- [ ] 채팅 봇 로고 (동일 이유)
 - [ ] 다국어 전환 후 브랜드 문구 (de / ja / zh-Hans 최소 확인)
-- [ ] 주요 외부 링크 (docs, GitHub 등)
+- [ ] 주요 외부 링크 (docs, GitHub 등) — 상수화 완료, URL값은 TODO
 ```
 
 ---
 
-## 잔여 검색 결과
+## 잔여 검색 결과 (2026-05-03 보완 라운드 기준)
 
-> Phase 완료 후 채움
+### 완료된 항목
+
+| 범주 | 건수 |
+|------|------|
+| 비영어 로케일 값 "Langflow" | 0건 (19개 키 × 6언어 = 114건 변경) |
+| 하드코딩 docs.langflow.org (프로덕션) | 0건 |
+| 공개 URL literal 중복 정의 | 0건 (urls.ts에만 존재) |
+
+### 의도된 잔류 (Intentional Residue)
+
+| 위치 | 내용 | 이유 |
+|------|------|------|
+| 로케일 파일 키 이름 | `"modal.io.builtWithLangflow"`, `"help.getLangflowDesktop"` 등 | i18n 키 식별자 — 내부용, 영구 유지 |
+| `urls.ts` URL 상수값 | `GITHUB_URL`, `DOCS_URL` 등 | idrflow 도메인 미확정 — TODO 주석 명시 |
+| `api.tsx` lines 103-105 | GitHub API 엔드포인트 whitelist | 기능 코드 — 사용자 표면 아님 |
+| 테스트 파일 URL | `mockAPIData.ts`, `Dropdowns.test.tsx`, `no-input.test.tsx` | 테스트 목 데이터 / assertion 값 |
+| SVG/PNG/ICO 자산 파일 | `LangflowLogo.svg` 등 8개 | idrflow 로고 파일 미확보 — 별도 작업 필요 |

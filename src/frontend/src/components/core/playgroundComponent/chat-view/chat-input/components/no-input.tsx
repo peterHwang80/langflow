@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Loading from "@/components/ui/loading";
+import { DOCS_URL } from "@/constants/constants";
 
 interface NoInputViewProps {
   isBuilding: boolean;
@@ -42,7 +43,7 @@ const NoInputView = ({
           <a
             className="underline underline-offset-4"
             target="_blank"
-            href="https://docs.langflow.org/components-io#chat-input"
+            href={`${DOCS_URL}/components-io#chat-input`}
             rel="noopener noreferrer"
           >
             Chat Input

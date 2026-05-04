@@ -49,7 +49,7 @@ tasks/idrflow-rebranding/
 ### 변경 파일 수
 
 - 1차: 37개 (하드코딩 문자열, alt/title, 테스트 assertion)
-- 보완: +1개 (`src/frontend/src/locales/en.json` — 19개 키 값 변경)
+- 보완 1: +1개 (`src/frontend/src/locales/en.json` — 19개 키 값 변경)
 
 ### 잔여 건수 (보완 라운드 후 기준)
 
@@ -134,15 +134,213 @@ Tests:       2 failed, 4005 passed, 4007 total
 
 ---
 
-## Phase 02 — Assets, Locales, Links (미완료)
+## Phase 02 — Assets, Locales, Links (🟡 In Progress)
 
-> Phase 완료 후 채움
+### 현재 상태
+
+- **완료된 하위 작업:** Sub-task A (로케일), B (URL 중앙화), C (하드코딩 URL 치환), E (로그 갱신)
+- **차단 요소:** Sub-task D — idrflow 로고 파일 미확보, SVG/PNG/ICO 자산 교체 불가
+- **수동 검증:** 미완료
+
+### 1차 작업: 2026-05-03 / 보완 라운드: 2026-05-03
+
+### 변경 파일 수
+
+**1차 (Sub-task A/C):**
+- 로케일 JSON: 6개 (de/es/fr/ja/pt/zh-Hans) × 19키 = **114줄 변경**
+- 컴포넌트/모달 (하드코딩 URL 상수 교체): **7개**
+  - `crashErrorComponent/index.tsx` — `BUG_REPORT_URL` 도입, 2곳 교체
+  - `saveChangesModal/index.tsx` — `DOCS_URL` 도입, 1곳 교체
+  - `playgroundComponent/chat-view/chat-input/components/no-input.tsx` — `DOCS_URL` 1곳 교체
+  - `IOModal/components/chatView/chatInput/components/no-input.tsx` — `DOCS_URL` 1곳 교체
+  - `McpJsonContent.tsx` — `DOCS_URL` 1곳 교체
+  - `McpServerTab.tsx` — `DOCS_URL` 1곳 교체
+  - `StoreApiKeyForm.tsx` — `STORE_URL` 도입, href 교체, 표시 텍스트 `langflow.store` → `idrflow Store`
+
+**보완 라운드 1 (Sub-task B — URL 중앙화 완성):**
+- `src/customization/utils/api-urls.ts` (신규) — getBaseUrl / getHealthCheckUrl
+- `src/customization/utils/urls.ts` (리작성) — 공개 브랜드 URL canonical source
+- `src/constants/constants.ts` — URL 직접 정의 제거, urls.ts에서 re-export로 교체
+- `src/customization/config-constants.ts` — DOCS_LINK literal 제거 (사용처 없음)
+
+**보완 라운드 2 (Biome 정리):**
+- `src/modals/IOModal/components/chatView/chatInput/components/no-input.tsx` — 미사용 import 6개 제거 (`useEffect`, `useRef`, `useState`, `IconComponent`, `ICON_STROKE_WIDTH`, `cn`)
+- `src/components/common/crashErrorComponent/index.tsx` — import 순서 수정 (organizeImports)
+- `src/modals/saveChangesModal/index.tsx` — import 순서 수정
+- `src/pages/MainPage/pages/homePage/components/McpJsonContent.tsx` — import 순서 수정
+- `src/pages/MainPage/pages/homePage/components/McpServerTab.tsx` — import 순서 수정
+- `src/pages/SettingsPage/pages/StoreApiKeyPage/components/StoreApiKeyForm.tsx` — import 순서 수정
+
+### URL 중앙화 최종 구조
+
+```
+urls.ts         ← 공개 브랜드 URL literals 유일한 정의 위치 (GITHUB_URL, DOCS_URL 등)
+api-urls.ts     ← getBaseUrl / getHealthCheckUrl (config-constants 의존)
+constants.ts    ← urls.ts에서 re-export (직접 literal 없음)
+config-constants.ts ← URL literal 없음
+```
+
+### 잔여 검색 결과 (보완 라운드 기준)
+
+```bash
+rg "Langflow" src/frontend/src/locales/ --glob '!en.json'
+```
+결과: **18건** — 모두 i18n 키 이름 (`modal.io.builtWithLangflow`, `help.getLangflowDesktop` 등) — 값 변경 완료
+
+```bash
+rg -n 'https://docs\.langflow\.org|https://github\.com/langflow-ai/langflow/issues|https://github\.com/langflow-ai/langflow|https://x\.com/langflow_ai|https://langflow\.store/' \
+  src/frontend/src/ --glob '!**/urls.ts'
+```
+결과: **4건** — 모두 의도된 잔류
+- `compute-section-visibility.test.ts:110`: 코드 주석 (기능 코드 아님)
+- `mockAPIData.ts:38`: 테스트 목 데이터
+- `Dropdowns.test.tsx:44,103`: 테스트 목 URL 값
+- `no-input.test.tsx:80`: 테스트 assertion 값
+
+```bash
+rg -n 'DOCS_LINK' src/frontend/src/
+```
+결과: **0건** — DOCS_LINK 완전 제거됨
+
+### 빌드/테스트 결과 (2026-05-03 보완 라운드 2 기준)
+
+**`make format_frontend_check`:**
+```
+Found 1140 errors. Found 174 warnings.
+```
+→ **실패** — 기준선 (Phase 1: 1139건)과 거의 동일한 기존 Biome 오류. Phase 2 회귀로 단정 불가.
+
+**Phase 2 수정 파일 개별 Biome 체크 (보완 라운드 2 완료 기준, 총 17개 파일):**
+
+```
+npx @biomejs/biome check \
+  src/customization/utils/urls.ts \
+  src/customization/utils/api-urls.ts \
+  src/constants/constants.ts \
+  src/customization/config-constants.ts \
+  src/locales/de.json src/locales/es.json src/locales/fr.json \
+  src/locales/ja.json src/locales/pt.json src/locales/zh-Hans.json \
+  src/components/core/playgroundComponent/chat-view/chat-input/components/no-input.tsx
+→ Checked 11 files. No fixes applied. (오류 0건)
+
+npx @biomejs/biome check \
+  src/modals/IOModal/components/chatView/chatInput/components/no-input.tsx \
+  src/components/common/crashErrorComponent/index.tsx \
+  src/modals/saveChangesModal/index.tsx \
+  src/pages/MainPage/pages/homePage/components/McpJsonContent.tsx \
+  src/pages/MainPage/pages/homePage/components/McpServerTab.tsx \
+  src/pages/SettingsPage/pages/StoreApiKeyPage/components/StoreApiKeyForm.tsx
+→ Found 2 errors (pre-existing): McpServerTab.tsx noUnusedVariables(isOAuthProject),
+  StoreApiKeyForm.tsx noExplicitAny(×2) — Phase 2 신규 오류 0건
+```
+
+→ **Phase 2 수정 파일 전체 17개 기준: 신규 Biome 오류 0건.** 잔류 2건은 Phase 2 이전부터 존재한 pre-existing 오류.
+
+**`make test_frontend`:**
+```
+Test Suites: 2 failed, 283 passed, 285 total
+Tests:       2 failed, 4005 passed, 4007 total
+```
+실패 스위트:
+- `src/modals/IOModal/components/chatView/__tests__/sort-sender-messages.test.ts`
+- `src/utils/__tests__/dateTime.test.ts`
+
+→ **Phase 1 기준선과 동일** (unchanged baseline failure). Phase 2 신규 회귀 없음.
+
+### 수동 검증
+
+> **미완료** — `make run_cli` 후 UI 수동 확인 필요
+
+### 의도된 미수정 (Intentional Residue)
+
+| 항목 | 이유 |
+|------|------|
+| SVG/PNG/ICO 자산 8개 | idrflow 로고 파일 미확보 — 파일 준비 후 내용 교체 예정 |
+| URL 상수 값 (GITHUB_URL 등) | idrflow 도메인 미확정 — urls.ts에 TODO 주석 명시 |
+| i18n 키 이름 (builtWithLangflow 등) | 내부 식별자 — 영구 유지 |
+| 테스트 파일 URL 문자열 | 테스트 목 / assertion 값 — 기능 코드 아님 |
+| `api.tsx` lines 103-105 | GitHub API 엔드포인트 whitelist — 기능 코드, 사용자 표면 아님 |
 
 ---
 
-## Phase 03 — Current Docs (미완료)
+## Phase 03 — Current Docs (🟡 In Progress)
 
-> Phase 완료 후 채움
+### 1차 작업: 2026-05-03
+
+### 변경 파일 수
+
+- `docs/docusaurus.config.js`: 7건 수정 (title, tagline, navbar alt, data-platform-title×3, footer)
+- `docs/static/llms.txt`: 10건 수정
+- `docs/static/llms-full.txt`: 14건 수정
+- `docs/docs/**` MDX: **184개 파일** 수정 (Python fence-tracking 스크립트)
+- `docs/docs/` 8개 헤딩에 explicit anchor ID 추가 (broken anchor 수정)
+
+### 잔여 검색 결과
+
+```bash
+rg -c "Langflow" docs/docs/ | awk -F: '{s+=$2} END {print "Total:", s}'
+→ 49건 / 16개 파일 (전량 코드블록 내부 — whitelist 준수)
+
+grep -c "Langflow" docs/static/llms.txt docs/static/llms-full.txt
+→ 1건, 1건 (YouTube URL @Langflow — 의도된 잔류)
+
+grep -c "Langflow" docs/docusaurus.config.js
+→ 2건 (코드 주석·리다이렉트 경로 — 의도된 잔류)
+```
+
+### 빌드 결과
+
+**1차 (`make docs_build`, 2026-05-03):**
+```
+[SUCCESS] Generated static files in "build".
+```
+→ **성공.** 단, 산문 치환으로 헤딩 텍스트가 변경된 8개 헤딩에서 broken anchor 경고 발생.
+(링크 대상 anchor가 `#langflow-...` → Docusaurus auto-ID `#idrflow-...`로 변경된 결과)
+
+**보완 라운드 1 (2026-05-03):**
+- 8개 헤딩에 `{#langflow-...}` 명시적 anchor ID 추가 → backward-compatible anchor 유지
+- `docs/docs/API-Reference/api-openai-responses.mdx` — `#global-var` 헤딩 누락 복구
+  (`## Pass global variables to your flows in headers {#global-var}` 추가)
+
+**보완 라운드 1 후 빌드 확인:**
+`/api-openai-responses#global-var`, `/release-notes` 경고가 여전히 발생.
+원인: `docs/docs/`는 `path: "next"` (next 버전), 기본 라우트(`/`)는 `lastVersion: "1.9.0"`이므로
+`docs/versioned_docs/version-1.9.0/**`가 실제 기본 docs로 서빙됨.
+
+**보완 라운드 2 (2026-05-03):**
+- `docs/versioned_docs/version-1.9.0/API-Reference/api-openai-responses.mdx` — `#global-var` 헤딩 복구
+  (`## Pass global variables to your flows in headers {#global-var}` 추가)
+
+**보완 라운드 2 후 `make docs_build` 재실행 (2026-05-04 확인):**
+```
+[SUCCESS] Generated static files in "build".
+```
+→ **성공.** current docs (`/`, `/next/`) broken anchor 경고 **0건**.
+이전 재검증 실패 원인: 변경이 uncommitted 상태여서 별도 worktree(HEAD 기준) 빌드에서는 수정 전 파일이 사용됐음.
+
+**잔류 경고 (1.8.0 versioned docs — pre-existing / Phase 4 scope):**
+```
+Broken anchor on source page path = /1.8.0/agent-tutorial: ...
+Broken anchor on source page path = /1.8.0/api-request: ...
+(외 1.8.0/ prefix 경고 다수)
+```
+→ Phase 3 이전부터 존재하는 기존 경고. Phase 4 (versioned docs) 에서 처리 예정.
+
+### 수동 검증
+
+> **미완료** — `cd docs && npm start` 후 UI 직접 확인 필요
+
+### 의도된 잔류
+
+| 항목 | 이유 |
+|------|------|
+| `docusaurus.config.js` url, Algolia indexName | 도메인 미확정, Algolia 외부 서비스 |
+| `docusaurus.config.js` 코드 주석, 리다이렉트 경로 | 내부 식별자 |
+| `docs/static/CNAME` | 도메인 미확정 |
+| `docs/static/llms*.txt` YouTube URL | 외부 URL 미확정 |
+| `docs/src/plugins/segment/` 2건 | 분석 서비스 식별자 |
+| 코드블록 내 49건 | whitelist — CLI/환경변수/import |
+| `docs/static/files/*.json` | Phase 5 선별 수정 예정 |
 
 ---
 

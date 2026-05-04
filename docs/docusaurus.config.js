@@ -10,11 +10,11 @@ const isProduction = process.env.NODE_ENV === "production";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Langflow Documentation",
+  title: "idrflow Documentation",
   tagline:
-    "Langflow is a low-code app builder for RAG and multi-agent AI applications.",
+    "idrflow is a low-code app builder for RAG and multi-agent AI applications.",
   favicon: "img/favicon.ico",
-  url: "https://docs.langflow.org",
+  url: "https://docs.langflow.org", // TODO: idrflow docs 도메인 확정 후 업데이트
   baseUrl: process.env.BASE_URL ? process.env.BASE_URL : "/",
   onBrokenLinks: "throw",
   onBrokenAnchors: "warn",
@@ -438,7 +438,7 @@ const config = {
       navbar: {
         hideOnScroll: false,
         logo: {
-          alt: "Langflow",
+          alt: "idrflow",
           src: "img/lf-docs-light.svg",
           srcDark: "img/lf-docs-dark.svg",
         },
@@ -460,7 +460,7 @@ const config = {
             'data-channel': 'docs',
             'data-element-id': 'social-github',
             'data-namespace': 'header',
-            'data-platform-title': 'Langflow'
+            'data-platform-title': 'idrflow'
           },
           {
             position: "right",
@@ -474,7 +474,7 @@ const config = {
             'data-channel': 'docs',
             'data-element-id': 'social-twitter',
             'data-namespace': 'header',
-            'data-platform-title': 'Langflow'
+            'data-platform-title': 'idrflow'
           },
           {
             position: "right",
@@ -488,7 +488,7 @@ const config = {
             'data-channel': 'docs',
             'data-element-id': 'social-discord',
             'data-namespace': 'header',
-            'data-platform-title': 'Langflow'
+            'data-platform-title': 'idrflow'
           },
         ],
       },
@@ -523,7 +523,7 @@ const config = {
             items: [
               {
                 html: `<div class="footer-links">
-                  <span>© ${new Date().getFullYear()} Langflow</span>
+                  <span>© ${new Date().getFullYear()} idrflow</span>
                   <span id="preferenceCenterContainer"> ·&nbsp; <a href="#" onclick="if(typeof window !== 'undefined' && window.truste && window.truste.eu && window.truste.eu.clickListener) { window.truste.eu.clickListener(); } return false;" style="cursor: pointer;">Manage Privacy Choices</a></span>
                   </div>`,
               },

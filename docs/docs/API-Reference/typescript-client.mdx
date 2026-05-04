@@ -1,20 +1,20 @@
 ---
-title: Langflow TypeScript client
+title: idrflow TypeScript client
 slug: /typescript-client
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-The Langflow TypeScript client allows your TypeScript applications to programmatically interact with the Langflow API.
+The idrflow TypeScript client allows your TypeScript applications to programmatically interact with the idrflow API.
 
 For the client code repository, see [langflow-client-ts](https://github.com/datastax/langflow-client-ts/).
 
 For the npm package, see [@datastax/langflow-client](https://www.npmjs.com/package/@datastax/langflow-client).
 
-## Install the Langflow TypeScript package
+## Install the idrflow TypeScript package
 
-To install the Langflow typescript client package, use one of the following commands:
+To install the idrflow typescript client package, use one of the following commands:
 
 <Tabs>
 <TabItem value="npm" label="npm" default>
@@ -40,7 +40,7 @@ pnpm add @datastax/langflow-client
 </TabItem>
 </Tabs>
 
-## Initialize the Langflow TypeScript client
+## Initialize the idrflow TypeScript client
 
 1. Import the client into your code.
 
@@ -48,7 +48,7 @@ pnpm add @datastax/langflow-client
     import { LangflowClient } from "@datastax/langflow-client";
     ```
 
-2. Initialize a `LangflowClient` object to interact with your server:
+2. Initialize a `idrflowClient` object to interact with your server:
 
     ```tsx
     const baseUrl = "BASE_URL";
@@ -57,12 +57,12 @@ pnpm add @datastax/langflow-client
     ```
 
     Replace `BASE_URL` and `API_KEY` with values from your deployment.
-    The default Langflow base URL is `http://localhost:7860`.
+    The default idrflow base URL is `http://localhost:7860`.
     To create an API key, see [API keys and authentication](/api-keys-and-authentication).
 
 ## Connect to your server and get responses
 
-1. With your Langflow client initialized, test the connection by calling your Langflow server.
+1. With your idrflow client initialized, test the connection by calling your idrflow server.
 
     The following example runs a flow (`runFlow`) by sending the flow ID and a chat input string:
 
@@ -86,14 +86,14 @@ pnpm add @datastax/langflow-client
 
     Replace the following:
 
-    * `baseUrl`: The URL of your Langflow server.
+    * `baseUrl`: The URL of your idrflow server.
     * `flowId`: The ID of the flow you want to run.
     * `input`: The chat input message you want to send to trigger the flow.
     This is only valid for flows with a **Chat Input** component.
 
-2. Review the result to confirm that the client connected to your Langflow server.
+2. Review the result to confirm that the client connected to your idrflow server.
 
-    The following example shows the response from a well-formed `runFlow` request that reached the Langflow server and successfully started the flow:
+    The following example shows the response from a well-formed `runFlow` request that reached the idrflow server and successfully started the flow:
 
     ```
     FlowResponse {
@@ -122,7 +122,7 @@ pnpm add @datastax/langflow-client
 
 The TypeScript client can do more than just connect to your server and run a flow.
 
-This example builds on the quickstart with additional features for interacting with Langflow:
+This example builds on the quickstart with additional features for interacting with idrflow:
 
 1. Pass [tweaks](/concepts-publish#input-schema) as an object with the request.
 Tweaks are programmatic run-time overrides for component settings.
@@ -150,7 +150,7 @@ Tweaks are programmatic run-time overrides for component settings.
     ```
 
     The response is a [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream) of objects.
-    For more information on streaming Langflow responses, see the [`/run` endpoint](/api-flows-run#run-flow).
+    For more information on streaming idrflow responses, see the [`/run` endpoint](/api-flows-run#run-flow).
 
 4. Run the modified TypeScript application to run the flow with `tweaks`, `session_id`, and streaming:
 
@@ -181,7 +181,7 @@ Tweaks are programmatic run-time overrides for component settings.
 
     Replace the following:
 
-    * `baseUrl`: The URL of your Langflow server.
+    * `baseUrl`: The URL of your idrflow server.
     * `flowId`: The ID of the flow you want to run.
     * `input`: The chat input message you want to send to trigger the flow, assuming the flow has a **Chat Input** component.
     * `tweaks`: Any tweak modifiers to apply to the flow run.
@@ -268,9 +268,9 @@ Tweaks are programmatic run-time overrides for component settings.
 
     </details>
 
-## Retrieve Langflow logs with the TypeScript client
+## Retrieve idrflow logs with the TypeScript client
 
-To retrieve [Langflow logs](/logging), you must enable log retrieval on your Langflow server by including the following values in your Langflow `.env` file:
+To retrieve [idrflow logs](/logging), you must enable log retrieval on your idrflow server by including the following values in your idrflow `.env` file:
 
 ```text
 LANGFLOW_ENABLE_LOG_RETRIEVAL=True
@@ -311,7 +311,7 @@ main().catch(console.error);
 
 Replace the following:
 
-* `baseUrl`: The URL of your Langflow server.
+* `baseUrl`: The URL of your idrflow server.
 * `flowId`: The ID of the flow you want to run.
 * `input`: The chat input message you want to send to trigger the flow, assuming the flow has a **Chat Input** component.
 

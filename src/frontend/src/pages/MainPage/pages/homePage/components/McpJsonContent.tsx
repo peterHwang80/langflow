@@ -3,6 +3,7 @@ import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import { ForwardedIconComponent } from "@/components/common/genericIconComponent";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs-button";
+import { DOCS_URL } from "@/constants/constants";
 import type { MCPTransport } from "@/controllers/API/queries/mcp/use-patch-install-mcp";
 import { cn } from "@/utils/utils";
 import {
@@ -179,7 +180,7 @@ export const McpJsonContent = ({
     <div className="px-2 text-mmd text-muted-foreground">
       Add this config to your client of choice. Need help? See the{" "}
       <a
-        href="https://docs.langflow.org/mcp-server#connect-clients-to-use-the-servers-actions"
+        href={`${DOCS_URL}/mcp-server#connect-clients-to-use-the-servers-actions`}
         target="_blank"
         rel="noreferrer"
         className="text-accent-pink-foreground"

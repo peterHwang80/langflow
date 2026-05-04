@@ -2,6 +2,7 @@ import { truncate } from "lodash";
 import { useCallback, useState } from "react";
 import ForwardedIconComponent from "@/components/common/genericIconComponent";
 import Loading from "@/components/ui/loading";
+import { DOCS_URL } from "@/constants/constants";
 import ConfirmationModal from "../confirmationModal";
 
 export function SaveChangesModal({
@@ -68,7 +69,7 @@ export function SaveChangesModal({
             <a
               target="_blank"
               className="text-accent-pink-foreground hover:underline"
-              href="https://docs.langflow.org/environment-variables#visual-editor-and-playground-behavior"
+              href={`${DOCS_URL}/environment-variables#visual-editor-and-playground-behavior`}
               rel="noopener"
             >
               Enable auto-saving

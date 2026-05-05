@@ -2973,7 +2973,7 @@
             "beta": false,
             "conditional_paths": [],
             "custom_fields": {},
-            "description": "Stores or retrieves stored chat messages from Langflow tables or an external memory.",
+            "description": "Stores or retrieves stored chat messages from idrflow tables or an external memory.",
             "display_name": "Message History",
             "documentation": "",
             "edited": false,
@@ -3039,7 +3039,7 @@
                 "advanced": true,
                 "display_name": "External Memory",
                 "dynamic": false,
-                "info": "Retrieve messages from an external memory. If empty, it will use the Langflow tables.",
+                "info": "Retrieve messages from an external memory. If empty, it will use the idrflow tables.",
                 "input_types": [
                   "Memory"
                 ],

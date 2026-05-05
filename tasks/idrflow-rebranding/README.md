@@ -18,7 +18,7 @@
 | 2 | Assets, Locales, and Link Centralization | 🟡 In Progress | [phase-02](./phase-02-assets-locales-links.md) |
 | 3 | Docs Site and Current Docs | 🟡 In Progress | [phase-03](./phase-03-docs-current.md) |
 | 4 | Versioned Docs and Public Repo Surface | ✅ Done | [phase-04](./phase-04-versioned-docs.md) |
-| 5 | Residual Sweep and Final Verification | ⬜ Not Started | [phase-05](./phase-05-residual-sweep.md) |
+| 5 | Residual Sweep and Final Verification | 🟡 In Progress | [phase-05](./phase-05-residual-sweep.md) |
 
 ---
 

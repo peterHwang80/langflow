@@ -474,10 +474,62 @@ rg -n 'Langflow|docs\.langflow\.org|langflow-ai|langflow_ai|@Langflow' \
 
 ---
 
-## Phase 05 — Residual Sweep (미완료)
+## Phase 05 — Residual Sweep (🟡 In Progress)
 
-> Phase 완료 후 채움
+### sweep 완료: 2026-05-05 / 최종 수동 검증: 미완료
+
+### 수정 파일
+
+| 파일 | 수정 내용 |
+|------|----------|
+| `docs/static/files/Conversational_Notion_Agent.json` | `"description"` 필드 `Langflow tables` → `idrflow tables` |
+| `docs/static/files/Conversational_Notion_Agent.json` | `"info"` 필드 `Langflow tables` → `idrflow tables` |
+| `docs/static/files/Meeting_Notes_Agent.json` | 대화 시뮬레이션 `Langflow Prod` → `idrflow Prod` |
+
+### 최종 잔여 건수 (2026-05-05)
+
+```bash
+rg -c 'Langflow' src/frontend/src/ --glob '!**/*.snap' | awk -F: '{s+=$2} END {print "frontend/src:", s}'
+→ frontend/src: 84  (전량 intentional residue)
+
+rg -c 'Langflow' docs/docs/ | awk -F: '{s+=$2} END {print "current docs:", s}'
+→ current docs: 49  (전량 코드블록 내부 — whitelist)
+
+rg -c 'Langflow' docs/versioned_docs/ | awk -F: '{s+=$2} END {print "versioned docs:", s}'
+→ versioned docs: 119  (전량 whitelist)
+
+rg -c 'Langflow' docs/static/files/ | awk -F: '{s+=$2} END {print "static/files:", s}'
+→ static/files: 1  (Python 임베딩 코드 — whitelist)
+```
+
+### 검증 결과
+
+**`make docs_build` (2026-05-05):**
+```
+[SUCCESS] Generated static files in "build".
+```
+→ **성공.** broken anchor 경고 0건. OpenAPI Sampler 경고는 pre-existing.
+
+**`make test_frontend` (2026-05-05):**
+```
+Test Suites: 2 failed, 283 passed, 285 total
+Tests:       2 failed, 4005 passed, 4007 total
+```
+→ **신규 회귀 없음.** Phase 1 기준선과 동일.
 
 ### 최종 Intentional Residue
 
-> Phase 05 완료 후 채움
+| 분류 | 건수 | 이유 |
+|------|------|------|
+| i18n 키 이름 (`builtWithLangflow`, `getLangflowDesktop`) | 21 | 내부 식별자 — 영구 whitelist |
+| SVG/PNG 자산 임포트명 | ~29 | 파일명 보존 — 자산 교체 시 변경 |
+| API 헤더 `X-Langflow-Global-Var-*` | 6 | 백엔드 계약 |
+| 코드 주석 (비노출) | 6 | 사용자 표면 아님 |
+| 함수·컴포넌트명 | 7 | 내부 식별자 |
+| i18n 키 참조 (`t("modal.io.builtWithLangflow")`) | 2 | 키 이름 — 값은 idrflow |
+| Current docs 코드블록 | 49 | whitelist |
+| Versioned docs 외부 URL·코드 | 119 | whitelist |
+| `com.LangflowDesktop`, `com.Langflow` | 다수 | 명시적 whitelist |
+| `@Langflow` YouTube 핸들 | 2 | 외부 조직명 whitelist |
+| `docs/docusaurus.config.js` 리다이렉트 | 1 | 레거시 URL 호환성 |
+| `Conversational_Notion_Agent.json` Python 임베딩 | 1줄 | 임베딩 코드 whitelist |

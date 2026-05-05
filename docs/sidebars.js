@@ -13,12 +13,12 @@ module.exports = {
         {
           type: "doc",
           id: "Get-Started/about-langflow",
-          label: "About Langflow"
+          label: "About idrflow"
         },
         {
           type: "doc",
           id: "Get-Started/get-started-installation",
-          label: "Install Langflow"
+          label: "Install idrflow"
         },
         {
           type: "doc",
@@ -59,7 +59,7 @@ module.exports = {
             {
               type: "doc",
               id: "Flows/concepts-publish",
-              label: "Trigger flows with the Langflow API"
+              label: "Trigger flows with the idrflow API"
             },
             {
               type: "doc",
@@ -81,7 +81,7 @@ module.exports = {
         {
           type: "doc",
           id: "Flows/langflow-assistant",
-          label: "Build components with Langflow Assistant"
+          label: "Build components with idrflow Assistant"
         },
       ],
     },
@@ -173,7 +173,7 @@ module.exports = {
         {
           type: "doc",
           id: "Develop/data-types",
-          label: "Use Langflow data types"
+          label: "Use idrflow data types"
         },
         {
           type: "doc",
@@ -183,7 +183,7 @@ module.exports = {
         {
           type: "doc",
           id: "Develop/configuration-cli",
-          label: "Use the Langflow CLI"
+          label: "Use the idrflow CLI"
         },
       ],
     },
@@ -195,17 +195,17 @@ module.exports = {
         {
           type:"doc",
           id: "Deployment/deployment-overview",
-          label: "Langflow deployment overview"
+          label: "idrflow deployment overview"
         },
         {
           type: "doc",
           id: "Deployment/deployment-public-server",
-          label: "Deploy a public Langflow server"
+          label: "Deploy a public idrflow server"
         },
         {
           type: "doc",
           id: "Deployment/deployment-nginx-ssl",
-          label: "Deploy Langflow with Nginx and SSL"
+          label: "Deploy idrflow with Nginx and SSL"
         },
         {
           type: "category",
@@ -215,12 +215,12 @@ module.exports = {
             {
               type: "doc",
               id: "Deployment/deployment-docker",
-              label: "Langflow Docker images"
+              label: "idrflow Docker images"
             },
             {
               type: "doc",
               id: "Deployment/deployment-caddyfile",
-              label: "Deploy Langflow on a remote server"
+              label: "Deploy idrflow on a remote server"
             },
             {
               type: "category",
@@ -479,7 +479,7 @@ module.exports = {
         {
           type: "doc",
           id: "API-Reference/api-reference-api-examples",
-          label: "Get started with the Langflow API",
+          label: "Get started with the idrflow API",
         },
         {
           type: "doc",
@@ -518,7 +518,7 @@ module.exports = {
         "API-Reference/api-users",
         {
           type: "link",
-          label: "Langflow API specification",
+          label: "idrflow API specification",
           href: "/api",
         },
       ],
@@ -559,7 +559,7 @@ module.exports = {
         {
           type: "doc",
           id: "Support/luna-for-langflow",
-          label: "IBM Elite Support for Langflow",
+          label: "IBM Elite Support for idrflow",
         },
         {
           type: "doc",
@@ -585,7 +585,7 @@ module.exports = {
           </svg>
           <div class="sidebar-ad-text-container">
             <span class="sidebar-ad-text">Get started in minutes</span>
-            <span class="sidebar-ad-text sidebar-ad-text-gradient">Download Langflow Desktop</span>
+            <span class="sidebar-ad-text sidebar-ad-text-gradient">Download idrflow Desktop</span>
           </div>
         </a>
       `,

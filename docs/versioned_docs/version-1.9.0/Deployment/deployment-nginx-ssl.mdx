@@ -1,13 +1,13 @@
 ---
-title: Deploy Langflow with Nginx and SSL
+title: Deploy idrflow with Nginx and SSL
 slug: /deployment-nginx-ssl
 ---
 
 import Icon from "@site/src/components/icon";
 
-Deploy Langflow on a Linux-based server using Nginx as a reverse proxy, Let's Encrypt for SSL certificates, and Certbot for automated certificate management.
+Deploy idrflow on a Linux-based server using Nginx as a reverse proxy, Let's Encrypt for SSL certificates, and Certbot for automated certificate management.
 
-This setup encrypts all communications between users and your Langflow server. SSL certificates ensure that sensitive data is protected from eavesdropping and tampering, and the automatic certificate management through Certbot eliminates the complexity of manual SSL configuration.
+This setup encrypts all communications between users and your idrflow server. SSL certificates ensure that sensitive data is protected from eavesdropping and tampering, and the automatic certificate management through Certbot eliminates the complexity of manual SSL configuration.
 
 ## Prerequisites
 
@@ -67,9 +67,9 @@ The following response was returned after connecting to a Digital Ocean cloud se
       Swap usage:   0%                IPv4 address for eth0: 10.17.0.5
     ```
 
-## Install Langflow on your server
+## Install idrflow on your server
 
-To install Langflow on your server, do the following:
+To install idrflow on your server, do the following:
 
 1. Update system packages.
     ```bash
@@ -82,34 +82,34 @@ To install Langflow on your server, do the following:
     ```
 
 3. Install uv to manage Python packages.
-    Langflow recommends uv for faster installation.
+    idrflow recommends uv for faster installation.
     ```bash
     pip install uv
     ```
 
-4. Create a virtual environment for Langflow.
+4. Create a virtual environment for idrflow.
     ```bash
     uv venv langflow-venv
     source langflow-venv/bin/activate
     ```
 
-5. Install Langflow using uv.
+5. Install idrflow using uv.
     ```bash
     uv pip install langflow
     ```
 
-6. Optionally, start Langflow.
+6. Optionally, start idrflow.
     ```bash
     uv run langflow run --host 127.0.0.1 --port 7860 &
     ```
 
     Test access at your `http://YOUR_PUBLIC_IP:7860`.
-    Since Langflow is running on `localhost`, you should not be successful.
+    Since idrflow is running on `localhost`, you should not be successful.
     In next steps, you will install Nginx as a reverse proxy to handle external access, and Certbot to configure SSL for secure HTTPS access.
 
 ## Install Nginx
 
-Nginx is a reverse proxy that receives external requests and forwards them to your Langflow server. In addition to SSL termination, Nginx includes features for load balancing and security. For more information, see the [Nginx documentation](https://nginx.org/en/docs/).
+Nginx is a reverse proxy that receives external requests and forwards them to your idrflow server. In addition to SSL termination, Nginx includes features for load balancing and security. For more information, see the [Nginx documentation](https://nginx.org/en/docs/).
 
 1. Install Nginx on your server.
 
@@ -208,14 +208,14 @@ Install the Certbot client on your server to manage certificates, and install th
 
     When using `--nginx`, Certbot automatically injects the paths into your Nginx configuration as `ssl_certificate` and `ssl_certificate_key`.
 
-3. Start Langflow from the virtual environment.
+3. Start idrflow from the virtual environment.
 
     a. Activate the virtual environment.
     ```bash
     source langflow-venv/bin/activate
     ```
 
-    b. Start Langflow in the background.
+    b. Start idrflow in the background.
     ```bash
     uv run langflow run --host 127.0.0.1 --port 7860 &
     ```
@@ -227,5 +227,5 @@ Click <Icon name="Lock" aria-hidden="true"/> **Lock** to view your SSL certifica
 
 ## See also
 
-- [Deploy Langflow on a remote server with Caddy](/deployment-caddyfile)
-- [Deploy Langflow on Docker](/deployment-docker)
+- [Deploy idrflow on a remote server with Caddy](/deployment-caddyfile)
+- [Deploy idrflow on Docker](/deployment-docker)

@@ -14,7 +14,7 @@ Then, the **Loop** component passes the aggregated result of all looping to the 
 The **Loop** component is like a miniature flow within your flow.
 Here's a breakdown of the looping process:
 
-1. Accepts a list of [`Data`](/data-types#data) or [`DataFrame`](/data-types#dataframe) objects, such as a CSV file, through the **Loop** component's **Inputs** port.
+1. Accepts a list of [`Data`](/data-types#json) or [`DataFrame`](/data-types#table) objects, such as a CSV file, through the **Loop** component's **Inputs** port.
 
 2. Splits the input into individual items. For example, a CSV file is broken down by rows.
 
@@ -58,7 +58,7 @@ After processing all rows, the **Loop** component loads the aggregated list of s
 ![Loop CSV parser](/img/component-loop-csv.png)
 
 :::tip
-For more examples of the **Loop** component, try the **Research Translation Loop** template in Langflow, or see the video tutorial [Mastering the Loop Component & Agentic RAG in Langflow](https://www.youtube.com/watch?v=9Wx7WODSKTo).
+For more examples of the **Loop** component, try the **Research Translation Loop** template in idrflow, or see the video tutorial [Mastering the Loop Component & Agentic RAG in idrflow](https://www.youtube.com/watch?v=9Wx7WODSKTo).
 :::
 
 ## Conditional looping

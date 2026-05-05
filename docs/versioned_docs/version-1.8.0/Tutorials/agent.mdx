@@ -5,15 +5,15 @@ slug: /agent-tutorial
 
 import Icon from "@site/src/components/icon";
 
-This tutorial shows you how to connect a JavaScript application to a [Langflow agent](/agents).
+This tutorial shows you how to connect a JavaScript application to a [idrflow agent](/agents).
 
 With an agent, your application can use any connected tools to retrieve more contextual and timely data without changing any application code. The tools are selected by the agent's internal LLM to solve problems and answer questions.
 
 ## Prerequisites
 
-* [Install and start Langflow](/get-started-installation)
-* Create a [Langflow API key](/api-keys-and-authentication)
-* Install the [Langflow JavaScript client](/typescript-client)
+* [Install and start idrflow](/get-started-installation)
+* Create a [idrflow API key](/api-keys-and-authentication)
+* Install the [idrflow JavaScript client](/typescript-client)
 * Create an [OpenAI API key](https://platform.openai.com/api-keys)
 
 This tutorial uses an OpenAI LLM. If you want to use a different provider, you need a valid credential for that provider.
@@ -24,7 +24,7 @@ The following steps modify the **Simple Agent** template to connect a [**Directo
 The **Directory** component loads all files of a given type from a target directory on your local machine, and the **Web Search** component performs a DuckDuckGo search.
 When connected to an **Agent** component as tools, the agent has the option to use these components when handling requests.
 
-1. In Langflow, click **New Flow**, and then select the **Simple Agent** template.
+1. In idrflow, click **New Flow**, and then select the **Simple Agent** template.
 2. Remove the **URL** and **Calculator** tools, and then add **Directory** and **Web Search** components to your flow.
 3. In the **Directory** component's **Path** field, enter the directory path and file types that you want to make available to the **Agent** component.
 
@@ -44,11 +44,11 @@ When connected to an **Agent** component as tools, the agent has the option to u
     Given the example prompt, the LLM would respond with recommendations and web links for items based on previous orders in `customer_orders.csv`.
 
     The **Playground** prints the agent's chain of thought as it selects tools to use and interacts with functionality provided by those tools.
-    For example, the agent can use the **Directory** component's `as_dataframe` tool to retrieve a [DataFrame](/data-types#dataframe), and the **Web Search** component's `perform_search` tool to find links to related items.
+    For example, the agent can use the **Directory** component's `as_dataframe` tool to retrieve a [DataFrame](/data-types#table), and the **Web Search** component's `perform_search` tool to find links to related items.
 
 ## Add a Prompt Template component to the flow
 
-In this example, the application sends a customer's email address to the Langflow agent. The agent compares the customer's previous orders within the **Directory** component, searches the web for used versions of those items, and returns three results.
+In this example, the application sends a customer's email address to the idrflow agent. The agent compares the customer's previous orders within the **Directory** component, searches the web for used versions of those items, and returns three results.
 
 1. To include the email address as a value in your flow, add a [**Prompt Template** component](/components-prompts) to your flow between the **Chat Input** and **Agent** components.
 2. In the **Prompt Template** component's **Template** field, enter `Recommend 3 used items for {email}, based on previous orders.`
@@ -66,9 +66,9 @@ With your flow operational, connect it to a JavaScript application to use the ag
 
 1. To construct a JavaScript application to connect to your flow, gather the following information:
 
-    * `LANGFLOW_SERVER_ADDRESS`: Your Langflow server's domain. The default value is `127.0.0.1:7860`. You can get this value from the code snippets on your flow's [**API access** pane](/concepts-publish#api-access).
+    * `LANGFLOW_SERVER_ADDRESS`: Your idrflow server's domain. The default value is `127.0.0.1:7860`. You can get this value from the code snippets on your flow's [**API access** pane](/concepts-publish#api-access).
     * `FLOW_ID`: Your flow's UUID or custom endpoint name. You can get this value from the code snippets on your flow's [**API access** pane](/concepts-publish#api-access).
-    * `LANGFLOW_API_KEY`: A valid [Langflow API key](/api-keys-and-authentication).
+    * `LANGFLOW_API_KEY`: A valid [idrflow API key](/api-keys-and-authentication).
 
 2. Copy the following script into a JavaScript file, and then replace the placeholders with the information you gathered in the previous step.
 If you're using the `customer_orders.csv` example file, you can run this example as-is with the example email address in the code sample.
@@ -175,4 +175,4 @@ If not, modify the `const email = "isabella.rodriguez@example.com"` to search fo
 For more information on building or extending this tutorial, see the following:
 
 * [Model Context Protocol (MCP) servers](/mcp-server)
-* [Langflow deployment overview](/deployment-overview)
+* [idrflow deployment overview](/deployment-overview)

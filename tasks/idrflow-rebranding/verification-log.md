@@ -344,9 +344,111 @@ Broken anchor on source page path = /1.8.0/api-request: ...
 
 ---
 
-## Phase 04 — Versioned Docs (미완료)
+## Phase 04 — Versioned Docs (🟡 In Progress)
 
-> Phase 완료 후 채움
+### 현재 상태
+
+- **전략:** `version-1.8.0` 문서는 비노출하지 않고 계속 노출 유지
+- **완료된 하위 작업:** README 표면 정리, versioned sidebars 정리, `version-1.8.0`/`1.9.0` prose 정리, broken anchor backward-compatibility 복구, `make docs_build` 재검증
+- **수동 검증:** 미완료
+
+### 1차 작업: 2026-05-05
+
+### 변경 파일 수
+
+- 루트 `README.md`: 1개
+- `docs/versioned_sidebars/*.json`: 2개
+- `docs/versioned_docs/version-1.8.0/**/*.mdx`, `version-1.9.0/**/*.mdx`: **358개 MDX 파일**
+- `src/frontend/README.md`, `docs/README.md`: 브랜드 문자열 잔여 0건 확인, 수정 없음
+
+### 핵심 변경 내용
+
+1. **Public Repo Surface**
+   - 루트 `README.md` Hero / Desktop / Quickstart / Deployment / Contribute 문구를 `idrflow` 기준으로 정리
+   - Twitter badge label을 `Follow @idrflow`로 조정
+
+2. **Versioned Sidebars**
+   - `About Langflow`, `Install Langflow`, `Langflow deployment overview` 등 label 정리
+   - sidebar ad의 `Download Langflow Desktop` → `Download idrflow Desktop`
+
+3. **Versioned Docs Prose**
+   - `version-1.8.0`, `version-1.9.0` MDX 본문에서 코드블록 밖 prose/heading/title/alt/link text를 `idrflow` 기준으로 정리
+   - fenced code, `LangflowClient`, `LANGFLOW_*`, `langflow-chat`, 외부 URL 값은 유지
+
+4. **Anchor 호환성 복구**
+   - `#langflow-json-file-contents`
+   - `#serve-flows-through-a-langflow-mcp-server`
+   - `#install-langflow-from-source`
+   - `#run-langflow-from-source`
+   - `#set-up-your-langflow-development-environment`
+   - `#create-a-langflow-api-key`
+   - `#start-a-langflow-server-with-authentication-enabled`
+   - `#connect-langflow-to-a-local-postgresql-database`
+   - `#set-environment-variables-for-langflow-desktop`
+   - `#install-and-run-langflow-desktop`
+   - `#install-and-run-the-langflow-oss-python-package`
+
+5. **1.8.0 Data Type Links**
+   - `/data-types#data` → `/data-types#json`
+   - `/data-types#dataframe` → `/data-types#table`
+
+### 잔여 검색 결과
+
+```bash
+rg -n 'About Langflow|Install Langflow|Trigger flows with the Langflow API|Build components with Langflow Assistant|Use Langflow data types|Use the Langflow CLI|Langflow deployment overview|Download Langflow Desktop' \
+  README.md docs/versioned_sidebars/version-1.8.0-sidebars.json docs/versioned_sidebars/version-1.9.0-sidebars.json \
+  docs/versioned_docs/version-1.8.0 docs/versioned_docs/version-1.9.0 --glob '*.mdx'
+```
+결과: **0건**
+
+```bash
+rg -n 'Langflow|docs\.langflow\.org|langflow-ai|langflow_ai|@Langflow' \
+  README.md src/frontend/README.md docs/README.md \
+  docs/versioned_sidebars \
+  docs/versioned_docs/version-1.9.0 \
+  docs/versioned_docs/version-1.8.0
+```
+결과: **274건**
+
+분류:
+- 실제 외부 URL/조직/핸들 (`langflow-ai`, `langflow_ai`, `@Langflow`, `docs.langflow.org`)
+- 코드 예제/샘플 출력/SDK 식별자 (`LangflowClient`, `langflow-chat`, `LANGFLOW_*`)
+- MDX code snippet import 변수명 (`FormLangflowApiRequests` 등)
+- 관측/배포 도구의 실제 식별자 (`Langflow` service name, `com.LangflowDesktop`)
+
+수동 표본 확인 결과, brand prose 미수정 잔여가 아니라 **intentional residue**로 분류 가능한 항목만 남음.
+
+### 빌드 결과 (2026-05-05)
+
+**`make docs_build`:**
+```
+[SUCCESS] Generated static files in "build".
+```
+
+결과:
+- **성공**
+- **broken anchor 경고 0건**
+- OpenAPI bundling 경고 / OpenAPI Sampler 경고는 여전히 남음
+  - `openapi/langflow-workflows-openapi.json` `$ref` 해석
+  - `openapi/openapi.json` `$ref` / discriminator mapping
+  - `allOf with "array" type` sampler 경고
+
+→ 위 OpenAPI 관련 경고는 Phase 4 리브랜딩 변경과 무관한 **pre-existing / out-of-scope** 경고로 분류
+
+### 2차 작업: 2026-05-05 (보완 수정)
+
+**Claude Code 검토 결과 발견된 prose 누락 수정:**
+
+- `docs/versioned_docs/version-1.8.0/Develop/integrations-instana-traceloop.mdx:91`
+  - 변경: `` search for `Langflow` `` → `` search for `idrflow` ``
+- `docs/versioned_docs/version-1.9.0/Develop/integrations-instana-traceloop.mdx:91`
+  - 변경: `` search for `Langflow` `` → `` search for `idrflow` ``
+
+해당 항목은 사용자에게 Instana UI 서비스 목록에서 검색어를 안내하는 **산문 문구**로, 코드블록 외부에 위치함.
+
+### 수동 검증
+
+> **미완료** — docs 버전 드롭다운(`1.8.0`, `1.9.0`) 및 README 렌더링 확인 필요
 
 ---
 

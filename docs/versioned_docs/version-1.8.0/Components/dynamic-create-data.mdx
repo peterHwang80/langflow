@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 import PartialParams from '@site/docs/_partial-hidden-params.mdx';
 import PartialCurlyBraces from '@site/docs/_partial-escape-curly-braces.mdx';
 
-The **Dynamic Create Data** component creates a [`Data`](/data-types#data) object or [`Message`](/data-types#message) with configurable fields.
+The **Dynamic Create Data** component creates a [`Data`](/data-types#json) object or [`Message`](/data-types#message) with configurable fields.
 Define the table in the **Input Configuration** field, and the component creates corresponding input or output handles in the component.
 
 ## Use the Dynamic Create Data component in a flow
@@ -33,10 +33,10 @@ The following example demonstrates how to use a **Dynamic Create Data** componen
       * Handle: Accepts `Text`, `Data`, or `Message` output from other components.
       * Boolean: Accepts Boolean values. Cannot accept input from another component.
 
-    For more information, see [Langflow data types](/data-types).
+    For more information, see [idrflow data types](/data-types).
 4. Depending on your **Field Type** selections, either connect output from other components to dynamically populate the inputs, or enter values manually in the **Dynamic Create Data** component's fields.
 
-5. Select the desired output type at the component's output port. The component outputs either a [`Data`](/data-types#data) object containing all field values from the component's inputs, or a [`Message`](/data-types#message) containing all field values formatted as a text string.
+5. Select the desired output type at the component's output port. The component outputs either a [`Data`](/data-types#json) object containing all field values from the component's inputs, or a [`Message`](/data-types#message) containing all field values formatted as a text string.
 
 ## Dynamic Create Data parameters
 

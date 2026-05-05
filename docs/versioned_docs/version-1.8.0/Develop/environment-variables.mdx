@@ -7,20 +7,20 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Link from '@docusaurus/Link';
 
-In general, environment variables, like `LANGFLOW_PORT` or `LANGFLOW_LOG_LEVEL`, configure how Langflow runs.
-These are broad settings that apply to your entire Langflow deployment.
+In general, environment variables, like `LANGFLOW_PORT` or `LANGFLOW_LOG_LEVEL`, configure how idrflow runs.
+These are broad settings that apply to your entire idrflow deployment.
 
-In contrast, global variables are user-defined values stored in Langflow's database for use in flows, such as `OPENAI_API_KEY`.
-Langflow can also source global variables from environment variables.
-For more information, see [Langflow global variables](/configuration-global-variables).
+In contrast, global variables are user-defined values stored in idrflow's database for use in flows, such as `OPENAI_API_KEY`.
+idrflow can also source global variables from environment variables.
+For more information, see [idrflow global variables](/configuration-global-variables).
 
-## Configure environment variables for Langflow OSS
+## Configure environment variables for idrflow OSS
 
-Langflow recognizes [supported environment variables](#supported-variables) from the following sources:
+idrflow recognizes [supported environment variables](#supported-variables) from the following sources:
 
 - Environment variables set in your terminal.
-- Environment variables imported from a `.env` file when starting Langflow.
-- Environment variables set with the [Langflow CLI](./configuration-cli), including the `--env-file` option and direct options, such as `--port`.
+- Environment variables imported from a `.env` file when starting idrflow.
+- Environment variables set with the [idrflow CLI](./configuration-cli), including the `--env-file` option and direct options, such as `--port`.
 
 You can choose to use one or more of these sources.
 
@@ -28,15 +28,15 @@ You can choose to use one or more of these sources.
 
 If the same environment variable is set in multiple places, the following hierarchy applies:
 
-1. Langflow CLI options override all other sources.
+1. idrflow CLI options override all other sources.
 2. The `.env` file overrides system environment variables.
 3. System environment variables are used only if not set elsewhere.
-When running a Langflow Docker image, the `-e` flag can be used to set additional system environment variables.
+When running a idrflow Docker image, the `-e` flag can be used to set additional system environment variables.
 
 For example:
 
-* If you set `LANGFLOW_PORT=8080` in your system environment and `LANGFLOW_PORT=7860` in `.env`, Langflow uses `7860` from `.env`.
-* If you use the Langflow CLI to run `langflow run --env-file .env --port 9000`, and you set `LANGFLOW_PORT=7860` in `.env`, then Langflow uses `9000` from the CLI option.
+* If you set `LANGFLOW_PORT=8080` in your system environment and `LANGFLOW_PORT=7860` in `.env`, idrflow uses `7860` from `.env`.
+* If you use the idrflow CLI to run `langflow run --env-file .env --port 9000`, and you set `LANGFLOW_PORT=7860` in `.env`, then idrflow uses `9000` from the CLI option.
 
 ### Set environment variables in your terminal {#configure-variables-terminal}
 
@@ -69,16 +69,16 @@ docker run -it --rm \
 </TabItem>
 </Tabs>
 
-When you start Langflow, it looks for environment variables that you've set in your terminal.
+When you start idrflow, it looks for environment variables that you've set in your terminal.
 If it detects a supported environment variable, then it automatically adopts the specified value, subject to [precedence rules](#precedence).
 
 ### Import environment variables from a .env file {#configure-variables-env-file}
 
-1. If Langflow is running, quit Langflow.
+1. If idrflow is running, quit idrflow.
 
 2. Create a `.env` file, and then open it in your preferred editor.
 
-3. Define [Langflow environment variables](#supported-variables) in the `.env` file.
+3. Define [idrflow environment variables](#supported-variables) in the `.env` file.
 
     <details>
     <summary>Example: .env</summary>
@@ -115,13 +115,13 @@ If it detects a supported environment variable, then it automatically adopts the
     LANGFLOW_WORKERS=3
     ```
 
-    For additional examples, see [`.env.example`](https://github.com/langflow-ai/langflow/blob/main/.env.example) in the Langflow repository.
+    For additional examples, see [`.env.example`](https://github.com/langflow-ai/langflow/blob/main/.env.example) in the idrflow repository.
 
     </details>
 
 4. Save and close `.env`.
 
-5. Start Langflow with your `.env` file:
+5. Start idrflow with your `.env` file:
 
     <Tabs>
     <TabItem value="local" label="Local" default>
@@ -145,18 +145,18 @@ If it detects a supported environment variable, then it automatically adopts the
 
     If your `.env` file isn't in the same directory, provide the path to your `.env` file.
 
-On startup, Langflow imports the environment variables from your `.env` file, as well as any others that you set in your terminal, and then adopts their specified values.
+On startup, idrflow imports the environment variables from your `.env` file, as well as any others that you set in your terminal, and then adopts their specified values.
 
 ### Configure environment variables for development
 
-The following examples show how to configure Langflow using environment variables in different development scenarios.
+The following examples show how to configure idrflow using environment variables in different development scenarios.
 
 <Tabs>
 <TabItem value="env" label=".env file" default>
 
 The `.env` file is a text file that contains key-value pairs of environment variables.
 
-Create or edit a `.env` file in the root directory of your application or Langflow environment, and then add your configuration variables to the file:
+Create or edit a `.env` file in the root directory of your application or idrflow environment, and then add your configuration variables to the file:
 
 <details>
 <summary>Example: .env</summary>
@@ -306,25 +306,25 @@ Create or edit the `.vscode/tasks.json` file in your project root.
 
 </details>
 
-To run Langflow using the above VSCode `tasks.json` file, in the VSCode command palette, select **Tasks: Run Task** > **langflow backend**.
+To run idrflow using the above VSCode `tasks.json` file, in the VSCode command palette, select **Tasks: Run Task** > **langflow backend**.
 
 </TabItem>
 </Tabs>
 
-## Set environment variables for Langflow Desktop
+## Set environment variables for idrflow Desktop {#set-environment-variables-for-langflow-desktop}
 
-Environment variables set in your terminal aren't automatically available to GUI-based applications like Langflow Desktop when you launch them from the Windows or macOS GUI.
+Environment variables set in your terminal aren't automatically available to GUI-based applications like idrflow Desktop when you launch them from the Windows or macOS GUI.
 
 For Windows, this means any GUI-based app launched from the Start menu, desktop shortcuts, or Windows Explorer.
 
 For macOS, this means any GUI-based app launched from Finder, Spotlight, Launchpad, or the Dock.
 
-To set environment variables for Langflow Desktop, you need to use specific commands or files, depending on your OS.
+To set environment variables for idrflow Desktop, you need to use specific commands or files, depending on your OS.
 
 <Tabs>
 <TabItem value="macos" label="macOS" default>
 
-Langflow Desktop for macOS cannot automatically use variables set in your terminal, such as those in`.zshrc` or `.bash_profile`, when launched from the macOS GUI.
+idrflow Desktop for macOS cannot automatically use variables set in your terminal, such as those in`.zshrc` or `.bash_profile`, when launched from the macOS GUI.
 
 To make environment variables available to GUI apps on macOS, you need to use `launchctl` with a `plist` file:
 
@@ -336,7 +336,7 @@ To make environment variables available to GUI apps on macOS, you need to use `l
 
 2. In the `LaunchAgents` directory, create a `.plist` file called `dev.langflow.env`.
 
-3. Add the following content to `dev.langflow.env.plist`, and then add, change, or remove Langflow environment variables as needed for your configuration.
+3. Add the following content to `dev.langflow.env.plist`, and then add, change, or remove idrflow environment variables as needed for your configuration.
 
     This example sets multiple environmental variables for all GUI apps launched from the macOS GUI.
 
@@ -372,9 +372,9 @@ To make environment variables available to GUI apps on macOS, you need to use `l
 </TabItem>
 <TabItem value="windows1" label="Window System Properties">
 
-Langflow Desktop for Windows cannot automatically use variables set in your terminal, such as those defined with `set` in `cmd` or `$env:VAR=...` in PowerShell, when launched from the Windows GUI.
+idrflow Desktop for Windows cannot automatically use variables set in your terminal, such as those defined with `set` in `cmd` or `$env:VAR=...` in PowerShell, when launched from the Windows GUI.
 
-To make environment variables available to the Langflow Desktop app, you must set them at the user or system level using the **System Properties** interface or the Terminal.
+To make environment variables available to the idrflow Desktop app, you must set them at the user or system level using the **System Properties** interface or the Terminal.
 
 To set environment variables using the System Properties interface, do the following:
 
@@ -386,17 +386,17 @@ To set environment variables using the System Properties interface, do the follo
     To apply the setting to all users, select **System variables**.
     :::
 
-4. Enter the name of the Langflow variable you want to set, such as `LANGFLOW_CONFIG_DIR`, and the desired value, such as `C:\Users\your_user\.langflow_config`.
+4. Enter the name of the idrflow variable you want to set, such as `LANGFLOW_CONFIG_DIR`, and the desired value, such as `C:\Users\your_user\.langflow_config`.
 5. Click **OK** to save the variable.
-6. Repeat until you have set all necessary Langflow environment variables.
-7. Launch or restart Langflow Desktop to apply the environment variables.
+6. Repeat until you have set all necessary idrflow environment variables.
+7. Launch or restart idrflow Desktop to apply the environment variables.
 
 </TabItem>
 <TabItem value="windows2" label="Powershell">
 
 To define environment variables for Windows using PowerShell, do the following:
 
-1. Enter the name of the Langflow variable you want to set, such as `LANGFLOW_CONFIG_DIR`, and the desired value, such as `C:\Users\your_user\.langflow_config`.
+1. Enter the name of the idrflow variable you want to set, such as `LANGFLOW_CONFIG_DIR`, and the desired value, such as `C:\Users\your_user\.langflow_config`.
 
     To set an environment variable for the current user:
     ```powershell
@@ -408,15 +408,15 @@ To define environment variables for Windows using PowerShell, do the following:
    [System.Environment]::SetEnvironmentVariable("LANGFLOW_CONFIG_DIR", "C:\Langflow\Config", "Machine")
    ```
 
-2. Repeat until you have set all necessary Langflow environment variables.
-3. Launch or restart Langflow Desktop to apply the environment variables.
+2. Repeat until you have set all necessary idrflow environment variables.
+3. Launch or restart idrflow Desktop to apply the environment variables.
 
 </TabItem>
 </Tabs>
 
 ## Supported environment variables {#supported-variables}
 
-The following sections provide information about specific Langflow environment variables.
+The following sections provide information about specific idrflow environment variables.
 
 ### Authentication and security
 
@@ -424,7 +424,7 @@ See [API keys and authentication](/api-keys-and-authentication).
 
 ### Global variables
 
-For information about the relationship between Langflow global variables and environment variables, as well as environment variables that control handling of global variables, see [Global variables](/configuration-global-variables).
+For information about the relationship between idrflow global variables and environment variables, as well as environment variables that control handling of global variables, see [Global variables](/configuration-global-variables).
 
 ### Logs {#logging}
 
@@ -432,33 +432,33 @@ See [Configure log options](/logging#log-storage).
 
 ### MCP servers {#mcp}
 
-See [Use Langflow as an MCP server](/mcp-server).
+See [Use idrflow as an MCP server](/mcp-server).
 
 ### Monitoring and metrics
 
-For environment variables for specific monitoring service providers, see the Langflow monitoring integration guides, such as [Langfuse](/integrations-langfuse) and [Best practices for Langflow on Kubernetes](/deployment-prod-best-practices).
+For environment variables for specific monitoring service providers, see the idrflow monitoring integration guides, such as [Langfuse](/integrations-langfuse) and [Best practices for idrflow on Kubernetes](/deployment-prod-best-practices).
 
 ### Server
 
-The following environment variables set base Langflow server configuration, such as where the server is hosted, required files for SSL encryption, and the deployment type (frontend and backend, backend-only, development mode).
+The following environment variables set base idrflow server configuration, such as where the server is hosted, required files for SSL encryption, and the deployment type (frontend and backend, backend-only, development mode).
 
 | Variable | Format | Default | Description |
 |----------|--------|---------|-------------|
-| `LANGFLOW_HOST` | String | `localhost` | The host on which the Langflow server will run. |
-| `LANGFLOW_PORT` | Integer | `7860` | The port on which the Langflow server runs. The server automatically selects a free port if the specified port is in use. |
-| `LANGFLOW_BACKEND_ONLY` | Boolean | `False` | Run only the Langflow backend service (no frontend). |
-| `LANGFLOW_DEV` | Boolean | `False` | Whether to run Langflow in development mode (may contain bugs). |
+| `LANGFLOW_HOST` | String | `localhost` | The host on which the idrflow server will run. |
+| `LANGFLOW_PORT` | Integer | `7860` | The port on which the idrflow server runs. The server automatically selects a free port if the specified port is in use. |
+| `LANGFLOW_BACKEND_ONLY` | Boolean | `False` | Run only the idrflow backend service (no frontend). |
+| `LANGFLOW_DEV` | Boolean | `False` | Whether to run idrflow in development mode (may contain bugs). |
 | `LANGFLOW_OPEN_BROWSER` | Boolean | `False` | Open the system web browser on startup. |
-| `LANGFLOW_HEALTH_CHECK_MAX_RETRIES` | Integer | `5` | Set the maximum number of retries for Langflow's server status health checks. |
+| `LANGFLOW_HEALTH_CHECK_MAX_RETRIES` | Integer | `5` | Set the maximum number of retries for idrflow's server status health checks. |
 | `LANGFLOW_WORKERS` | Integer | `1` | Number of worker processes. |
 | `LANGFLOW_WORKER_TIMEOUT` | Integer | `300` | Worker timeout in seconds. |
-| `LANGFLOW_SSL_CERT_FILE` | String | Not set | Path to the SSL certificate file for enabling HTTPS on the Langflow web server. This is separate from [database SSL connections](/configuration-custom-database#connect-langflow-to-a-local-postgresql-database). |
-| `LANGFLOW_SSL_KEY_FILE` | String | Not set | Path to the SSL key file for enabling HTTPS on the Langflow web server. This is separate from [database SSL connections](/configuration-custom-database#connect-langflow-to-a-local-postgresql-database). |
+| `LANGFLOW_SSL_CERT_FILE` | String | Not set | Path to the SSL certificate file for enabling HTTPS on the idrflow web server. This is separate from [database SSL connections](/configuration-custom-database#connect-langflow-to-a-local-postgresql-database). |
+| `LANGFLOW_SSL_KEY_FILE` | String | Not set | Path to the SSL key file for enabling HTTPS on the idrflow web server. This is separate from [database SSL connections](/configuration-custom-database#connect-langflow-to-a-local-postgresql-database). |
 | `LANGFLOW_DEACTIVATE_TRACING` | Boolean | `False` | Deactivate tracing functionality. |
 | `LANGFLOW_CELERY_ENABLED` | Boolean | `False` | Enable Celery for distributed task processing. |
 | `LANGFLOW_ALEMBIC_LOG_TO_STDOUT` | Boolean | `False` | Whether to log Alembic database migration output to stdout instead of a log file. If `true`, Alembic logs to `stdout` and the default log file is ignored. |
 
-For more information about deploying Langflow servers, see [Langflow deployment overview](/deployment-overview).
+For more information about deploying idrflow servers, see [idrflow deployment overview](/deployment-overview).
 
 ### Storage
 
@@ -479,9 +479,9 @@ See [Telemetry](/contributing-telemetry).
 | `LANGFLOW_BUNDLE_URLS` | List[String] | `[]` | A list of URLs from which to load custom bundles. Supports GitHub URLs. If `LANGFLOW_AUTO_LOGIN=True`, flows from these bundles are loaded into the database. |
 | `LANGFLOW_COMPONENTS_PATH` | String | Not set | Path to a directory containing custom components. Typically used if you have local custom components or you are building a Docker image with custom components. |
 | `LANGFLOW_LOAD_FLOWS_PATH` | String | Not set | Path to a directory containing flow JSON files to be loaded on startup. Typically used when creating a Docker image with prepackaged flows. Requires `LANGFLOW_AUTO_LOGIN=True`. |
-| `LANGFLOW_CREATE_STARTER_PROJECTS` | Boolean | `True` | Whether to create templates during initialization. If `false`, Langflow doesn't create templates, and `LANGFLOW_UPDATE_STARTER_PROJECTS` is treated as `false`. |
+| `LANGFLOW_CREATE_STARTER_PROJECTS` | Boolean | `True` | Whether to create templates during initialization. If `false`, idrflow doesn't create templates, and `LANGFLOW_UPDATE_STARTER_PROJECTS` is treated as `false`. |
 | `LANGFLOW_UPDATE_STARTER_PROJECTS` | Boolean | `True` | Whether to update templates with the latest component versions when initializing after an upgrade. |
-| `LANGFLOW_LAZY_LOAD_COMPONENTS` | Boolean | `False` | If `true`, Langflow only partially loads components at startup and fully loads them on demand. This significantly reduces startup time but can cause a slight delay when a component is first used. |
+| `LANGFLOW_LAZY_LOAD_COMPONENTS` | Boolean | `False` | If `true`, idrflow only partially loads components at startup and fully loads them on demand. This significantly reduces startup time but can cause a slight delay when a component is first used. |
 | `LANGFLOW_EVENT_DELIVERY` | String | `streaming` | How to deliver build events to the frontend: `polling`, `streaming` or `direct`. |
 | `LANGFLOW_FRONTEND_PATH` | String | `./frontend` | Path to the frontend directory containing build files. For development purposes only when you need to serve specific frontend code. |
 | `LANGFLOW_MAX_ITEMS_LENGTH` | Integer | `100` | Maximum number of items to store and display in the visual editor. Lists longer than this will be truncated when displayed in the visual editor. Doesn't affect outputs or data passed between components. |

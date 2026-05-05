@@ -16,8 +16,8 @@ For examples, see [Use embedding model components in a flow](/components-embeddi
 ![An embedding generation flow that uses a Split Text component to chunk data.](/img/component-split-text.png)
 
 The component accepts `Message`, `Data`, or `DataFrame`, and then outputs either **Chunks** or **DataFrame**.
-The **Chunks** output returns a list of [`Data`](/data-types#data) objects containing individual text chunks.
-The **DataFrame** output returns the list of chunks as a structured [`DataFrame`](/data-types#dataframe) with additional `text` and `metadata` columns.
+The **Chunks** output returns a list of [`Data`](/data-types#json) objects containing individual text chunks.
+The **DataFrame** output returns the list of chunks as a structured [`DataFrame`](/data-types#table) with additional `text` and `metadata` columns.
 
 ## Split Text parameters
 

@@ -14,10 +14,10 @@
 | Phase | 이름 | 상태 | 문서 |
 |-------|------|------|------|
 | 0 | Baseline and Tracker Setup | ✅ Done | [phase-00](./phase-00-baseline-and-rules.md) |
-| 1 | Frontend Shell and Core Copy | ✅ Done | [phase-01](./phase-01-frontend-shell.md) |
-| 2 | Assets, Locales, and Link Centralization | ✅ Done | [phase-02](./phase-02-assets-locales-links.md) |
-| 3 | Docs Site and Current Docs | ✅ Done | [phase-03](./phase-03-docs-current.md) |
-| 4 | Versioned Docs and Public Repo Surface | 🟡 In Progress | [phase-04](./phase-04-versioned-docs.md) |
+| 1 | Frontend Shell and Core Copy | 🔄 Re-opened | [phase-01](./phase-01-frontend-shell.md) |
+| 2 | Assets, Locales, and Link Centralization | 🟡 In Progress | [phase-02](./phase-02-assets-locales-links.md) |
+| 3 | Docs Site and Current Docs | 🟡 In Progress | [phase-03](./phase-03-docs-current.md) |
+| 4 | Versioned Docs and Public Repo Surface | ✅ Done | [phase-04](./phase-04-versioned-docs.md) |
 | 5 | Residual Sweep and Final Verification | ⬜ Not Started | [phase-05](./phase-05-residual-sweep.md) |
 
 ---

@@ -344,13 +344,13 @@ Broken anchor on source page path = /1.8.0/api-request: ...
 
 ---
 
-## Phase 04 — Versioned Docs (🟡 In Progress)
+## Phase 04 — Versioned Docs (✅ Done)
 
 ### 현재 상태
 
 - **전략:** `version-1.8.0` 문서는 비노출하지 않고 계속 노출 유지
-- **완료된 하위 작업:** README 표면 정리, versioned sidebars 정리, `version-1.8.0`/`1.9.0` prose 정리, broken anchor backward-compatibility 복구, `make docs_build` 재검증
-- **수동 검증:** 미완료
+- **완료된 하위 작업:** README 표면 정리, versioned sidebars 정리, `version-1.8.0`/`1.9.0` prose 정리, broken anchor backward-compatibility 복구, `make docs_build` 재검증, 로컬 정적 빌드 spot-check
+- **수동 검증:** 완료
 
 ### 1차 작업: 2026-05-05
 
@@ -359,7 +359,8 @@ Broken anchor on source page path = /1.8.0/api-request: ...
 - 루트 `README.md`: 1개
 - `docs/versioned_sidebars/*.json`: 2개
 - `docs/versioned_docs/version-1.8.0/**/*.mdx`, `version-1.9.0/**/*.mdx`: **358개 MDX 파일**
-- `src/frontend/README.md`, `docs/README.md`: 브랜드 문자열 잔여 0건 확인, 수정 없음
+- `src/frontend/README.md`: 사용자 표면 브랜드 잔여 0건 확인, 수정 없음
+- `docs/README.md`: 사용자 표면 브랜드 잔여 0건 확인, fenced code 내 `@langflow` import 경로 유지
 
 ### 핵심 변경 내용
 
@@ -408,15 +409,15 @@ rg -n 'Langflow|docs\.langflow\.org|langflow-ai|langflow_ai|@Langflow' \
   docs/versioned_docs/version-1.9.0 \
   docs/versioned_docs/version-1.8.0
 ```
-결과: **274건**
+결과: **323 lines**
 
 분류:
-- 실제 외부 URL/조직/핸들 (`langflow-ai`, `langflow_ai`, `@Langflow`, `docs.langflow.org`)
+- 실제 외부 URL/조직/핸들 (`langflow-ai`, `langflow_ai`, `@Langflow`, `docs.langflow.org`, `spaces/Langflow/Langflow`)
 - 코드 예제/샘플 출력/SDK 식별자 (`LangflowClient`, `langflow-chat`, `LANGFLOW_*`)
-- MDX code snippet import 변수명 (`FormLangflowApiRequests` 등)
-- 관측/배포 도구의 실제 식별자 (`Langflow` service name, `com.LangflowDesktop`)
+- MDX code snippet import 변수명 및 import 경로 (`FormLangflowApiRequests`, `@langflow`)
+- 데스크톱 번들/파일 시스템 식별자 (`com.LangflowDesktop`, `com.Langflow`)
 
-수동 표본 확인 결과, brand prose 미수정 잔여가 아니라 **intentional residue**로 분류 가능한 항목만 남음.
+표본 재확인 결과, 사용자 표면 prose 미수정 잔여는 없고 **intentional residue** 로 분류 가능한 항목만 남음.
 
 ### 빌드 결과 (2026-05-05)
 
@@ -446,9 +447,30 @@ rg -n 'Langflow|docs\.langflow\.org|langflow-ai|langflow_ai|@Langflow' \
 
 해당 항목은 사용자에게 Instana UI 서비스 목록에서 검색어를 안내하는 **산문 문구**로, 코드블록 외부에 위치함.
 
+### 3차 작업: 2026-05-05 (마감 정리)
+
+**독립 검사자 피드백 반영:**
+
+- `docs/versioned_docs/version-1.9.0/API-Reference/README.md:3`
+  - 변경: `local Langflow server` → `local idrflow server`
+- `tasks/idrflow-rebranding/README.md`
+  - 상위 phase tracker를 세부 문서 상태와 일치하도록 조정
+- `tasks/idrflow-rebranding/phase-04-versioned-docs.md`
+  - `docs/README.md` fenced code 내 `@langflow` import 경로 유지 사실 반영
+  - Instana residue 분류 제거 및 final residue 목록 최신화
+
 ### 수동 검증
 
-> **미완료** — docs 버전 드롭다운(`1.8.0`, `1.9.0`) 및 README 렌더링 확인 필요
+> **완료** — 로컬 정적 빌드 HTML spot-check 및 README 표면 재확인 완료
+
+- 로컬 서버: `python3 -m http.server 4173` in `docs/build`
+- 확인 페이지:
+  - `/index.html` → `About idrflow`, version dropdown `1.10.x (Next) / 1.9.x / 1.8.x`, footer `© 2026 idrflow`
+  - `/getting-started-installation/index.html` → `Install idrflow`, `Download idrflow`, `idrflow Desktop`
+  - `/1.8.0/get-started-installation.html` → `Install idrflow`, `Download idrflow`, `1.8.x` banner
+  - `/api-openai-responses.html`, `/1.8.0/api-openai-responses.html` → `local idrflow server`, API reference labels, sidebar CTA
+- `README.md` source spot-check:
+  - Hero / Desktop / Deployment / Contribute 표면 문구가 `idrflow` 기준인지 재확인
 
 ---
 

@@ -20,7 +20,7 @@ class FlowRunUser(FastHttpUser):
     Uses FastHttpUser for better performance with keep-alive connections and connection pooling.
 
     Environment Variables:
-      - LANGFLOW_HOST: Base URL for the Langflow server (default: http://localhost:7860)
+      - IDRFLOW_HOST: Base URL for the Langflow server (default: http://localhost:7860)
       - FLOW_ID: UUID or endpoint name of the flow to test (default: 62c21279-f7ca-43e2-b5e3-326ac573db04)
       - API_KEY: API key for authentication, sent as header 'x-api-key' (Required)
       - MIN_WAIT: Minimum wait time between requests in ms (default: 2000)
@@ -40,7 +40,7 @@ class FlowRunUser(FastHttpUser):
     )
 
     # Use the host provided by environment variable or default
-    host = os.getenv("LANGFLOW_HOST", "http://localhost:7860")
+    host = os.getenv("IDRFLOW_HOST", "http://localhost:7860")
 
     # Flow ID from environment variable or default example UUID
     flow_id = os.getenv("FLOW_ID")

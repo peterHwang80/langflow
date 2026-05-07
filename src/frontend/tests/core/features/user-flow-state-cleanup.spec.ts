@@ -20,8 +20,8 @@ test(
       window.process = window.process || {};
       const newEnv = {
         ...window.process.env,
-        LANGFLOW_AUTO_LOGIN: "false",
-        LANGFLOW_NEW_USER_IS_ACTIVE: "true",
+        IDRFLOW_AUTO_LOGIN: "false",
+        IDRFLOW_NEW_USER_IS_ACTIVE: "true",
       };
       Object.defineProperty(window.process, "env", {
         value: newEnv,

@@ -1,20 +1,16 @@
-# noqa: INP001
 import asyncio
 import hashlib
 import os
 from logging.config import fileConfig
 from typing import Any
 
-
 from alembic import context
+from lfx.log.logger import logger
 from sqlalchemy import pool, text
 from sqlalchemy.event import listen
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from lfx.log.logger import logger
-
 from langflow.services.database.service import SQLModel
-
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -105,7 +101,7 @@ def _do_run_migrations(connection):
     with context.begin_transaction():
         if connection.dialect.name == "postgresql":
             # Use namespace from environment variable if provided, otherwise use default static key
-            namespace = os.getenv("LANGFLOW_MIGRATION_LOCK_NAMESPACE")
+            namespace = os.getenv("IDRFLOW_MIGRATION_LOCK_NAMESPACE")
             if namespace:
                 lock_key = int(hashlib.sha256(namespace.encode()).hexdigest()[:16], 16) % (2**63 - 1)
                 logger.info(f"Using migration lock namespace: {namespace}, lock_key: {lock_key}")
@@ -116,6 +112,7 @@ def _do_run_migrations(connection):
             connection.execute(text("SET LOCAL lock_timeout = '180s';"))
             connection.execute(text(f"SELECT pg_advisory_xact_lock({lock_key});"))
         context.run_migrations()
+
 
 async def _run_async_migrations() -> None:
     # Disable prepared statements for PostgreSQL (required for PgBouncer compatibility)

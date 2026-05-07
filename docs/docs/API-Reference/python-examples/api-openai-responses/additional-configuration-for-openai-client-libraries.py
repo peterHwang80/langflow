@@ -2,8 +2,8 @@ import os
 
 from openai import OpenAI
 
-base = (os.environ.get("LANGFLOW_URL") or os.environ.get("LANGFLOW_SERVER_URL", "")).rstrip("/")
-api_key = os.environ.get("LANGFLOW_API_KEY", "")
+base = (os.environ.get("IDRFLOW_URL") or os.environ.get("IDRFLOW_SERVER_URL", "")).rstrip("/")
+api_key = os.environ.get("IDRFLOW_API_KEY", "")
 flow_id = os.environ.get("FLOW_ID", "")
 
 client = OpenAI(

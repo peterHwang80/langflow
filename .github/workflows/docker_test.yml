@@ -85,7 +85,7 @@ jobs:
       - name: Build backend image
         run: |
           ${{ env.CONTAINER_RUNTIME }} build -t langflowai/langflow-backend:latest-dev \
-            --build-arg LANGFLOW_IMAGE=langflowai/langflow:latest-dev \
+            --build-arg IDRFLOW_IMAGE=langflowai/langflow:latest-dev \
             -f docker/build_and_push_backend.Dockerfile \
             .
       - name: Test backend image

@@ -111,11 +111,11 @@ def get_api_key() -> str:
     Used by ``lfx serve`` to set the superuser key on the local server.
     For *remote* commands (push, pull, login, …), the per-environment key
     is resolved via :func:`lfx.config.resolve_environment` and the
-    ``api_key_env`` field in ``.lfx/environments.yaml``.
+    ``api_key_env`` field in the discovered environments config.
     """
-    api_key = os.getenv("LANGFLOW_API_KEY") or os.getenv("LFX_API_KEY")
+    api_key = os.getenv("IDRFLOW_API_KEY") or os.getenv("LFX_API_KEY")
     if not api_key:
-        msg = "LANGFLOW_API_KEY environment variable is not set"
+        msg = "IDRFLOW_API_KEY environment variable is not set"
         raise ValueError(msg)
     return api_key
 

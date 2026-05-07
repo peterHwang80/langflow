@@ -36,10 +36,10 @@ idrflow can more efficiently handle multiple users and larger workloads by using
 
     You can use the [`.env.example`](https://github.com/langflow-ai/langflow/blob/main/.env.example) file in the idrflow repository as a template for your own `.env` file.
 
-4. In your `.env` file, set `LANGFLOW_DATABASE_URL` to your PostgreSQL connection string:
+4. In your `.env` file, set `IDRFLOW_DATABASE_URL` to your PostgreSQL connection string:
 
     ```text
-    LANGFLOW_DATABASE_URL="postgresql://user:password@localhost:5432/dbname"
+    IDRFLOW_DATABASE_URL="postgresql://user:password@localhost:5432/dbname"
     ```
 
     idrflow uses [SQLAlchemy](https://www.sqlalchemy.org/) with the [psycopg](https://www.psycopg.org/) driver to pass SSL parameters directly to the PostgreSQL connection.
@@ -52,20 +52,20 @@ idrflow can more efficiently handle multiple users and larger workloads by using
 
     - **`sslmode=require`**: Requires SSL connection but doesn't verify server certificate. This option is the least secure, but acceptable for most use cases.
         ```bash
-        LANGFLOW_DATABASE_URL="postgresql://user:password@localhost:5432/dbname?sslmode=require"
+        IDRFLOW_DATABASE_URL="postgresql://user:password@localhost:5432/dbname?sslmode=require"
         ```
 
     - **`sslmode=verify-ca`**: Requires SSL and verifies the server certificate against the Certificate Authority (CA). Add the certificate paths to your connection string:
         ```bash
-        LANGFLOW_DATABASE_URL="postgresql://user@localhost:5432/dbname?sslmode=verify-ca&sslcert=/path/to/client.crt&sslkey=/path/to/client.key&sslrootcert=/path/to/ca.crt"
+        IDRFLOW_DATABASE_URL="postgresql://user@localhost:5432/dbname?sslmode=verify-ca&sslcert=/path/to/client.crt&sslkey=/path/to/client.key&sslrootcert=/path/to/ca.crt"
         ```
 
     - **`sslmode=verify-full`**: Requires SSL, verifies the server certificate, and checks the request hostname against the certificate hostname. The `db.example.com` hostname in this example must match the server certificate's CN. This option is the most secure.
         ```bash
-        LANGFLOW_DATABASE_URL="postgresql://user@db.example.com:5432/dbname?sslmode=verify-full&sslcert=/path/to/client.crt&sslkey=/path/to/client.key&sslrootcert=/path/to/ca.crt"
+        IDRFLOW_DATABASE_URL="postgresql://user@db.example.com:5432/dbname?sslmode=verify-full&sslcert=/path/to/client.crt&sslkey=/path/to/client.key&sslrootcert=/path/to/ca.crt"
         ```
 
-        Do not use the idrflow environment variables [`LANGFLOW_SSL_CERT_FILE`](/environment-variables#server) and [`LANGFLOW_SSL_KEY_FILE`](/environment-variables#server) for your PostgreSQL certificates: these variables are for enabling HTTPS on the idrflow server, not for PostgreSQL database connections.
+        Do not use the idrflow environment variables [`IDRFLOW_SSL_CERT_FILE`](/environment-variables#server) and [`IDRFLOW_SSL_KEY_FILE`](/environment-variables#server) for your PostgreSQL certificates: these variables are for enabling HTTPS on the idrflow server, not for PostgreSQL database connections.
 
         For more on managing SSL certificates in PostgreSQL, see the [PostgreSQL documentation](https://www.postgresql.org/docs/9.1/ssl-tcp.html).
 
@@ -110,10 +110,10 @@ This approach means you only have to manage deployment variables in one file, in
     POSTGRES_DB=langflow
     POSTGRES_HOST=postgres
     POSTGRES_PORT=5432
-    LANGFLOW_CONFIG_DIR=app/langflow
-    LANGFLOW_PORT_1=7860
-    LANGFLOW_PORT_2=7861
-    LANGFLOW_HOST=0.0.0.0
+    IDRFLOW_CONFIG_DIR=app/langflow
+    IDRFLOW_PORT_1=7860
+    IDRFLOW_PORT_2=7861
+    IDRFLOW_HOST=0.0.0.0
     ```
 
     For optional connection pooling and timeout settings, see [Configure external memory](/memory#configure-external-memory).
@@ -138,13 +138,13 @@ For example:
         image: langflowai/langflow:latest
         pull_policy: always
         ports:
-          - "${LANGFLOW_PORT_1}:7860"
+          - "${IDRFLOW_PORT_1}:7860"
         depends_on:
           - postgres
         environment:
-          - LANGFLOW_DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
-          - LANGFLOW_CONFIG_DIR=${LANGFLOW_CONFIG_DIR}
-          - LANGFLOW_HOST=${LANGFLOW_HOST}
+          - IDRFLOW_DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+          - IDRFLOW_CONFIG_DIR=${IDRFLOW_CONFIG_DIR}
+          - IDRFLOW_HOST=${IDRFLOW_HOST}
           - PORT=7860
         volumes:
           - langflow-data-1:/app/langflow
@@ -153,13 +153,13 @@ For example:
         image: langflowai/langflow:latest
         pull_policy: always
         ports:
-          - "${LANGFLOW_PORT_2}:7860"
+          - "${IDRFLOW_PORT_2}:7860"
         depends_on:
           - postgres
         environment:
-          - LANGFLOW_DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
-          - LANGFLOW_CONFIG_DIR=${LANGFLOW_CONFIG_DIR}
-          - LANGFLOW_HOST=${LANGFLOW_HOST}
+          - IDRFLOW_DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+          - IDRFLOW_CONFIG_DIR=${IDRFLOW_CONFIG_DIR}
+          - IDRFLOW_HOST=${IDRFLOW_HOST}
           - PORT=7860
         volumes:
           - langflow-data-2:/app/langflow

@@ -46,7 +46,7 @@ def get_default_config_dir() -> Path:
 
 def get_config_dir() -> Path:
     """Get the Langflow config directory from environment or default."""
-    config_dir = os.environ.get("LANGFLOW_CONFIG_DIR")
+    config_dir = os.environ.get("IDRFLOW_CONFIG_DIR")
     if config_dir:
         return Path(config_dir)
     return get_default_config_dir()

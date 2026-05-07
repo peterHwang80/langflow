@@ -10,14 +10,14 @@ services:
     healthCheckPath: /health_check
     autoDeploy: false
     envVars:
-      - key: LANGFLOW_DATABASE_URL
+      - key: IDRFLOW_DATABASE_URL
         value: sqlite:////app/data/.cache/langflow/langflow.db
-      - key: LANGFLOW_HOST
+      - key: IDRFLOW_HOST
         value: 0.0.0.0
-      - key: LANGFLOW_PORT
+      - key: IDRFLOW_PORT
         # default render port https://docs.render.com/web-services#port-binding
         value: 10000
-      - key: LANGFLOW_LOG_LEVEL
+      - key: IDRFLOW_LOG_LEVEL
         value: INFO
     disk:
       name: langflow-data

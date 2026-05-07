@@ -1,0 +1,57 @@
+---
+title: IDRFLOW settings migration
+slug: /idrflow-settings-migration
+---
+
+This release replaces the old `LANGFLOW_*` external settings namespace with `IDRFLOW_*`.
+
+## Breaking change
+
+`LANGFLOW_*` environment variables and `--langflow-*` testing flags are no longer recognized.
+Update your shell environment, `.env` files, CI secrets, deploy manifests, and test commands before upgrading.
+
+The `langflow` and `lfx` commands stay the same.
+Package names, import paths, API routes, cookies, local storage keys, and `x-langflow-*` headers are unchanged.
+
+## Environment variables
+
+Use the same setting names with the `IDRFLOW_` prefix.
+
+| Old | New |
+| --- | --- |
+| `LANGFLOW_PORT` | `IDRFLOW_PORT` |
+| `LANGFLOW_HOST` | `IDRFLOW_HOST` |
+| `LANGFLOW_DATABASE_URL` | `IDRFLOW_DATABASE_URL` |
+| `LANGFLOW_CONFIG_DIR` | `IDRFLOW_CONFIG_DIR` |
+| `LANGFLOW_AUTO_LOGIN` | `IDRFLOW_AUTO_LOGIN` |
+| `LANGFLOW_API_KEY` | `IDRFLOW_API_KEY` |
+| `LANGFLOW_SERVER_URL` | `IDRFLOW_SERVER_URL` |
+| `LANGFLOW_ENV` | `IDRFLOW_ENV` |
+| `LANGFLOW_ENVIRONMENTS_FILE` | `IDRFLOW_ENVIRONMENTS_FILE` |
+| `LANGFLOW_REDIS_PASSWORD` | `IDRFLOW_REDIS_PASSWORD` |
+| `LANGFLOW_LOG_ROTATION` | `IDRFLOW_LOG_ROTATION` |
+| `LANGFLOW_MCP_COMPOSER_ENABLED` | `IDRFLOW_MCP_COMPOSER_ENABLED` |
+| `LANGFLOW_FEATURE_WXO_DEPLOYMENTS` | `IDRFLOW_FEATURE_WXO_DEPLOYMENTS` |
+
+Apply the same rename to other externally configured `LANGFLOW_*` settings.
+
+## Environments files
+
+| Old | New |
+| --- | --- |
+| `langflow-environments.toml` | `idrflow-environments.toml` |
+| `~/.config/langflow/environments.toml` | `~/.config/idrflow/environments.toml` |
+
+## CLI and pytest flags
+
+| Old | New |
+| --- | --- |
+| `--langflow-url` | `--idrflow-url` |
+| `--langflow-api-key` | `--idrflow-api-key` |
+| `--langflow-env` | `--idrflow-env` |
+| `--langflow-environments-file` | `--idrflow-environments-file` |
+
+## LFX aliases
+
+`LFX_URL` and `LFX_API_KEY` are still supported as aliases.
+When both are set, `IDRFLOW_*` values take precedence.

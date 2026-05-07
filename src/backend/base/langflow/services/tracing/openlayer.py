@@ -747,7 +747,7 @@ class OpenlayerTracer(BaseTracer):
 
         Configuration is resolved in the following order (highest priority first):
         1. Flow-specific env var: OPENLAYER_PIPELINE_<FLOW_NAME>
-        2. JSON mapping: OPENLAYER_LANGFLOW_MAPPING
+        2. JSON mapping: OPENLAYER_IDRFLOW_MAPPING
         3. Default env var: OPENLAYER_INFERENCE_PIPELINE_ID
 
         Args:
@@ -775,7 +775,7 @@ class OpenlayerTracer(BaseTracer):
 
         # 2. Try JSON mapping (medium priority)
         if not inference_pipeline_id:
-            mapping_json = os.getenv("OPENLAYER_LANGFLOW_MAPPING")
+            mapping_json = os.getenv("OPENLAYER_IDRFLOW_MAPPING")
             if mapping_json and flow_name:
                 try:
                     mapping = json.loads(mapping_json)

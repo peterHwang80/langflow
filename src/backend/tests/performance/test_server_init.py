@@ -9,18 +9,18 @@ def setup_database_url(tmp_path, monkeypatch):
     """Setup a temporary database URL for testing."""
     settings_service = get_settings_service()
     db_path = tmp_path / "test_performance.db"
-    original_value = os.getenv("LANGFLOW_DATABASE_URL")
-    monkeypatch.delenv("LANGFLOW_DATABASE_URL", raising=False)
+    original_value = os.getenv("IDRFLOW_DATABASE_URL")
+    monkeypatch.delenv("IDRFLOW_DATABASE_URL", raising=False)
     test_db_url = f"sqlite:///{db_path}"
-    monkeypatch.setenv("LANGFLOW_DATABASE_URL", test_db_url)
+    monkeypatch.setenv("IDRFLOW_DATABASE_URL", test_db_url)
     settings_service.set("database_url", test_db_url)
     yield
     # Restore original value if it existed
     if original_value is not None:
-        monkeypatch.setenv("LANGFLOW_DATABASE_URL", original_value)
+        monkeypatch.setenv("IDRFLOW_DATABASE_URL", original_value)
         settings_service.set("database_url", original_value)
     else:
-        monkeypatch.delenv("LANGFLOW_DATABASE_URL", raising=False)
+        monkeypatch.delenv("IDRFLOW_DATABASE_URL", raising=False)
 
 
 async def test_initialize_services():

@@ -20,8 +20,8 @@ function buildMcpJson(serverUrl: string): string {
           command: "uvx",
           args: ["--from", "lfx", "lfx-mcp"],
           env: {
-            LANGFLOW_SERVER_URL: serverUrl,
-            LANGFLOW_API_KEY: "YOUR_API_KEY", // pragma: allowlist secret
+            IDRFLOW_SERVER_URL: serverUrl,
+            IDRFLOW_API_KEY: "YOUR_API_KEY", // pragma: allowlist secret
           },
         },
       },
@@ -58,8 +58,8 @@ function getAgentInstructions(agent: AgentTab): {
 
 function getClaudeCodeCommand(serverUrl: string): string {
   return `claude mcp add langflow -- uvx --from lfx lfx-mcp \\
-  -e LANGFLOW_SERVER_URL=${serverUrl} \\
-  -e LANGFLOW_API_KEY=YOUR_API_KEY`;
+  -e IDRFLOW_SERVER_URL=${serverUrl} \\
+  -e IDRFLOW_API_KEY=YOUR_API_KEY`;
 }
 
 export default function McpClientPage() {

@@ -140,8 +140,8 @@ for file in "${SH_FILES[@]}"; do
   fi
 
   if [[ "$MODE" == "execute" ]]; then
-    if [[ -z "${LANGFLOW_API_KEY:-}" || ( -z "${LANGFLOW_URL:-}" && -z "${LANGFLOW_SERVER_URL:-}" ) ]]; then
-      echo "SKIP  $rel (set LANGFLOW_API_KEY and LANGFLOW_URL or LANGFLOW_SERVER_URL to execute)"
+    if [[ -z "${IDRFLOW_API_KEY:-}" || ( -z "${IDRFLOW_URL:-}" && -z "${IDRFLOW_SERVER_URL:-}" ) ]]; then
+      echo "SKIP  $rel (set IDRFLOW_API_KEY and IDRFLOW_URL or IDRFLOW_SERVER_URL to execute)"
       ((SKIP+=1))
       continue
     fi

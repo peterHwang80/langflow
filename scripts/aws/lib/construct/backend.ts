@@ -58,9 +58,9 @@ export class BackEndCluster extends Construct {
         logGroup: props.backendLogGroup,
       }),
       environment:{
-        "LANGFLOW_AUTO_LOGIN" : process.env.LANGFLOW_AUTO_LOGIN ?? 'false',
-        "LANGFLOW_SUPERUSER" : process.env.LANGFLOW_SUPERUSER ?? "admin",
-        "LANGFLOW_SUPERUSER_PASSWORD" : process.env.LANGFLOW_SUPERUSER_PASSWORD ?? "123456"
+        "IDRFLOW_AUTO_LOGIN" : process.env.IDRFLOW_AUTO_LOGIN ?? 'false',
+        "IDRFLOW_SUPERUSER" : process.env.IDRFLOW_SUPERUSER ?? "admin",
+        "IDRFLOW_SUPERUSER_PASSWORD" : process.env.IDRFLOW_SUPERUSER_PASSWORD ?? "123456"
       },
       portMappings: [
           {

@@ -2,12 +2,12 @@ import os
 
 import requests
 
-url = f"{os.getenv('LANGFLOW_URL', '')}/api/v1/flows/"
+url = f"{os.getenv('IDRFLOW_URL', '')}/api/v1/flows/"
 
 headers = {
     "accept": "application/json",
     "Content-Type": "application/json",
-    "x-api-key": f"{os.getenv('LANGFLOW_API_KEY', '')}",
+    "x-api-key": f"{os.getenv('IDRFLOW_API_KEY', '')}",
 }
 
 payload = {

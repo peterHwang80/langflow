@@ -14,6 +14,7 @@ Examples::
 from __future__ import annotations
 
 import json
+import os
 import uuid
 from pathlib import Path
 from typing import Any
@@ -65,17 +66,16 @@ def _slugify(name: str) -> str:
 # ---------------------------------------------------------------------------
 
 
-def _is_lfx_project() -> bool:
-    """Return True if cwd (or a parent up to .git) contains .lfx/environments.yaml."""
-    cwd = Path.cwd()
-    for directory in (cwd, *cwd.parents):
-        if (directory / ".lfx" / "environments.yaml").is_file():
-            return True
-        if (directory / ".lfx" / "environments.yml").is_file():
-            return True
-        if (directory / ".git").is_dir() or directory.parent == directory:
-            break
-    return False
+def _has_environment_config() -> bool:
+    """Return True when lfx can discover an environments config from cwd."""
+    from lfx.config.environments import _ENVIRONMENTS_FILE_FALLBACK, _find_config_file
+
+    override = os.environ.get(_ENVIRONMENTS_FILE_FALLBACK)
+    override_path = Path(override) if override else None
+    try:
+        return _find_config_file(override_path) is not None
+    except Exception:  # noqa: BLE001
+        return False
 
 
 def create_command(
@@ -90,9 +90,11 @@ def create_command(
     Returns the path of the written file.
     Raises ``typer.Exit`` on user-facing errors so the CLI reports them cleanly.
     """
-    if not _is_lfx_project():
+    if not _has_environment_config():
         console.print(
-            "[yellow]Warning:[/yellow] No .lfx/environments.yaml found in this project. "
+            "[yellow]Warning:[/yellow] No environments config found via "
+            ".lfx/environments.yaml, idrflow-environments.toml, "
+            "~/.config/idrflow/environments.toml, or IDRFLOW_ENVIRONMENTS_FILE. "
             "Run [bold]lfx init[/bold] first to scaffold a project."
         )
 

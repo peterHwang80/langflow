@@ -615,7 +615,7 @@ class SaveToFileComponent(Component):
         if not bucket_name:
             msg = (
                 "S3 Bucket Name is required for S3 storage. Provide it as a component input "
-                "or set LANGFLOW_OBJECT_STORAGE_BUCKET_NAME environment variable."
+                "or set IDRFLOW_OBJECT_STORAGE_BUCKET_NAME environment variable."
             )
             raise ValueError(msg)
 

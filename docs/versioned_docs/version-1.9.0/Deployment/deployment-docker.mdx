@@ -80,8 +80,8 @@ For example, to configure the container's database credentials using a `.env` fi
     POSTGRES_DB=langflow
 
     # Langflow configuration
-    LANGFLOW_DATABASE_URL=postgresql://myuser:mypassword@postgres:5432/langflow
-    LANGFLOW_CONFIG_DIR=/app/langflow
+    IDRFLOW_DATABASE_URL=postgresql://myuser:mypassword@postgres:5432/langflow
+    IDRFLOW_CONFIG_DIR=/app/langflow
     ```
 
 2. Modify the `docker-compose.yml` file to reference the `.env` file for both the `langflow` and `postgres` services:
@@ -90,8 +90,8 @@ For example, to configure the container's database credentials using a `.env` fi
     services:
       langflow:
         environment:
-          - LANGFLOW_DATABASE_URL=${LANGFLOW_DATABASE_URL}
-          - LANGFLOW_CONFIG_DIR=${LANGFLOW_CONFIG_DIR}
+          - IDRFLOW_DATABASE_URL=${IDRFLOW_DATABASE_URL}
+          - IDRFLOW_CONFIG_DIR=${IDRFLOW_CONFIG_DIR}
       postgres:
         environment:
           - POSTGRES_USER=${POSTGRES_USER}
@@ -131,7 +131,7 @@ Unlike the previous sections that use pre-built images, this method builds a cus
     FROM langflowai/langflow:latest
     RUN mkdir /app/flows
     COPY ./*.json /app/flows/
-    ENV LANGFLOW_LOAD_FLOWS_PATH=/app/flows
+    ENV IDRFLOW_LOAD_FLOWS_PATH=/app/flows
     ```
 
 This Dockerfile uses the official idrflow image as the base, creates a directory for your flows, copies your JSON flow files into the directory, and sets the environment variable to tell idrflow where to find the flows.
@@ -228,7 +228,7 @@ For example, this Docker Compose file uses a bind mount for idrflow data (`./lan
       langflow:
         image: langflowai/langflow:1.8.0
         environment:
-          - LANGFLOW_CONFIG_DIR=/app/langflow
+          - IDRFLOW_CONFIG_DIR=/app/langflow
         volumes:
           - ./langflow-data:/app/langflow
       postgres:

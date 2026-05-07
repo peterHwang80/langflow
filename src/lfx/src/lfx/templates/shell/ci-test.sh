@@ -12,23 +12,25 @@
 # ENVIRONMENT VARIABLES — connection (pick one approach)
 #
 #   Approach A: direct URL + key (simplest)
-#     LANGFLOW_URL        URL of the target Langflow instance.
+#     IDRFLOW_URL        URL of the target Langflow instance.
 #                         e.g. https://staging.langflow.example.com
-#     LANGFLOW_API_KEY    API key for that instance.
+#     IDRFLOW_API_KEY    API key for that instance.
 #
-#   Approach B: named environment from a TOML config
-#     LANGFLOW_ENV                 Name of the environment block in the TOML.
+#   Approach B: named environment from a discovered config
+#     IDRFLOW_ENV                 Name of the environment block in the config.
 #                                  e.g. staging
-#     LANGFLOW_ENVIRONMENTS_FILE   Path to the environments TOML.
-#                                  Default: langflow-environments.toml
+#     IDRFLOW_ENVIRONMENTS_FILE   Optional explicit path to the environments config.
+#                                  If unset, lfx/langflow-sdk auto-discovers:
+#                                  .lfx/environments.yaml, idrflow-environments.toml,
+#                                  then ~/.config/idrflow/environments.toml.
 #     <api_key_env var>            The env var named in api_key_env inside the
-#                                  TOML block, e.g. LANGFLOW_STAGING_API_KEY.
+#                                  config block, e.g. IDRFLOW_STAGING_API_KEY.
 #
 #   The TOML format (see also ci-push.sh):
 #
 #     [environments.staging]
 #     url        = "https://staging.langflow.example.com"
-#     api_key_env = "LANGFLOW_STAGING_API_KEY"
+#     api_key_env = "IDRFLOW_STAGING_API_KEY"
 #
 # ENVIRONMENT VARIABLES — behaviour
 #   TESTS_DIR        Directory containing test files.  Default: tests/
@@ -39,7 +41,7 @@
 #                    Default: installs latest.
 #
 # SKIPPING
-#   When neither LANGFLOW_URL nor LANGFLOW_ENV is set the tests auto-skip
+#   When neither IDRFLOW_URL nor IDRFLOW_ENV is set the tests auto-skip
 #   (the flow_runner fixture detects no connection).  This means the script
 #   exits 0 even when run on a branch that lacks the necessary secrets.
 #
@@ -61,8 +63,8 @@ TESTS_DIR="${TESTS_DIR:-tests/}"
 PYTEST_MARKERS="${PYTEST_MARKERS:-integration}"
 PYTEST_ARGS="${PYTEST_ARGS:-}"
 SDK_VERSION="${SDK_VERSION:-}"
-LANGFLOW_ENV="${LANGFLOW_ENV:-}"
-LANGFLOW_ENVIRONMENTS_FILE="${LANGFLOW_ENVIRONMENTS_FILE:-langflow-environments.toml}"
+IDRFLOW_ENV="${IDRFLOW_ENV:-}"
+IDRFLOW_ENVIRONMENTS_FILE="${IDRFLOW_ENVIRONMENTS_FILE:-}"
 
 # ── Install dependencies ───────────────────────────────────────────────────── #
 
@@ -77,21 +79,34 @@ pip install --quiet \
   "langflow-sdk[testing]${SDK_VERSION}" \
   pytest
 
-# ── Build environments file if using Approach B ───────────────────────────── #
+# ── Discover or build environments file for Approach B ────────────────────── #
 
-if [[ -n "${LANGFLOW_ENV}" && ! -f "${LANGFLOW_ENVIRONMENTS_FILE}" ]]; then
+if [[ -n "${IDRFLOW_ENV}" && -z "${IDRFLOW_ENVIRONMENTS_FILE}" ]]; then
+  if [[ -f ".lfx/environments.yaml" ]]; then
+    IDRFLOW_ENVIRONMENTS_FILE=".lfx/environments.yaml"
+  elif [[ -f ".lfx/environments.yml" ]]; then
+    IDRFLOW_ENVIRONMENTS_FILE=".lfx/environments.yml"
+  elif [[ -f "idrflow-environments.toml" ]]; then
+    IDRFLOW_ENVIRONMENTS_FILE="idrflow-environments.toml"
+  elif [[ -f "${HOME}/.config/idrflow/environments.toml" ]]; then
+    IDRFLOW_ENVIRONMENTS_FILE="${HOME}/.config/idrflow/environments.toml"
+  fi
+fi
+
+if [[ -n "${IDRFLOW_ENV}" && -z "${IDRFLOW_ENVIRONMENTS_FILE}" ]]; then
   # Derive variable names from the env name (uppercased, hyphens → underscores)
-  ENV_UPPER="${LANGFLOW_ENV^^}"
+  ENV_UPPER="${IDRFLOW_ENV^^}"
   ENV_UPPER="${ENV_UPPER//-/_}"
-  URL_VAR="LANGFLOW_${ENV_UPPER}_URL"
-  KEY_VAR="LANGFLOW_${ENV_UPPER}_API_KEY"
+  URL_VAR="IDRFLOW_${ENV_UPPER}_URL"
+  KEY_VAR="IDRFLOW_${ENV_UPPER}_API_KEY"
 
-  echo "==> Writing ${LANGFLOW_ENVIRONMENTS_FILE} for environment '${LANGFLOW_ENV}' ..."
+  IDRFLOW_ENVIRONMENTS_FILE="idrflow-environments.toml"
+  echo "==> Writing ${IDRFLOW_ENVIRONMENTS_FILE} for environment '${IDRFLOW_ENV}' ..."
   printf '[environments.%s]\nurl = "%s"\napi_key_env = "%s"\n' \
-    "${LANGFLOW_ENV}" \
+    "${IDRFLOW_ENV}" \
     "${!URL_VAR:-}" \
     "${KEY_VAR}" \
-    > "${LANGFLOW_ENVIRONMENTS_FILE}"
+    > "${IDRFLOW_ENVIRONMENTS_FILE}"
 fi
 
 # ── Run tests ─────────────────────────────────────────────────────────────── #
@@ -103,12 +118,12 @@ if [[ -n "${PYTEST_MARKERS}" ]]; then
   PYTEST_CMD+=(-m "${PYTEST_MARKERS}")
 fi
 
-if [[ -n "${LANGFLOW_ENV}" ]]; then
-  PYTEST_CMD+=(--langflow-env "${LANGFLOW_ENV}")
-  export LANGFLOW_ENVIRONMENTS_FILE
-elif [[ -n "${LANGFLOW_URL:-}" ]]; then
-  PYTEST_CMD+=(--langflow-url "${LANGFLOW_URL}")
-  [[ -n "${LANGFLOW_API_KEY:-}" ]] && PYTEST_CMD+=(--langflow-api-key "${LANGFLOW_API_KEY}")
+if [[ -n "${IDRFLOW_ENV}" ]]; then
+  PYTEST_CMD+=(--idrflow-env "${IDRFLOW_ENV}")
+  [[ -n "${IDRFLOW_ENVIRONMENTS_FILE}" ]] && export IDRFLOW_ENVIRONMENTS_FILE
+elif [[ -n "${IDRFLOW_URL:-}" ]]; then
+  PYTEST_CMD+=(--idrflow-url "${IDRFLOW_URL}")
+  [[ -n "${IDRFLOW_API_KEY:-}" ]] && PYTEST_CMD+=(--idrflow-api-key "${IDRFLOW_API_KEY}")
 fi
 
 # Append any extra user-supplied args

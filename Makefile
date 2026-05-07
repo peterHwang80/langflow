@@ -283,7 +283,7 @@ backend: setup_env install_backend ## run the backend in development mode
 	@-kill -9 $$(lsof -t -i:7860) || true
 ifdef login
 	@echo "Running backend autologin is $(login)";
-	LANGFLOW_AUTO_LOGIN=$(login) uv run uvicorn \
+	IDRFLOW_AUTO_LOGIN=$(login) uv run uvicorn \
 		--factory langflow.main:create_app \
 		--host 0.0.0.0 \
 		--port $(port) \
@@ -366,7 +366,7 @@ dockerfile_build_be: dockerfile_build
 	@echo 'BUILDING DOCKER IMAGE BACKEND: ${DOCKERFILE_BACKEND}'
 	@command -v $(DOCKER) >/dev/null 2>&1 || { echo "Error: $(DOCKER) is not installed. Please install $(DOCKER), or run 'make docker_build_backend DOCKER=podman' (or DOCKER=docker) if you have an alternative installed."; exit 1; }
 	@$(DOCKER) build --rm \
-		--build-arg LANGFLOW_IMAGE=langflow:${VERSION} \
+		--build-arg IDRFLOW_IMAGE=langflow:${VERSION} \
 		-f ${DOCKERFILE_BACKEND} \
 		-t langflow_backend:${VERSION} .
 
@@ -374,7 +374,7 @@ dockerfile_build_fe: dockerfile_build
 	@echo 'BUILDING DOCKER IMAGE FRONTEND: ${DOCKERFILE_FRONTEND}'
 	@command -v $(DOCKER) >/dev/null 2>&1 || { echo "Error: $(DOCKER) is not installed. Please install $(DOCKER), or run 'make docker_build_frontend DOCKER=podman' (or DOCKER=docker) if you have an alternative installed."; exit 1; }
 	@$(DOCKER) build --rm \
-		--build-arg LANGFLOW_IMAGE=langflow:${VERSION} \
+		--build-arg IDRFLOW_IMAGE=langflow:${VERSION} \
 		-f ${DOCKERFILE_FRONTEND} \
 		-t langflow_frontend:${VERSION} .
 
@@ -564,26 +564,26 @@ patch: ## Update version across all projects. Usage: make patch v=1.5.0
 	fi; \
 	echo "$(GREEN)Updating version to $(v)$(NC)"; \
 	\
-	LANGFLOW_VERSION="$(v)"; \
-	LANGFLOW_BASE_VERSION=$$(echo "$$LANGFLOW_VERSION" | sed -E 's/^[0-9]+\.(.*)$$/0.\1/'); \
+	IDRFLOW_VERSION="$(v)"; \
+	IDRFLOW_BASE_VERSION=$$(echo "$$IDRFLOW_VERSION" | sed -E 's/^[0-9]+\.(.*)$$/0.\1/'); \
 	\
-	echo "$(GREEN)Langflow version: $$LANGFLOW_VERSION$(NC)"; \
-	echo "$(GREEN)Langflow-base version: $$LANGFLOW_BASE_VERSION$(NC)"; \
+	echo "$(GREEN)Langflow version: $$IDRFLOW_VERSION$(NC)"; \
+	echo "$(GREEN)Langflow-base version: $$IDRFLOW_BASE_VERSION$(NC)"; \
 	\
 	echo "$(GREEN)Updating main pyproject.toml...$(NC)"; \
-	python -c "import re; fname='pyproject.toml'; txt=open(fname).read(); txt=re.sub(r'^version = \".*\"', 'version = \"$$LANGFLOW_VERSION\"', txt, flags=re.MULTILINE); txt=re.sub(r'\"langflow-base==.*\"', '\"langflow-base==$$LANGFLOW_BASE_VERSION\"', txt); open(fname, 'w').write(txt)"; \
+	python -c "import re; fname='pyproject.toml'; txt=open(fname).read(); txt=re.sub(r'^version = \".*\"', 'version = \"$$IDRFLOW_VERSION\"', txt, flags=re.MULTILINE); txt=re.sub(r'\"langflow-base==.*\"', '\"langflow-base==$$IDRFLOW_BASE_VERSION\"', txt); open(fname, 'w').write(txt)"; \
 	\
 	echo "$(GREEN)Updating langflow-base pyproject.toml...$(NC)"; \
-	python -c "import re; fname='src/backend/base/pyproject.toml'; txt=open(fname).read(); txt=re.sub(r'^version = \".*\"', 'version = \"$$LANGFLOW_BASE_VERSION\"', txt, flags=re.MULTILINE); open(fname, 'w').write(txt)"; \
+	python -c "import re; fname='src/backend/base/pyproject.toml'; txt=open(fname).read(); txt=re.sub(r'^version = \".*\"', 'version = \"$$IDRFLOW_BASE_VERSION\"', txt, flags=re.MULTILINE); open(fname, 'w').write(txt)"; \
 	\
 	echo "$(GREEN)Updating frontend package.json...$(NC)"; \
-	python -c "import re; fname='src/frontend/package.json'; txt=open(fname).read(); txt=re.sub(r'\"version\": \".*\"', '\"version\": \"$$LANGFLOW_VERSION\"', txt); open(fname, 'w').write(txt)"; \
+	python -c "import re; fname='src/frontend/package.json'; txt=open(fname).read(); txt=re.sub(r'\"version\": \".*\"', '\"version\": \"$$IDRFLOW_VERSION\"', txt); open(fname, 'w').write(txt)"; \
 	\
 	echo "$(GREEN)Validating version changes...$(NC)"; \
-	if ! grep -q "^version = \"$$LANGFLOW_VERSION\"" pyproject.toml; then echo "$(RED)✗ Main pyproject.toml version validation failed$(NC)"; exit 1; fi; \
-	if ! grep -q "\"langflow-base==$$LANGFLOW_BASE_VERSION\"" pyproject.toml; then echo "$(RED)✗ Main pyproject.toml langflow-base dependency validation failed$(NC)"; exit 1; fi; \
-	if ! grep -q "^version = \"$$LANGFLOW_BASE_VERSION\"" src/backend/base/pyproject.toml; then echo "$(RED)✗ Langflow-base pyproject.toml version validation failed$(NC)"; exit 1; fi; \
-	if ! grep -q "\"version\": \"$$LANGFLOW_VERSION\"" src/frontend/package.json; then echo "$(RED)✗ Frontend package.json version validation failed$(NC)"; exit 1; fi; \
+	if ! grep -q "^version = \"$$IDRFLOW_VERSION\"" pyproject.toml; then echo "$(RED)✗ Main pyproject.toml version validation failed$(NC)"; exit 1; fi; \
+	if ! grep -q "\"langflow-base==$$IDRFLOW_BASE_VERSION\"" pyproject.toml; then echo "$(RED)✗ Main pyproject.toml langflow-base dependency validation failed$(NC)"; exit 1; fi; \
+	if ! grep -q "^version = \"$$IDRFLOW_BASE_VERSION\"" src/backend/base/pyproject.toml; then echo "$(RED)✗ Langflow-base pyproject.toml version validation failed$(NC)"; exit 1; fi; \
+	if ! grep -q "\"version\": \"$$IDRFLOW_VERSION\"" src/frontend/package.json; then echo "$(RED)✗ Frontend package.json version validation failed$(NC)"; exit 1; fi; \
 	echo "$(GREEN)✓ All versions updated successfully$(NC)"; \
 	\
 	echo "$(GREEN)Syncing dependencies in parallel...$(NC)"; \
@@ -610,9 +610,9 @@ patch: ## Update version across all projects. Usage: make patch v=1.5.0
 	\
 	echo "$(GREEN)Version update complete!$(NC)"; \
 	echo "$(GREEN)Updated files:$(NC)"; \
-	echo "  - pyproject.toml: $$LANGFLOW_VERSION"; \
-	echo "  - src/backend/base/pyproject.toml: $$LANGFLOW_BASE_VERSION"; \
-	echo "  - src/frontend/package.json: $$LANGFLOW_VERSION"; \
+	echo "  - pyproject.toml: $$IDRFLOW_VERSION"; \
+	echo "  - src/backend/base/pyproject.toml: $$IDRFLOW_BASE_VERSION"; \
+	echo "  - src/frontend/package.json: $$IDRFLOW_VERSION"; \
 	echo "  - uv.lock: dependency lock updated"; \
 	echo "  - src/frontend/package-lock.json: dependency lock updated"; \
 	echo "$(GREEN)Dependencies synced successfully!$(NC)"
@@ -644,7 +644,7 @@ locust: ## run locust load tests (options: locust_users=10 locust_spawn_rate=1 l
 	@echo "Using locustfile: $(locust_file)"
 	@export API_KEY=$(locust_api_key) && \
 	export FLOW_ID=$(locust_flow_id) && \
-	export LANGFLOW_HOST=$(locust_host) && \
+	export IDRFLOW_HOST=$(locust_host) && \
 	export MIN_WAIT=$(locust_min_wait) && \
 	export MAX_WAIT=$(locust_max_wait) && \
 	export REQUEST_TIMEOUT=$(locust_request_timeout) && \
@@ -793,29 +793,29 @@ load_test_clean: ## Clean up load test files and credentials
 	@cd src/backend/tests/locust && rm -f *.json *.html *.csv *.log
 	@echo "$(GREEN)Load test files cleaned$(NC)"
 
-load_test_remote_setup: ## Set up load test for remote instance (requires LANGFLOW_HOST)
-	@if [ -z "$(LANGFLOW_HOST)" ]; then \
-		echo "$(RED)Error: LANGFLOW_HOST environment variable required$(NC)"; \
-		echo "$(YELLOW)Example: export LANGFLOW_HOST=https://your-remote-instance.com$(NC)"; \
+load_test_remote_setup: ## Set up load test for remote instance (requires IDRFLOW_HOST)
+	@if [ -z "$(IDRFLOW_HOST)" ]; then \
+		echo "$(RED)Error: IDRFLOW_HOST environment variable required$(NC)"; \
+		echo "$(YELLOW)Example: export IDRFLOW_HOST=https://your-remote-instance.com$(NC)"; \
 		exit 1; \
 	fi
-	@echo "$(YELLOW)Setting up load test for remote instance: $(LANGFLOW_HOST)$(NC)"
-	@cd src/backend/tests/locust && uv run python langflow_setup_test.py --host $(LANGFLOW_HOST) --flow "Basic Prompting" --save-credentials remote_test_creds.json
+	@echo "$(YELLOW)Setting up load test for remote instance: $(IDRFLOW_HOST)$(NC)"
+	@cd src/backend/tests/locust && uv run python langflow_setup_test.py --host $(IDRFLOW_HOST) --flow "Basic Prompting" --save-credentials remote_test_creds.json
 
 load_test_remote_run: ## Run load test against remote instance (requires prior setup)
-	@if [ -z "$(LANGFLOW_HOST)" ]; then \
-		echo "$(RED)Error: LANGFLOW_HOST environment variable required$(NC)"; \
+	@if [ -z "$(IDRFLOW_HOST)" ]; then \
+		echo "$(RED)Error: IDRFLOW_HOST environment variable required$(NC)"; \
 		exit 1; \
 	fi
 	@if [ ! -f "src/backend/tests/locust/remote_test_creds.json" ]; then \
 		echo "$(RED)Error: No remote credentials found. Run 'make load_test_remote_setup' first$(NC)"; \
 		exit 1; \
 	fi
-	@echo "$(YELLOW)Running load test against remote instance: $(LANGFLOW_HOST)$(NC)"
+	@echo "$(YELLOW)Running load test against remote instance: $(IDRFLOW_HOST)$(NC)"
 	@cd src/backend/tests/locust && \
 	export API_KEY=$$(python -c "import json; print(json.load(open('remote_test_creds.json'))['api_key'])") && \
 	export FLOW_ID=$$(python -c "import json; print(json.load(open('remote_test_creds.json'))['flow_id'])") && \
-	uv run python langflow_run_load_test.py --host $(LANGFLOW_HOST) --no-start-langflow --headless --users 10 --spawn-rate 1 --duration 120 --html remote_test_report.html
+	uv run python langflow_run_load_test.py --host $(IDRFLOW_HOST) --no-start-langflow --headless --users 10 --spawn-rate 1 --duration 120 --html remote_test_report.html
 
 load_test_help: ## Show detailed load testing help
 	@echo "$(GREEN)Langflow Enhanced Load Testing System$(NC)"
@@ -826,7 +826,7 @@ load_test_help: ## Show detailed load testing help
 	@echo "  3. Open quick_test_report.html  # View results"
 	@echo ""
 	@echo "$(YELLOW)Remote Testing:$(NC)"
-	@echo "  1. export LANGFLOW_HOST=https://your-instance.com"
+	@echo "  1. export IDRFLOW_HOST=https://your-instance.com"
 	@echo "  2. make load_test_remote_setup   # Set up for remote testing"
 	@echo "  3. make load_test_remote_run     # Run test against remote instance"
 	@echo ""

@@ -8,8 +8,8 @@ Copy the files you need into your project's CI configuration.
 | File | Trigger | Secrets needed |
 |------|---------|----------------|
 | [`github-actions/langflow-validate.yml`](github-actions/langflow-validate.yml) | PR touching `flows/**/*.json` | None |
-| [`github-actions/langflow-test.yml`](github-actions/langflow-test.yml) | PR touching flows or tests | `LANGFLOW_STAGING_API_KEY` |
-| [`github-actions/langflow-push.yml`](github-actions/langflow-push.yml) | Push to `main` touching flows | `LANGFLOW_PROD_API_KEY` |
+| [`github-actions/langflow-test.yml`](github-actions/langflow-test.yml) | PR touching flows or tests | `IDRFLOW_STAGING_API_KEY` |
+| [`github-actions/langflow-push.yml`](github-actions/langflow-push.yml) | Push to `main` touching flows | `IDRFLOW_PROD_API_KEY` |
 
 ### Quick start
 
@@ -26,15 +26,15 @@ Configure these in **Settings → Environments**:
 **`staging`** environment (used by `langflow-test.yml`):
 | Name | Type | Value |
 |------|------|-------|
-| `LANGFLOW_STAGING_URL` | Variable | `https://staging.langflow.example.com` |
-| `LANGFLOW_STAGING_API_KEY` | Secret | your staging API key |
+| `IDRFLOW_STAGING_URL` | Variable | `https://staging.langflow.example.com` |
+| `IDRFLOW_STAGING_API_KEY` | Secret | your staging API key |
 
 **`production`** environment (used by `langflow-push.yml`):
 | Name | Type | Value |
 |------|------|-------|
-| `LANGFLOW_PROD_URL` | Variable | `https://langflow.example.com` |
-| `LANGFLOW_PROD_API_KEY` | Secret | your production API key |
-| `LANGFLOW_PROJECT_NAME` | Variable | `Production Flows` *(optional)* |
+| `IDRFLOW_PROD_URL` | Variable | `https://langflow.example.com` |
+| `IDRFLOW_PROD_API_KEY` | Secret | your production API key |
+| `IDRFLOW_PROJECT_NAME` | Variable | `Production Flows` *(optional)* |
 
 Add **Required reviewers** to the `production` environment to gate every deploy
 behind a manual approval step.
@@ -65,11 +65,11 @@ Configure these in **Settings → CI/CD → Variables**:
 
 | Variable | Protected | Masked | Description |
 |----------|-----------|--------|-------------|
-| `LANGFLOW_STAGING_URL` | ✓ | ✗ | Staging instance URL |
-| `LANGFLOW_STAGING_API_KEY` | ✓ | ✓ | Staging API key |
-| `LANGFLOW_PROD_URL` | ✓ | ✗ | Production instance URL |
-| `LANGFLOW_PROD_API_KEY` | ✓ | ✓ | Production API key |
-| `LANGFLOW_PROJECT_NAME` | ✗ | ✗ | Project folder name *(optional)* |
+| `IDRFLOW_STAGING_URL` | ✓ | ✗ | Staging instance URL |
+| `IDRFLOW_STAGING_API_KEY` | ✓ | ✓ | Staging API key |
+| `IDRFLOW_PROD_URL` | ✓ | ✗ | Production instance URL |
+| `IDRFLOW_PROD_API_KEY` | ✓ | ✓ | Production API key |
+| `IDRFLOW_PROJECT_NAME` | ✗ | ✗ | Project folder name *(optional)* |
 
 ---
 
@@ -94,10 +94,10 @@ They are copied to `ci/` by `lfx init`.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `LANGFLOW_URL` | — | URL of target Langflow instance (Approach A) |
-| `LANGFLOW_API_KEY` | — | API key for target instance (Approach A) |
-| `LANGFLOW_ENV` | — | Environment name from config (Approach B) |
-| `LANGFLOW_ENVIRONMENTS_FILE` | `langflow-environments.toml` | Path to environments config (Approach B) |
+| `IDRFLOW_URL` | — | URL of target Langflow instance (Approach A) |
+| `IDRFLOW_API_KEY` | — | API key for target instance (Approach A) |
+| `IDRFLOW_ENV` | — | Environment name from config (Approach B) |
+| `IDRFLOW_ENVIRONMENTS_FILE` | auto-discovery | Optional explicit path to the environments config (Approach B) |
 | `TESTS_DIR` | `tests/` | Directory containing test files |
 | `PYTEST_MARKERS` | `integration` | Markers passed to `pytest -m` |
 | `PYTEST_ARGS` | — | Extra arguments forwarded verbatim to pytest |
@@ -107,15 +107,21 @@ They are copied to `ci/` by `lfx init`.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `LANGFLOW_URL` | — | URL of target Langflow instance (Approach A) |
-| `LANGFLOW_API_KEY` | — | API key for target instance (Approach A) |
-| `LANGFLOW_ENV` | — | Environment name from config (Approach B) |
-| `LANGFLOW_ENVIRONMENTS_FILE` | `langflow-environments.toml` | Path to environments config (Approach B) |
+| `IDRFLOW_URL` | — | URL of target Langflow instance (Approach A) |
+| `IDRFLOW_API_KEY` | — | API key for target instance (Approach A) |
+| `IDRFLOW_ENV` | — | Environment name from config (Approach B) |
+| `IDRFLOW_ENVIRONMENTS_FILE` | auto-discovery | Optional explicit path to the environments config (Approach B) |
 | `FLOWS_DIR` | `flows/` | Directory containing flow JSON files |
-| `LANGFLOW_PROJECT` | — | Project (folder) name on the remote instance |
-| `LANGFLOW_PROJECT_ID` | — | Project UUID (takes precedence over `LANGFLOW_PROJECT`) |
+| `IDRFLOW_PROJECT` | — | Project (folder) name on the remote instance |
+| `IDRFLOW_PROJECT_ID` | — | Project UUID (takes precedence over `IDRFLOW_PROJECT`) |
 | `DRY_RUN` | `false` | Set to `true` to preview without making changes |
 | `LFX_VERSION` | *(latest)* | PEP 508 version specifier for `lfx` |
+
+When `IDRFLOW_ENVIRONMENTS_FILE` is unset, the templates follow the same lookup
+contract as `lfx`: project `.lfx/environments.yaml`, local
+`idrflow-environments.toml`, then `~/.config/idrflow/environments.toml`. If no
+config is discovered but CI variables like `IDRFLOW_STAGING_URL` are present,
+the shell templates synthesize a local `idrflow-environments.toml` automatically.
 
 ---
 
@@ -127,7 +133,7 @@ PR opened
   ├── langflow-validate  ──── lfx validate flows/ --level 4
   │                           ↳ blocks merge if any flow is malformed
   │
-  └── langflow-test  ──────── pytest tests/ --langflow-env staging
+  └── langflow-test  ──────── pytest tests/ --idrflow-env staging
                               ↳ skips gracefully if staging is unavailable
 
 Merge to main
@@ -160,7 +166,7 @@ async def test_async_flow(async_flow_runner):
 Run locally against staging:
 
 ```bash
-LANGFLOW_URL=https://staging.langflow.example.com \
-LANGFLOW_API_KEY=<key> \
+IDRFLOW_URL=https://staging.langflow.example.com \
+IDRFLOW_API_KEY=<key> \
 pytest tests/ -m integration
 ```

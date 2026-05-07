@@ -50,9 +50,9 @@ To connect to your new Langflow VM, follow these steps:
 <br>**or**
 3. Run the following command to display the URL for your Langflow environment:
 ```bash
-export LANGFLOW_IP=$(gcloud compute instances list --filter="NAME=langflow-dev" --format="value(EXTERNAL_IP)")
+export IDRFLOW_IP=$(gcloud compute instances list --filter="NAME=langflow-dev" --format="value(EXTERNAL_IP)")
 
-echo http://$LANGFLOW_IP:7860
+echo http://$IDRFLOW_IP:7860
 ```
 
 4. Click on the Langflow URL in cloudshell to be greeted by the Langflow Dev environment

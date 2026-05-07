@@ -39,8 +39,8 @@ The `langflow` service uses the `langflowai/langflow:latest` Docker image and ex
 
 Environment variables:
 
-- `LANGFLOW_DATABASE_URL`: The connection string for the PostgreSQL database.
-- `LANGFLOW_CONFIG_DIR`: The directory where LangFlow stores logs, file storage, monitor data, and secret keys.
+- `IDRFLOW_DATABASE_URL`: The connection string for the PostgreSQL database.
+- `IDRFLOW_CONFIG_DIR`: The directory where LangFlow stores logs, file storage, monitor data, and secret keys.
 
 Volumes:
 

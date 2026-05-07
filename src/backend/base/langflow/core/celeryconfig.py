@@ -1,8 +1,8 @@
 # celeryconfig.py
 import os
 
-langflow_redis_host = os.environ.get("LANGFLOW_REDIS_HOST")
-langflow_redis_port = os.environ.get("LANGFLOW_REDIS_PORT")
+langflow_redis_host = os.environ.get("IDRFLOW_REDIS_HOST")
+langflow_redis_port = os.environ.get("IDRFLOW_REDIS_PORT")
 # broker default user
 
 if langflow_redis_host and langflow_redis_port:

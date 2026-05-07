@@ -87,14 +87,14 @@ async def files_active_user(files_client):  # noqa: ARG001
 
 @pytest.fixture
 def max_file_size_upload_fixture(monkeypatch):
-    monkeypatch.setenv("LANGFLOW_MAX_FILE_SIZE_UPLOAD", "1")
+    monkeypatch.setenv("IDRFLOW_MAX_FILE_SIZE_UPLOAD", "1")
     yield
     monkeypatch.undo()
 
 
 @pytest.fixture
 def max_file_size_upload_10mb_fixture(monkeypatch):
-    monkeypatch.setenv("LANGFLOW_MAX_FILE_SIZE_UPLOAD", "10")
+    monkeypatch.setenv("IDRFLOW_MAX_FILE_SIZE_UPLOAD", "10")
     yield
     monkeypatch.undo()
 
@@ -112,8 +112,8 @@ async def files_client_fixture(
         def init_app():
             db_dir = tempfile.mkdtemp()
             db_path = Path(db_dir) / "test.db"
-            monkeypatch.setenv("LANGFLOW_DATABASE_URL", f"sqlite:///{db_path}")
-            monkeypatch.setenv("LANGFLOW_AUTO_LOGIN", "false")
+            monkeypatch.setenv("IDRFLOW_DATABASE_URL", f"sqlite:///{db_path}")
+            monkeypatch.setenv("IDRFLOW_AUTO_LOGIN", "false")
             from lfx.services.manager import get_service_manager
 
             get_service_manager().factories.clear()
@@ -710,19 +710,19 @@ async def s3_files_client_fixture(
         def init_app():
             db_dir = tempfile.mkdtemp()
             db_path = Path(db_dir) / "test_s3.db"
-            monkeypatch.setenv("LANGFLOW_DATABASE_URL", f"sqlite:///{db_path}")
-            monkeypatch.setenv("LANGFLOW_AUTO_LOGIN", "false")
+            monkeypatch.setenv("IDRFLOW_DATABASE_URL", f"sqlite:///{db_path}")
+            monkeypatch.setenv("IDRFLOW_AUTO_LOGIN", "false")
             # Configure S3 storage
-            monkeypatch.setenv("LANGFLOW_STORAGE_TYPE", "s3")
+            monkeypatch.setenv("IDRFLOW_STORAGE_TYPE", "s3")
             monkeypatch.setenv(
-                "LANGFLOW_OBJECT_STORAGE_BUCKET_NAME",
-                os.environ.get("LANGFLOW_OBJECT_STORAGE_BUCKET_NAME", "langflow-ci"),
+                "IDRFLOW_OBJECT_STORAGE_BUCKET_NAME",
+                os.environ.get("IDRFLOW_OBJECT_STORAGE_BUCKET_NAME", "langflow-ci"),
             )
             # Use unique prefix per test run to avoid conflicts
             test_prefix = f"test-files-api-{uuid.uuid4().hex[:8]}"
-            monkeypatch.setenv("LANGFLOW_OBJECT_STORAGE_PREFIX", test_prefix)
+            monkeypatch.setenv("IDRFLOW_OBJECT_STORAGE_PREFIX", test_prefix)
             tags_json = json.dumps({"env": "test-api", "type": "file-upload"})
-            monkeypatch.setenv("LANGFLOW_OBJECT_STORAGE_TAGS", tags_json)
+            monkeypatch.setenv("IDRFLOW_OBJECT_STORAGE_TAGS", tags_json)
 
             from langflow.services.manager import service_manager
 
@@ -744,7 +744,7 @@ async def s3_files_client_fixture(
             import boto3
 
             s3 = boto3.client("s3")
-            bucket_name = os.environ.get("LANGFLOW_OBJECT_STORAGE_BUCKET_NAME", "langflow-ci")
+            bucket_name = os.environ.get("IDRFLOW_OBJECT_STORAGE_BUCKET_NAME", "langflow-ci")
 
             # List and delete all objects with our test prefix
             with contextlib.suppress(Exception):
@@ -949,13 +949,13 @@ class TestS3FileOperations:
         import boto3
 
         s3 = boto3.client("s3")
-        bucket_name = os.environ.get("LANGFLOW_OBJECT_STORAGE_BUCKET_NAME", "langflow-ci")
+        bucket_name = os.environ.get("IDRFLOW_OBJECT_STORAGE_BUCKET_NAME", "langflow-ci")
 
         # Extract file name from path
         file_name = file_path.split("/")[-1]
 
         # Build the S3 key using the correct pattern (prefix/user_id/filename)
-        test_prefix = os.environ.get("LANGFLOW_OBJECT_STORAGE_PREFIX")
+        test_prefix = os.environ.get("IDRFLOW_OBJECT_STORAGE_PREFIX")
         s3_key = f"{test_prefix}/{user_id}/{file_name}"
 
         # Try to get the object - should raise NoSuchKey

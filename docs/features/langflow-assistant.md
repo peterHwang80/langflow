@@ -69,7 +69,7 @@ This context owns:
 | **EnabledProvider** | A model provider that has been configured with valid API credentials | `get_enabled_providers_for_user()` |
 | **FlowExecutor** | Service that runs Langflow flows programmatically for assistant operations | `FlowExecutor`, `execute_flow_file()` |
 | **TranslationFlow** | Pre-built flow that translates user input and classifies intent | `TranslationFlow.json`, `TRANSLATION_FLOW` |
-| **LangflowAssistantFlow** | Pre-built flow containing the main assistant prompt and component generation logic | `LangflowAssistant.json`, `LANGFLOW_ASSISTANT_FLOW` |
+| **LangflowAssistantFlow** | Pre-built flow containing the main assistant prompt and component generation logic | `LangflowAssistant.json` |
 | **ReasoningUI** | Animated typing display showing "thinking" messages during component generation | `AssistantLoadingState` |
 | **ApproveAction** | User action to add a validated component to the canvas | `handleApprove()`, `addComponent()` |
 | **OffTopic** | Intent classification for questions unrelated to Langflow (other tools, general knowledge) | `"off_topic"`, `OFF_TOPIC_REFUSAL_MESSAGE` |

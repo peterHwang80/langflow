@@ -32,7 +32,7 @@ idrflow uses `x-api-key` headers for authentication, while OpenAI uses `Authoriz
 When sending requests to idrflow with OpenAI client libraries, you must configure custom headers and include an `api_key` configuration.
 The `api_key` parameter can have any value, such as `"dummy-api-key"` in the client examples, as the actual authentication is handled through the `default_headers` configuration.
 
-In the following examples, replace the values for `LANGFLOW_SERVER_URL`, `LANGFLOW_API_KEY`, and `FLOW_ID` with values from your deployment.
+In the following examples, replace the values for `IDRFLOW_SERVER_URL`, `IDRFLOW_API_KEY`, and `FLOW_ID` with values from your deployment.
 <Tabs groupId="client">
 <TabItem value="Python" label="OpenAI Python Client" default>
 
@@ -40,8 +40,8 @@ In the following examples, replace the values for `LANGFLOW_SERVER_URL`, `LANGFL
 from openai import OpenAI
 
 client = OpenAI(
-  base_url="LANGFLOW_SERVER_URL/api/v1/",
-  default_headers={"x-api-key": "LANGFLOW_API_KEY"},
+  base_url="IDRFLOW_SERVER_URL/api/v1/",
+  default_headers={"x-api-key": "IDRFLOW_API_KEY"},
   api_key="dummy-api-key" # Required by OpenAI SDK but not used by Langflow
 )
 
@@ -60,9 +60,9 @@ print(response.output_text)
 import OpenAI from "openai";
 
 const client = new OpenAI({
-  baseURL: "LANGFLOW_SERVER_URL/api/v1/",
+  baseURL: "IDRFLOW_SERVER_URL/api/v1/",
   defaultHeaders: {
-    "x-api-key": "LANGFLOW_API_KEY"
+    "x-api-key": "IDRFLOW_API_KEY"
   },
   apiKey: "dummy-api-key" // Required by OpenAI SDK but not used by Langflow
 });
@@ -102,8 +102,8 @@ If you need these in a different format or want a downloadable calendar, let me 
 
 ```bash
 curl -X POST \
-  "$LANGFLOW_SERVER_URL/api/v1/responses" \
-  -H "x-api-key: $LANGFLOW_API_KEY" \
+  "$IDRFLOW_SERVER_URL/api/v1/responses" \
+  -H "x-api-key: $IDRFLOW_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "$YOUR_FLOW_ID",
@@ -225,8 +225,8 @@ When you set `"stream": true` with your request, the API returns a stream where 
 
 ```bash
 curl -X POST \
-  "$LANGFLOW_SERVER_URL/api/v1/responses" \
-  -H "x-api-key: $LANGFLOW_API_KEY" \
+  "$IDRFLOW_SERVER_URL/api/v1/responses" \
+  -H "x-api-key: $IDRFLOW_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "$FLOW_ID",
@@ -291,8 +291,8 @@ First Message:
 
 ```bash
 curl -X POST \
-  "http://$LANGFLOW_SERVER_URL/api/v1/responses" \
-  -H "x-api-key: $LANGFLOW_API_KEY" \
+  "http://$IDRFLOW_SERVER_URL/api/v1/responses" \
+  -H "x-api-key: $IDRFLOW_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "$FLOW_ID",
@@ -335,8 +335,8 @@ Follow-up message:
 
 ```bash
 curl -X POST \
-  "http://$LANGFLOW_SERVER_URL/api/v1/responses" \
-  -H "x-api-key: $LANGFLOW_API_KEY" \
+  "http://$IDRFLOW_SERVER_URL/api/v1/responses" \
+  -H "x-api-key: $IDRFLOW_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "ced2ec91-f325-4bf0-8754-f3198c2b1563",
@@ -380,8 +380,8 @@ Optionally, you can use your own session ID values for the `previous_response_id
 
 ```bash
 curl -X POST \
-  "http://$LANGFLOW_SERVER_URL/api/v1/responses" \
-  -H "x-api-key: $LANGFLOW_API_KEY" \
+  "http://$IDRFLOW_SERVER_URL/api/v1/responses" \
+  -H "x-api-key: $IDRFLOW_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "ced2ec91-f325-4bf0-8754-f3198c2b1563",
@@ -444,9 +444,9 @@ To get the raw `results` of each tool execution, add  `include: ["tool_call.resu
 
 ```bash
 curl -X POST \
-  "http://$LANGFLOW_SERVER_URL/api/v1/responses" \
+  "http://$IDRFLOW_SERVER_URL/api/v1/responses" \
   -H "Content-Type: application/json" \
-  -H "x-api-key: $LANGFLOW_API_KEY" \
+  -H "x-api-key: $IDRFLOW_API_KEY" \
   -d '{
     "model": "FLOW_ID",
     "input": "Calculate 23 * 15 and show me the result",
@@ -547,8 +547,8 @@ This example demonstrates passing an `OPENAI_API_KEY` variable, which is a varia
 
 ```bash
 curl -X POST \
-  "$LANGFLOW_SERVER_URL/api/v1/responses" \
-  -H "x-api-key: $LANGFLOW_API_KEY" \
+  "$IDRFLOW_SERVER_URL/api/v1/responses" \
+  -H "x-api-key: $IDRFLOW_API_KEY" \
   -H "Content-Type: application/json" \
   -H "X-LANGFLOW-GLOBAL-VAR-OPENAI_API_KEY: sk-..." \
   -H "X-LANGFLOW-GLOBAL-VAR-USER_ID: user123" \
@@ -616,8 +616,8 @@ The `usage` field is always present in the response, either with token counts or
 from openai import OpenAI
 
 client = OpenAI(
-  base_url="LANGFLOW_SERVER_URL/api/v1/",
-  default_headers={"x-api-key": "LANGFLOW_API_KEY"},
+  base_url="IDRFLOW_SERVER_URL/api/v1/",
+  default_headers={"x-api-key": "IDRFLOW_API_KEY"},
   api_key="dummy-api-key"
 )
 
@@ -642,9 +642,9 @@ else:
 import OpenAI from "openai";
 
 const client = new OpenAI({
-  baseURL: "LANGFLOW_SERVER_URL/api/v1/",
+  baseURL: "IDRFLOW_SERVER_URL/api/v1/",
   defaultHeaders: {
-    "x-api-key": "LANGFLOW_API_KEY"
+    "x-api-key": "IDRFLOW_API_KEY"
   },
   apiKey: "dummy-api-key"
 });
@@ -669,8 +669,8 @@ if (response.usage) {
 
 ```bash
 curl -X POST \
-  "$LANGFLOW_SERVER_URL/api/v1/responses" \
-  -H "x-api-key: $LANGFLOW_API_KEY" \
+  "$IDRFLOW_SERVER_URL/api/v1/responses" \
+  -H "x-api-key: $IDRFLOW_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "FLOW_ID",

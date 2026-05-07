@@ -46,7 +46,7 @@ For more information, see [Configure an external PostgreSQL database](/configura
     2. Add the connection string to the `.env` file:
 
         ```text
-        LANGFLOW_DATABASE_URL="postgresql://langflow:securepassword@postgres:5432/langflow"
+        IDRFLOW_DATABASE_URL="postgresql://langflow:securepassword@postgres:5432/langflow"
         ```
 
     For more environment variables, see the `.env.example` file in the idrflow repository.
@@ -65,7 +65,7 @@ For more information, see [Configure an external PostgreSQL database](/configura
         ports:
           - "7860:7860"
         environment:
-          - LANGFLOW_DATABASE_URL=postgresql://langflow:langflow@postgres:5432/langflow
+          - IDRFLOW_DATABASE_URL=postgresql://langflow:langflow@postgres:5432/langflow
       postgres:
         image: postgres:16
         ports:
@@ -223,7 +223,7 @@ spec:
         ports:
         - containerPort: 7860
         env:
-        - name: LANGFLOW_DATABASE_URL
+        - name: IDRFLOW_DATABASE_URL
           value: "postgresql://langflow:securepassword@db-proxy:5432/langflow?sslmode=require"
 ---
 apiVersion: v1
@@ -243,7 +243,7 @@ spec:
 </Tabs>
 
 After implementing HA or Active-Active HA, monitor failover events and ensure replicas are in sync.
-idrflow, through [SQLAlchemy](https://docs.sqlalchemy.org/en/20/), supports reconnection attempts if `LANGFLOW_DATABASE_CONNECTION_RETRY=True`, ensures recovery after failover, and reduces disruption once the database is back online.
+idrflow, through [SQLAlchemy](https://docs.sqlalchemy.org/en/20/), supports reconnection attempts if `IDRFLOW_DATABASE_CONNECTION_RETRY=True`, ensures recovery after failover, and reduces disruption once the database is back online.
 
 Although PostgreSQL handles concurrent connections well, you must still monitor for contention, deadlocks, or other performance degradation during high load.
 

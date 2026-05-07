@@ -43,7 +43,7 @@ class TelemetryService(BaseTelemetryService):
         do_not_track: bool | None = None,
     ):
         super().__init__()
-        self.base_url = base_url or os.environ.get("LANGFLOW_TELEMETRY_BASE_URL", _DEFAULT_BASE_URL)
+        self.base_url = base_url or os.environ.get("IDRFLOW_TELEMETRY_BASE_URL", _DEFAULT_BASE_URL)
 
         if do_not_track is None:
             do_not_track = os.environ.get("DO_NOT_TRACK", "false").lower() in {"1", "true"}

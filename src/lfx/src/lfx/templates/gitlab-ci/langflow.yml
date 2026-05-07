@@ -20,13 +20,13 @@
 #
 #   Variable name               Type     Protected  Masked  Example value
 #   ──────────────────────────  ───────  ─────────  ──────  ─────────────────────────────
-#   LANGFLOW_STAGING_URL        Variable     ✓         ✗    https://staging.langflow.example.com
-#   LANGFLOW_STAGING_API_KEY    Variable     ✓         ✓    <staging api key>
-#   LANGFLOW_PROD_URL           Variable     ✓         ✗    https://langflow.example.com
-#   LANGFLOW_PROD_API_KEY       Variable     ✓         ✓    <production api key>
-#   LANGFLOW_PROJECT_NAME       Variable     ✗         ✗    Production Flows
+#   IDRFLOW_STAGING_URL        Variable     ✓         ✗    https://staging.langflow.example.com
+#   IDRFLOW_STAGING_API_KEY    Variable     ✓         ✓    <staging api key>
+#   IDRFLOW_PROD_URL           Variable     ✓         ✗    https://langflow.example.com
+#   IDRFLOW_PROD_API_KEY       Variable     ✓         ✓    <production api key>
+#   IDRFLOW_PROJECT_NAME       Variable     ✗         ✗    Production Flows
 #
-#   Marking LANGFLOW_*_API_KEY as "Masked" prevents the value from appearing
+#   Marking IDRFLOW_*_API_KEY as "Masked" prevents the value from appearing
 #   in job logs.  Marking variables as "Protected" limits them to protected
 #   branches (main / tags), which restricts production access automatically.
 
@@ -46,13 +46,13 @@ stages:
 
 .write-staging-env: &write-staging-env
   - >-
-    printf '[environments.staging]\nurl = "%s"\napi_key_env = "LANGFLOW_STAGING_API_KEY"\n'
-    "$LANGFLOW_STAGING_URL" > langflow-environments.toml
+    printf '[environments.staging]\nurl = "%s"\napi_key_env = "IDRFLOW_STAGING_API_KEY"\n'
+    "$IDRFLOW_STAGING_URL" > idrflow-environments.toml
 
 .write-prod-env: &write-prod-env
   - >-
-    printf '[environments.production]\nurl = "%s"\napi_key_env = "LANGFLOW_PROD_API_KEY"\n'
-    "$LANGFLOW_PROD_URL" > langflow-environments.toml
+    printf '[environments.production]\nurl = "%s"\napi_key_env = "IDRFLOW_PROD_API_KEY"\n'
+    "$IDRFLOW_PROD_URL" > idrflow-environments.toml
 
 # ── validate ──────────────────────────────────────────────────────────────── #
 
@@ -89,13 +89,13 @@ langflow:test:
     - *write-staging-env
     - >-
       pytest tests/
-      --langflow-env staging
+      --idrflow-env staging
       -m integration
       -v
       --tb=short
   variables:
-    LANGFLOW_ENVIRONMENTS_FILE: langflow-environments.toml
-  # Tests auto-skip when LANGFLOW_STAGING_URL is absent, so this job never
+    IDRFLOW_ENVIRONMENTS_FILE: idrflow-environments.toml
+  # Tests auto-skip when IDRFLOW_STAGING_URL is absent, so this job never
   # hard-fails on feature branches that lack staging access.
   allow_failure: false
 
@@ -115,18 +115,18 @@ langflow:deploy:
   script:
     - *write-prod-env
     # Use CI_ENVIRONMENT_NAME in the job summary
-    - echo "Deploying to production (${LANGFLOW_PROD_URL})"
+    - echo "Deploying to production (${IDRFLOW_PROD_URL})"
     - >-
       lfx push
       --dir flows/
       --env production
-      --project "${LANGFLOW_PROJECT_NAME:-Main}"
+      --project "${IDRFLOW_PROJECT_NAME:-Main}"
   variables:
-    LANGFLOW_ENVIRONMENTS_FILE: langflow-environments.toml
+    IDRFLOW_ENVIRONMENTS_FILE: idrflow-environments.toml
   environment:
     name: production
-    url: $LANGFLOW_PROD_URL
-  # Protect this job by restricting LANGFLOW_PROD_API_KEY to protected
+    url: $IDRFLOW_PROD_URL
+  # Protect this job by restricting IDRFLOW_PROD_API_KEY to protected
   # branches only (see setup instructions above).
   allow_failure: false
 
@@ -145,8 +145,8 @@ langflow:deploy:dry-run:
       lfx push
       --dir flows/
       --env production
-      --project "${LANGFLOW_PROJECT_NAME:-Main}"
+      --project "${IDRFLOW_PROJECT_NAME:-Main}"
       --dry-run
   environment:
     name: production (dry run)
-    url: $LANGFLOW_PROD_URL
+    url: $IDRFLOW_PROD_URL

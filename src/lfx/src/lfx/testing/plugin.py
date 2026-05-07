@@ -52,32 +52,34 @@ def pytest_addoption(parser: pytest.Parser) -> None:
     )
 
     # Guard against duplicate registration when langflow-sdk[testing] is also installed.
-    # Both plugins expose the same --langflow-* options; only register them once.
+    # Both plugins expose the same --idrflow-* options; only register them once.
     remote = parser.getgroup("langflow", "Langflow remote integration testing options")
     _remote_opts = {
-        "--langflow-env": {
-            "dest": "langflow_env",
+        "--idrflow-env": {
+            "dest": "idrflow_env",
             "default": None,
             "metavar": "NAME",
             "help": (
-                "Named environment from .lfx/environments.yaml or langflow-environments.toml. "
+                "Named environment from the discovered environments config "
+                "(.lfx/environments.yaml, idrflow-environments.toml, "
+                "~/.config/idrflow/environments.toml, or IDRFLOW_ENVIRONMENTS_FILE). "
                 "When set, flow_runner targets the remote instance instead of running locally."
             ),
         },
-        "--langflow-url": {
-            "dest": "langflow_url",
+        "--idrflow-url": {
+            "dest": "idrflow_url",
             "default": None,
             "metavar": "URL",
-            "help": "Base URL of the remote Langflow instance (overrides --langflow-env).",
+            "help": "Base URL of the remote Langflow instance (overrides --idrflow-env).",
         },
-        "--langflow-api-key": {
-            "dest": "langflow_api_key",
+        "--idrflow-api-key": {
+            "dest": "idrflow_api_key",
             "default": None,
             "metavar": "KEY",
             "help": "API key for the remote Langflow instance.",
         },
-        "--langflow-environments-file": {
-            "dest": "langflow_environments_file",
+        "--idrflow-environments-file": {
+            "dest": "idrflow_environments_file",
             "default": None,
             "metavar": "PATH",
             "help": "Path to environments config file (.yaml or .toml; overrides default lookup).",
@@ -106,7 +108,7 @@ def pytest_configure(config: pytest.Config) -> None:
 
 _SKIP_NO_REMOTE = (
     "No remote Langflow connection configured. "
-    "Pass --langflow-url <URL> or --langflow-env <NAME> to run against a live instance."
+    "Pass --idrflow-url <URL> or --idrflow-env <NAME> to run against a live instance."
 )
 
 
@@ -114,11 +116,11 @@ def _resolve_remote_client(request: pytest.FixtureRequest) -> Any | None:
     """Return a sync SDK client if remote options are configured, else ``None``.
 
     Priority:
-    1. ``--langflow-url`` / ``LANGFLOW_URL`` -- direct URL (with optional ``--langflow-api-key``)
-    2. ``--langflow-env`` / ``LANGFLOW_ENV`` -- named environment from TOML/YAML file
+    1. ``--idrflow-url`` / ``IDRFLOW_URL`` -- direct URL (with optional ``--idrflow-api-key``)
+    2. ``--idrflow-env`` / ``IDRFLOW_ENV`` -- named environment from TOML/YAML file
     """
-    url: str | None = request.config.getoption("langflow_url", default=None) or os.environ.get("LANGFLOW_URL")
-    env_name: str | None = request.config.getoption("langflow_env", default=None) or os.environ.get("LANGFLOW_ENV")
+    url: str | None = request.config.getoption("idrflow_url", default=None) or os.environ.get("IDRFLOW_URL")
+    env_name: str | None = request.config.getoption("idrflow_env", default=None) or os.environ.get("IDRFLOW_ENV")
 
     if not url and not env_name:
         return None
@@ -129,14 +131,14 @@ def _resolve_remote_client(request: pytest.FixtureRequest) -> Any | None:
         pytest.skip("langflow-sdk is required for remote testing. Install: pip install langflow-sdk")
 
     if url:
-        api_key: str | None = request.config.getoption("langflow_api_key", default=None) or os.environ.get(
-            "LANGFLOW_API_KEY"
+        api_key: str | None = request.config.getoption("idrflow_api_key", default=None) or os.environ.get(
+            "IDRFLOW_API_KEY"
         )
         return langflow_sdk.Client(base_url=url, api_key=api_key)
 
     # Named environment
-    env_file: str | None = request.config.getoption("langflow_environments_file", default=None) or os.environ.get(
-        "LANGFLOW_ENVIRONMENTS_FILE"
+    env_file: str | None = request.config.getoption("idrflow_environments_file", default=None) or os.environ.get(
+        "IDRFLOW_ENVIRONMENTS_FILE"
     )
     try:
         from pathlib import Path as _Path
@@ -150,8 +152,8 @@ def _resolve_remote_client(request: pytest.FixtureRequest) -> Any | None:
 
 def _resolve_async_remote_client(request: pytest.FixtureRequest) -> Any | None:
     """Return an async SDK client if remote options are configured, else ``None``."""
-    url: str | None = request.config.getoption("langflow_url", default=None) or os.environ.get("LANGFLOW_URL")
-    env_name: str | None = request.config.getoption("langflow_env", default=None) or os.environ.get("LANGFLOW_ENV")
+    url: str | None = request.config.getoption("idrflow_url", default=None) or os.environ.get("IDRFLOW_URL")
+    env_name: str | None = request.config.getoption("idrflow_env", default=None) or os.environ.get("IDRFLOW_ENV")
 
     if not url and not env_name:
         return None
@@ -162,13 +164,13 @@ def _resolve_async_remote_client(request: pytest.FixtureRequest) -> Any | None:
         pytest.skip("langflow-sdk is required for remote testing. Install: pip install langflow-sdk")
 
     if url:
-        api_key: str | None = request.config.getoption("langflow_api_key", default=None) or os.environ.get(
-            "LANGFLOW_API_KEY"
+        api_key: str | None = request.config.getoption("idrflow_api_key", default=None) or os.environ.get(
+            "IDRFLOW_API_KEY"
         )
         return langflow_sdk.AsyncClient(base_url=url, api_key=api_key)
 
-    env_file: str | None = request.config.getoption("langflow_environments_file", default=None) or os.environ.get(
-        "LANGFLOW_ENVIRONMENTS_FILE"
+    env_file: str | None = request.config.getoption("idrflow_environments_file", default=None) or os.environ.get(
+        "IDRFLOW_ENVIRONMENTS_FILE"
     )
     try:
         from pathlib import Path as _Path
@@ -225,14 +227,14 @@ def flow_runner(
         * ``--lfx-env-file`` / ``--lfx-timeout`` / ``--lfx-flow-dir``
         * ``LFX_ENV_FILE`` / ``LFX_TIMEOUT`` / ``LFX_FLOW_DIR``
 
-    **Remote mode** (when ``--langflow-env`` or ``--langflow-url`` is supplied)
+    **Remote mode** (when ``--idrflow-env`` or ``--idrflow-url`` is supplied)
         Calls the live Langflow API.  Requires ``langflow-sdk``.
 
-        * ``--langflow-env <NAME>`` -- named environment from ``.lfx/environments.yaml``
-        * ``--langflow-url <URL>`` -- direct URL
-        * ``--langflow-api-key <KEY>`` / ``LANGFLOW_API_KEY``
-        * ``--langflow-environments-file <PATH>`` / ``LANGFLOW_ENVIRONMENTS_FILE``
-        * ``LANGFLOW_ENV`` / ``LANGFLOW_URL``
+        * ``--idrflow-env <NAME>`` -- named environment from the discovered environments config
+        * ``--idrflow-url <URL>`` -- direct URL
+        * ``--idrflow-api-key <KEY>`` / ``IDRFLOW_API_KEY``
+        * ``--idrflow-environments-file <PATH>`` / ``IDRFLOW_ENVIRONMENTS_FILE``
+        * ``IDRFLOW_ENV`` / ``IDRFLOW_URL``
 
     Example (local)::
 
@@ -240,7 +242,7 @@ def flow_runner(
             result = flow_runner("flows/greeting.json", input_value="Hello")
             assert result.ok
 
-    Example (remote -- run with ``pytest --langflow-env staging``)::
+    Example (remote -- run with ``pytest --idrflow-env staging``)::
 
         @pytest.mark.integration
         def test_greeting(flow_runner):

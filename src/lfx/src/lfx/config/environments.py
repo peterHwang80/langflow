@@ -3,11 +3,13 @@
 Config file lookup order
 ------------------------
 1.  Explicit path given via ``--environments-file`` / ``environments_file`` parameter.
-2.  ``.lfx/environments.yaml`` in the current working directory, then each
+2.  The ``IDRFLOW_ENVIRONMENTS_FILE`` environment variable.
+3.  ``.lfx/environments.yaml`` in the current working directory, then each
     parent directory up to the first ``.git`` boundary (project root discovery).
-3.  ``~/.lfx/environments.yaml`` (user-level config).
-4.  ``langflow-environments.toml`` in the current working directory
+4.  ``~/.lfx/environments.yaml`` (user-level config).
+5.  ``idrflow-environments.toml`` in the current working directory
     (backward-compatible with the langflow-sdk TOML format).
+6.  ``~/.config/idrflow/environments.toml``
 
 YAML file format
 ----------------
@@ -16,20 +18,20 @@ YAML file format
     environments:
       local:
         url: http://localhost:7860
-        api_key_env: LANGFLOW_LOCAL_API_KEY
+        api_key_env: IDRFLOW_LOCAL_API_KEY
 
       staging:
         url: https://staging.langflow.example.com
-        api_key_env: LANGFLOW_STAGING_API_KEY
+        api_key_env: IDRFLOW_STAGING_API_KEY
 
       production:
         url: https://langflow.example.com
-        api_key_env: LANGFLOW_PROD_API_KEY
+        api_key_env: IDRFLOW_PROD_API_KEY
 
     defaults:
       environment: local
 
-TOML format is also accepted (``langflow-environments.toml`` or any ``.toml``
+TOML format is also accepted (``idrflow-environments.toml`` or any ``.toml``
 file passed via ``--environments-file``).
 
 The ``api_key_env`` field names an *environment variable* that holds the API
@@ -78,8 +80,11 @@ class LangflowEnvironment:
 # ---------------------------------------------------------------------------
 
 _YAML_NAMES: tuple[str, ...] = ("environments.yaml", "environments.yml")
-_TOML_FALLBACK = "langflow-environments.toml"
+_TOML_FALLBACK = "idrflow-environments.toml"
 _LFX_DIR = ".lfx"
+_ENV_NAME_FALLBACK = "IDRFLOW_ENV"
+_ENVIRONMENTS_FILE_FALLBACK = "IDRFLOW_ENVIRONMENTS_FILE"
+_USER_TOML_FALLBACK = Path.home() / ".config" / "idrflow" / "environments.toml"
 
 
 def _find_config_file(override: Path | None) -> Path | None:
@@ -119,10 +124,14 @@ def _find_config_file(override: Path | None) -> Path | None:
         if user_yaml.is_file():
             return user_yaml
 
-    # Backward-compat: langflow-environments.toml in cwd
+    # Backward-compat: idrflow-environments.toml in cwd
     toml_fallback = cwd / _TOML_FALLBACK
     if toml_fallback.is_file():
         return toml_fallback
+
+    # User-level TOML, matching langflow-sdk defaults
+    if _USER_TOML_FALLBACK.is_file():
+        return _USER_TOML_FALLBACK
 
     return None
 
@@ -249,10 +258,11 @@ def resolve_environment(
     1. **Inline mode** — if *target* is given, return immediately without
        reading any config file.  *api_key* is used as-is (its value, not a
        variable name).
-    2. **Named env** — look up *env* (or the configured default) in the config
+    2. **Named env** — look up *env* (or ``IDRFLOW_ENV``, or the configured default)
+       in the config
        file discovered by the lookup order described in this module's docstring.
     3. **Env-var fallback** — if no config file exists and no *env* was
-       requested, fall back to ``LANGFLOW_URL`` / ``LANGFLOW_API_KEY`` (or
+       requested, fall back to ``IDRFLOW_URL`` / ``IDRFLOW_API_KEY`` (or
        ``LFX_URL`` / ``LFX_API_KEY``) env vars before raising.
 
     Parameters
@@ -289,20 +299,25 @@ def resolve_environment(
     # -----------------------------------------------------------------------
     # Mode 2: config file
     # -----------------------------------------------------------------------
-    override = Path(environments_file) if environments_file else None
+    resolved_env = env or os.environ.get(_ENV_NAME_FALLBACK)
+    resolved_environments_file = environments_file or os.environ.get(_ENVIRONMENTS_FILE_FALLBACK)
+    override = Path(resolved_environments_file) if resolved_environments_file else None
     config_path = _find_config_file(override)
 
     if config_path is None:
         # No config file found — try env-var fallback before giving up
-        lf_url = os.environ.get("LANGFLOW_URL") or os.environ.get("LFX_URL")
-        if lf_url and env is None:
-            lf_key = api_key or os.environ.get("LANGFLOW_API_KEY") or os.environ.get("LFX_API_KEY")
+        lf_url = os.environ.get("IDRFLOW_URL") or os.environ.get("LFX_URL")
+        if lf_url and resolved_env is None:
+            lf_key = api_key or os.environ.get("IDRFLOW_API_KEY") or os.environ.get("LFX_API_KEY")
             return LangflowEnvironment(name="__env__", url=lf_url, api_key=lf_key)
 
-        if env is not None:
+        if resolved_env is not None:
             msg = (
-                f"Environment {env!r} requested but no config file was found.\n"
-                f"  • Create .lfx/environments.yaml in your project root, or\n"
+                f"Environment {resolved_env!r} requested but no config file was found.\n"
+                "  • Create .lfx/environments.yaml in your project root, or\n"
+                "  • Create idrflow-environments.toml in the current directory, or\n"
+                "  • Create ~/.config/idrflow/environments.toml for user-level defaults, or\n"
+                f"  • Set {_ENVIRONMENTS_FILE_FALLBACK}=<path-to-config>, or\n"
                 f"  • Pass --target <url> [--api-key <key>] for inline configuration.\n"
                 f"  • Run 'lfx init' to scaffold a project with a config template."
             )
@@ -311,16 +326,18 @@ def resolve_environment(
         msg = (
             "No --env, --target URL, or config file found.\n"
             "Options:\n"
-            "  • lfx <cmd> --env <name>              (requires .lfx/environments.yaml)\n"
+            "  • lfx <cmd> --env <name>              (uses .lfx/environments.yaml, idrflow-environments.toml,\n"
+            "                                         or ~/.config/idrflow/environments.toml)\n"
+            f"  • export {_ENVIRONMENTS_FILE_FALLBACK}=<path>  (explicit environments config)\n"
             "  • lfx <cmd> --target <url>             (inline, no config file needed)\n"
-            "  • export LANGFLOW_URL=<url>            (env-var fallback)\n"
+            "  • export IDRFLOW_URL=<url>            (env-var fallback)\n"
             "  • lfx init                             (scaffold a project with a template)"
         )
         raise ConfigError(msg)
 
     all_envs, default_name = _load_config(config_path)
 
-    resolved_name = env or default_name
+    resolved_name = resolved_env or default_name
     if resolved_name is None:
         available = ", ".join(sorted(all_envs)) or "(none defined)"
         msg = (

@@ -121,7 +121,7 @@ class TelemetryService(Service):
 
     def _get_langflow_desktop(self) -> bool:
         # Coerce to bool, could be 1, 0, True, False, "1", "0", "True", "False"
-        return str(os.getenv("LANGFLOW_DESKTOP", "False")).lower() in {"1", "true"}
+        return str(os.getenv("IDRFLOW_DESKTOP", "False")).lower() in {"1", "true"}
 
     def _get_client_type(self) -> str:
         return "desktop" if self._get_langflow_desktop() else "oss"

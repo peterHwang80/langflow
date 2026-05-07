@@ -59,8 +59,8 @@ jobs:
             --tb=short \
             -v
         env:
-          LANGFLOW_SUPERUSER: admin
-          LANGFLOW_SUPERUSER_PASSWORD: 123456
+          IDRFLOW_SUPERUSER: admin
+          IDRFLOW_SUPERUSER_PASSWORD: 123456
 
   lfx-smoke-tests:
     # created a separate label for this since it's a different test suite for LFX components
@@ -103,8 +103,8 @@ jobs:
             --maxfail=5 \
             -v
         env:
-          LANGFLOW_SUPERUSER: admin
-          LANGFLOW_SUPERUSER_PASSWORD: 123456
+          IDRFLOW_SUPERUSER: admin
+          IDRFLOW_SUPERUSER_PASSWORD: 123456
 
   frontend-smoke-tests:
     if: contains(github.event.pull_request.labels.*.name, 'smoke-test') || github.event_name == 'release' || github.event_name == 'workflow_dispatch'
@@ -152,11 +152,11 @@ jobs:
             const backendStatus = '${{ needs.backend-smoke-tests.result }}';
             const lfxStatus = '${{ needs.lfx-smoke-tests.result }}';
             const frontendStatus = '${{ needs.frontend-smoke-tests.result }}';
-            
+
             const overallSuccess = backendStatus === 'success' && lfxStatus === 'success' && frontendStatus === 'success';
             const emoji = overallSuccess ? '✅' : '❌';
             const status = overallSuccess ? 'passed' : 'failed';
-            
+
             const backendEmoji = backendStatus === 'success' ? '✅' : '❌';
             const lfxEmoji = lfxStatus === 'success' ? '✅' : '❌';
             const frontendEmoji = frontendStatus === 'success' ? '✅' : '❌';
@@ -168,7 +168,7 @@ jobs:
             - ${backendEmoji} **Backend**: 11 essential test files (database, auth, API endpoints, flows, components)
             - ${lfxEmoji} **LFX**: Graph tests (langflow execution) - runs in isolation
             - ${frontendEmoji} **Frontend**: Unit tests only (components, utilities)
-            
+
             **Coverage**: Core functionality without external dependencies
 
             View details in the [Actions tab](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}).`;

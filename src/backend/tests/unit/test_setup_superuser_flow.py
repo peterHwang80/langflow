@@ -19,8 +19,8 @@ async def initialized_services(monkeypatch, tmp_path):
     from lfx.services.manager import get_service_manager
 
     db_path = tmp_path / "test.db"
-    monkeypatch.setenv("LANGFLOW_DATABASE_URL", f"sqlite:///{db_path}")
-    monkeypatch.setenv("LANGFLOW_AUTO_LOGIN", "false")
+    monkeypatch.setenv("IDRFLOW_DATABASE_URL", f"sqlite:///{db_path}")
+    monkeypatch.setenv("IDRFLOW_AUTO_LOGIN", "false")
 
     get_service_manager().factories.clear()
     get_service_manager().services.clear()

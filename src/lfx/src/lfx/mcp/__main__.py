@@ -6,8 +6,8 @@ Usage:
     lfx-mcp
 
 Environment variables:
-    LANGFLOW_SERVER_URL: Langflow server URL (default: http://localhost:7860)
-    LANGFLOW_API_KEY: API key for authentication (skips login)
+    IDRFLOW_SERVER_URL: Langflow server URL (default: http://localhost:7860)
+    IDRFLOW_API_KEY: API key for authentication (skips login)
 """
 
 from lfx.mcp.server import mcp

@@ -442,14 +442,14 @@ class TestKeyFileManagement:
         """Test default config directory uses platformdirs."""
         from platformdirs import user_cache_dir
 
-        monkeypatch.delenv("LANGFLOW_CONFIG_DIR", raising=False)
+        monkeypatch.delenv("IDRFLOW_CONFIG_DIR", raising=False)
         result = migrate_module.get_config_dir()
         expected = Path(user_cache_dir("langflow", "langflow"))
         assert result == expected
 
     def test_get_config_dir_from_env(self, migrate_module, monkeypatch):
         """Test config directory from environment variable."""
-        monkeypatch.setenv("LANGFLOW_CONFIG_DIR", "/custom/config")
+        monkeypatch.setenv("IDRFLOW_CONFIG_DIR", "/custom/config")
         result = migrate_module.get_config_dir()
         assert result == Path("/custom/config")
 

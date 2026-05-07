@@ -9,9 +9,9 @@
 #
 # GITHUB SETUP  (Settings → Environments → New environment → "staging")
 #   Variables  (plain text, visible in logs):
-#     LANGFLOW_STAGING_URL   e.g. https://staging.langflow.example.com
+#     IDRFLOW_STAGING_URL   e.g. https://staging.langflow.example.com
 #   Secrets    (masked, never logged):
-#     LANGFLOW_STAGING_API_KEY   your staging API key
+#     IDRFLOW_STAGING_API_KEY   your staging API key
 #
 # USAGE
 #   Copy to .github/workflows/langflow-test.yml in your repo.
@@ -62,27 +62,27 @@ jobs:
         run: pip install "langflow-sdk[testing]" pytest
 
       # ------------------------------------------------------------------ #
-      # Write a minimal environments config so --langflow-env works.       #
+      # Write a minimal environments config so --idrflow-env works.       #
       # The URL comes from a plain variable; the key is injected as an     #
       # env var and resolved by langflow-sdk at runtime (never written to  #
       # disk).                                                              #
       # ------------------------------------------------------------------ #
       - name: Write environments config
         run: >-
-          printf '[environments.staging]\nurl = "%s"\napi_key_env = "LANGFLOW_STAGING_API_KEY"\n'
-          "$LANGFLOW_STAGING_URL" > langflow-environments.toml
+          printf '[environments.staging]\nurl = "%s"\napi_key_env = "IDRFLOW_STAGING_API_KEY"\n'
+          "$IDRFLOW_STAGING_URL" > idrflow-environments.toml
         env:
-          LANGFLOW_STAGING_URL: ${{ vars.LANGFLOW_STAGING_URL }}
+          IDRFLOW_STAGING_URL: ${{ vars.IDRFLOW_STAGING_URL }}
 
       - name: Run flow tests
         env:
-          # URL for the flow_runner --langflow-env option
-          LANGFLOW_ENVIRONMENTS_FILE: langflow-environments.toml
+          # URL for the flow_runner --idrflow-env option
+          IDRFLOW_ENVIRONMENTS_FILE: idrflow-environments.toml
           # API key resolved by api_key_env in the environments file
-          LANGFLOW_STAGING_API_KEY: ${{ secrets.LANGFLOW_STAGING_API_KEY }}
+          IDRFLOW_STAGING_API_KEY: ${{ secrets.IDRFLOW_STAGING_API_KEY }}
         run: |
           pytest tests/ \
-            --langflow-env staging \
+            --idrflow-env staging \
             -m integration \
             -v \
             --tb=short

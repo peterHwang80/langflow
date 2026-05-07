@@ -298,14 +298,14 @@ def test_flow_runner_and_async_runner_are_importable():
 
 
 def test_pytest_addoption_registers_options(pytestconfig):
-    """The plugin registers all --langflow-* options (verified via public getoption API)."""
+    """The plugin registers all --idrflow-* options (verified via public getoption API)."""
     # getoption() returns None for unset options; raises ValueError if the
     # option was never registered -- so a clean return proves registration.
     for name in (
-        "--langflow-url",
-        "--langflow-env",
-        "--langflow-api-key",
-        "--langflow-environments-file",
+        "--idrflow-url",
+        "--idrflow-env",
+        "--idrflow-api-key",
+        "--idrflow-environments-file",
     ):
         assert pytestconfig.getoption(name) is None, f"Option {name!r} missing or has unexpected default"
 

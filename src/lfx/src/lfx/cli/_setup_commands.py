@@ -46,7 +46,12 @@ def register(app: typer.Typer) -> None:
             None,
             "--env",
             "-e",
-            help="Environment name from .lfx/environments.yaml. Uses [defaults] if omitted.",
+            help=(
+                "Environment name from the discovered environments config "
+                "(.lfx/environments.yaml, idrflow-environments.toml, "
+                "~/.config/idrflow/environments.toml, or IDRFLOW_ENVIRONMENTS_FILE). "
+                "Uses [defaults] if omitted."
+            ),
         ),
         environments_file: str | None = typer.Option(
             None,

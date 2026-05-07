@@ -6,9 +6,9 @@ between Langflow instances (dev / staging / production) without code changes.
 Config file lookup order
 ------------------------
 1. Path given explicitly to ``load_environments()`` or ``get_client()``.
-2. The ``LANGFLOW_ENVIRONMENTS_FILE`` environment variable.
-3. ``langflow-environments.toml`` in the current working directory.
-4. ``~/.config/langflow/environments.toml``
+2. The ``IDRFLOW_ENVIRONMENTS_FILE`` environment variable.
+3. ``idrflow-environments.toml`` in the current working directory.
+4. ``~/.config/idrflow/environments.toml``
 
 File format
 -----------
@@ -16,11 +16,11 @@ File format
 
     [environments.staging]
     url = "https://staging.langflow.example.com"
-    api_key_env = "LANGFLOW_STAGING_API_KEY"   # env-var that holds the key  # pragma: allowlist secret
+    api_key_env = "IDRFLOW_STAGING_API_KEY"   # env-var that holds the key  # pragma: allowlist secret
 
     [environments.production]
     url = "https://langflow.example.com"
-    api_key_env = "LANGFLOW_PROD_API_KEY"  # pragma: allowlist secret
+    api_key_env = "IDRFLOW_PROD_API_KEY"  # pragma: allowlist secret
 
     # Optional: set a default so callers don't have to name an environment
     [defaults]
@@ -40,23 +40,23 @@ try:
 except ImportError:  # pragma: no cover
     import tomli as tomllib  # type: ignore[no-reattr,assignment]
 
-_ENV_VAR = "LANGFLOW_ENVIRONMENTS_FILE"
-_LOCAL_NAME = "langflow-environments.toml"
-_USER_PATH = Path.home() / ".config" / "langflow" / "environments.toml"
+_ENV_VAR = "IDRFLOW_ENVIRONMENTS_FILE"
+_LOCAL_NAME = "idrflow-environments.toml"
+_USER_PATH = Path.home() / ".config" / "idrflow" / "environments.toml"
 
 _EXAMPLE_CONFIG = """\
-# langflow-environments.toml
+# idrflow-environments.toml
 #
 # Define named Langflow environments.  The api_key_env field is the *name*
 # of an environment variable that holds the API key for that instance.
 #
 # [environments.staging]
 # url = "https://staging.langflow.example.com"
-# api_key_env = "LANGFLOW_STAGING_API_KEY"  # pragma: allowlist secret
+# api_key_env = "IDRFLOW_STAGING_API_KEY"  # pragma: allowlist secret
 #
 # [environments.production]
 # url = "https://langflow.example.com"
-# api_key_env = "LANGFLOW_PROD_API_KEY"  # pragma: allowlist secret
+# api_key_env = "IDRFLOW_PROD_API_KEY"  # pragma: allowlist secret
 #
 # [defaults]
 # environment = "staging"
@@ -127,7 +127,7 @@ def load_environments(
     Parameters
     ----------
     config_file:
-        Explicit path to a ``langflow-environments.toml`` file. If omitted,
+        Explicit path to a ``idrflow-environments.toml`` file. If omitted,
         the lookup order described in the module docstring is used.
 
     Returns:
@@ -148,7 +148,7 @@ def load_environments(
 
     if file_path is None:
         raise EnvironmentConfigError(
-            "No langflow-environments.toml found. "
+            "No idrflow-environments.toml found. "
             f"Set {_ENV_VAR} or create one in the current directory.\n\n" + _EXAMPLE_CONFIG
         )
 

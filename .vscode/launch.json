@@ -31,8 +31,8 @@
       "jinja": true,
       "justMyCode": false,
       "env": {
-        "LANGFLOW_LOG_LEVEL": "debug",
-        "LANGFLOW_PROMETHEUS_PORT": "9090"
+        "IDRFLOW_LOG_LEVEL": "debug",
+        "IDRFLOW_PROMETHEUS_PORT": "9090"
       },
       "envFile": "${workspaceFolder}/.env"
     },

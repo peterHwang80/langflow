@@ -2,9 +2,9 @@ import os
 
 import requests
 
-base = os.environ.get("LANGFLOW_URL") or os.environ.get("LANGFLOW_SERVER_URL", "")
+base = os.environ.get("IDRFLOW_URL") or os.environ.get("IDRFLOW_SERVER_URL", "")
 flow_id = os.environ.get("FLOW_ID", "")
-api_key = os.environ.get("LANGFLOW_API_KEY", "")
+api_key = os.environ.get("IDRFLOW_API_KEY", "")
 
 headers = {"Content-Type": "application/json", "x-api-key": api_key}
 

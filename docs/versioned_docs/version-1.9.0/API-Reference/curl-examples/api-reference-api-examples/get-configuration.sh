@@ -1,4 +1,4 @@
 curl -X GET \
-  "$LANGFLOW_SERVER_URL/api/v1/config" \
+  "$IDRFLOW_SERVER_URL/api/v1/config" \
   -H "accept: application/json" \
-  -H "x-api-key: $LANGFLOW_API_KEY"
+  -H "x-api-key: $IDRFLOW_API_KEY"

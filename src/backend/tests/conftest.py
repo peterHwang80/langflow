@@ -268,12 +268,12 @@ def load_flows_dir():
 
 @pytest.fixture(name="distributed_env")
 def _setup_env(monkeypatch):
-    monkeypatch.setenv("LANGFLOW_CACHE_TYPE", "redis")
-    monkeypatch.setenv("LANGFLOW_REDIS_HOST", "result_backend")
-    monkeypatch.setenv("LANGFLOW_REDIS_PORT", "6379")
-    monkeypatch.setenv("LANGFLOW_REDIS_DB", "0")
-    monkeypatch.setenv("LANGFLOW_REDIS_EXPIRE", "3600")
-    monkeypatch.setenv("LANGFLOW_REDIS_PASSWORD", "")
+    monkeypatch.setenv("IDRFLOW_CACHE_TYPE", "redis")
+    monkeypatch.setenv("IDRFLOW_REDIS_HOST", "result_backend")
+    monkeypatch.setenv("IDRFLOW_REDIS_PORT", "6379")
+    monkeypatch.setenv("IDRFLOW_REDIS_DB", "0")
+    monkeypatch.setenv("IDRFLOW_REDIS_EXPIRE", "3600")
+    monkeypatch.setenv("IDRFLOW_REDIS_PASSWORD", "")
     monkeypatch.setenv("FLOWER_UNAUTHENTICATED_API", "True")
     monkeypatch.setenv("BROKER_URL", "redis://result_backend:6379/0")
     monkeypatch.setenv("RESULT_BACKEND", "redis://result_backend:6379/0")
@@ -292,8 +292,8 @@ def distributed_client_fixture(
     db_dir = tempfile.mkdtemp()
     try:
         db_path = Path(db_dir) / "test.db"
-        monkeypatch.setenv("LANGFLOW_DATABASE_URL", f"sqlite:///{db_path}")
-        monkeypatch.setenv("LANGFLOW_AUTO_LOGIN", "false")
+        monkeypatch.setenv("IDRFLOW_DATABASE_URL", f"sqlite:///{db_path}")
+        monkeypatch.setenv("IDRFLOW_AUTO_LOGIN", "false")
         # monkeypatch langflow.services.task.manager.USE_CELERY to True
         # monkeypatch.setattr(manager, "USE_CELERY", True)
         monkeypatch.setattr(celery_app, "celery_app", celery_app.make_celery("langflow", Config))
@@ -404,14 +404,14 @@ def json_loop_test():
 
 @pytest.fixture(autouse=True)
 def deactivate_tracing(monkeypatch):
-    monkeypatch.setenv("LANGFLOW_DEACTIVATE_TRACING", "true")
+    monkeypatch.setenv("IDRFLOW_DEACTIVATE_TRACING", "true")
     yield
     monkeypatch.undo()
 
 
 @pytest.fixture
 def use_noop_session(monkeypatch):
-    monkeypatch.setenv("LANGFLOW_USE_NOOP_DATABASE", "1")
+    monkeypatch.setenv("IDRFLOW_USE_NOOP_DATABASE", "1")
     # Optionally patch the Settings object if needed
     # from lfx.services.settings.base import Settings
     # monkeypatch.setattr(Settings, "use_noop_database", True)
@@ -434,14 +434,14 @@ async def client_fixture(
         def init_app():
             db_dir = tempfile.mkdtemp()
             db_path = Path(db_dir) / "test.db"
-            monkeypatch.setenv("LANGFLOW_DATABASE_URL", f"sqlite:///{db_path}")
-            monkeypatch.setenv("LANGFLOW_AUTO_LOGIN", "false")
+            monkeypatch.setenv("IDRFLOW_DATABASE_URL", f"sqlite:///{db_path}")
+            monkeypatch.setenv("IDRFLOW_AUTO_LOGIN", "false")
             if "load_flows" in request.keywords:
                 shutil.copyfile(
                     pytest.BASIC_EXAMPLE_PATH, Path(load_flows_dir) / "c54f9130-f2fa-4a3e-b22a-3856d946351b.json"
                 )
-                monkeypatch.setenv("LANGFLOW_LOAD_FLOWS_PATH", load_flows_dir)
-                monkeypatch.setenv("LANGFLOW_AUTO_LOGIN", "true")
+                monkeypatch.setenv("IDRFLOW_LOAD_FLOWS_PATH", load_flows_dir)
+                monkeypatch.setenv("IDRFLOW_AUTO_LOGIN", "true")
             # Clear the services cache
             from lfx.services.manager import get_service_manager
 
@@ -469,7 +469,7 @@ async def client_fixture(
 
 @pytest.fixture
 def runner(tmp_path):
-    env = {"LANGFLOW_DATABASE_URL": f"sqlite:///{tmp_path}/test.db"}
+    env = {"IDRFLOW_DATABASE_URL": f"sqlite:///{tmp_path}/test.db"}
     return CliRunner(env=env)
 
 

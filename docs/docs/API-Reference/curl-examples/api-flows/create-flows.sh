@@ -1,8 +1,8 @@
 curl -X POST \
-  "$LANGFLOW_URL/api/v1/flows/batch/" \
+  "$IDRFLOW_URL/api/v1/flows/batch/" \
   -H "accept: application/json" \
   -H "Content-Type: application/json" \
-  -H "x-api-key: $LANGFLOW_API_KEY" \
+  -H "x-api-key: $IDRFLOW_API_KEY" \
   -d '{
   "flows": [
     {

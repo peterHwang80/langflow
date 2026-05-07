@@ -52,7 +52,8 @@ def _api_key_env_name(env_name: str, environments_file: str | None) -> str | Non
     try:
         from lfx.config.environments import _find_config_file, _load_config
 
-        override = Path(environments_file) if environments_file else None
+        resolved_path = environments_file or os.environ.get("IDRFLOW_ENVIRONMENTS_FILE")
+        override = Path(resolved_path) if resolved_path else None
         config_path = _find_config_file(override)
         if config_path is None:
             return None
@@ -127,7 +128,7 @@ def login_command(
         if key_env_name:
             warning_parts.append(f"  Set [bold]export {key_env_name}=<your-key>[/bold] then retry.")
         else:
-            warning_parts.append("  Add [bold]api_key_env: LANGFLOW_<ENV>_API_KEY[/bold] to your config,")
+            warning_parts.append("  Add [bold]api_key_env: IDRFLOW_<ENV>_API_KEY[/bold] to your config,")
             warning_parts.append("  then set that environment variable to your API key.")
         for line in warning_parts:
             err_console.print(line)
@@ -167,7 +168,11 @@ def login_command(
             err_console.print()
             err_console.print("[bold]How to fix:[/bold]")
             err_console.print("  • Make sure your idrflow instance is running")
-            err_console.print("  • Check the URL in your .lfx/environments.yaml")
+            err_console.print(
+                "  • Check the URL in your environments config "
+                "(.lfx/environments.yaml, idrflow-environments.toml, "
+                "~/.config/idrflow/environments.toml, or IDRFLOW_ENVIRONMENTS_FILE)"
+            )
             err_console.print("  • If running locally: [bold]langflow run[/bold] or [bold]lfx serve <flow.json>[/bold]")
             raise typer.Exit(1)
 
@@ -183,8 +188,8 @@ def login_command(
     key_source = ""
     if key_env_name and env_cfg.api_key:
         key_source = f"  [dim]from env var {key_env_name}[/dim]"
-    elif os.environ.get("LANGFLOW_API_KEY") == env_cfg.api_key and env_cfg.api_key:
-        key_source = "  [dim]from LANGFLOW_API_KEY[/dim]"
+    elif os.environ.get("IDRFLOW_API_KEY") == env_cfg.api_key and env_cfg.api_key:
+        key_source = "  [dim]from IDRFLOW_API_KEY[/dim]"
 
     env_label = env_cfg.name if env_cfg.name not in ("__inline__", "__env__") else "(inline)"
 
@@ -207,9 +212,12 @@ def login_command(
 
     if env_cfg.name in ("__inline__", "__env__") and env_cfg.api_key:
         console.print()
-        console.print("[dim]Tip: to avoid passing credentials each time, add to .lfx/environments.yaml:[/dim]")
+        console.print(
+            "[dim]Tip: to avoid passing credentials each time, add this block to "
+            ".lfx/environments.yaml or another environments config:[/dim]"
+        )
         env_display = env or "myenv"
         console.print("[dim]  environments:[/dim]")
         console.print(f"[dim]    {env_display}:[/dim]")
         console.print(f"[dim]      url: {env_cfg.url}[/dim]")
-        console.print(f"[dim]      api_key_env: LANGFLOW_{env_display.upper()}_API_KEY[/dim]")
+        console.print(f"[dim]      api_key_env: IDRFLOW_{env_display.upper()}_API_KEY[/dim]")

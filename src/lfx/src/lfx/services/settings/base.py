@@ -58,12 +58,12 @@ class CustomSource(EnvSettingsSource):
 
 
 class Settings(BaseSettings):
-    # Define the default LANGFLOW_DIR
+    # Define the default IDRFLOW_DIR
     config_dir: str | None = None
     # Define if langflow db should be saved in config dir or
     # in the langflow directory
     save_db_in_config_dir: bool = False
-    """Define if langflow database should be saved in LANGFLOW_CONFIG_DIR or in the langflow directory
+    """Define if langflow database should be saved in IDRFLOW_CONFIG_DIR or in the langflow directory
     (i.e. in the package directory)."""
 
     knowledge_bases_dir: str | None = "~/.langflow/knowledge_bases"
@@ -96,7 +96,7 @@ class Settings(BaseSettings):
     """ASGI root_path for deployments behind a reverse proxy that strips a URL
     prefix (e.g. '/langflow').  When set, the MCP SSE transport includes this
     prefix in the POST-back URL so clients can reach the correct endpoint.
-    Can also be set via the LANGFLOW_ROOT_PATH environment variable."""
+    Can also be set via the IDRFLOW_ROOT_PATH environment variable."""
 
     @field_validator("root_path", mode="before")
     @classmethod
@@ -177,7 +177,7 @@ class Settings(BaseSettings):
 
     use_noop_database: bool = False
     """If True, disables all database operations and uses a no-op session.
-    Controlled by LANGFLOW_USE_NOOP_DATABASE env variable."""
+    Controlled by IDRFLOW_USE_NOOP_DATABASE env variable."""
 
     # cache configuration
     cache_type: Literal["async", "redis", "memory", "disk"] = "async"
@@ -198,7 +198,7 @@ class Settings(BaseSettings):
     """List of paths to custom components.
 
     Security: This setting defines an allow-list of custom components
-    permitted to execute, even when LANGFLOW_ALLOW_CUSTOM_COMPONENTS is False.
+    permitted to execute, even when IDRFLOW_ALLOW_CUSTOM_COMPONENTS is False.
     """
     components_index_path: str | None = None
     """Path or URL to a prebuilt component index JSON file.
@@ -391,7 +391,7 @@ class Settings(BaseSettings):
     when the cache is not yet loaded (e.g., during startup), all flow execution is blocked
     as a safety measure.
 
-    Note: LANGFLOW_COMPONENTS_PATH can be used to define an allow-list of custom components
+    Note: IDRFLOW_COMPONENTS_PATH can be used to define an allow-list of custom components
     that will be allowed to execute, even when allow_custom_components is False.
 
     Note: this is a beta feature. For security in a multi-tenant environment,
@@ -419,8 +419,8 @@ class Settings(BaseSettings):
     def validate_runtime_port(cls, value):
         """Parse port from Kubernetes service discovery env vars.
 
-        Kubernetes auto-creates env vars like LANGFLOW_RUNTIME_PORT=tcp://<ip>:<port>
-        for services, which collides with the LANGFLOW_ env prefix. Extract the port
+        Kubernetes auto-creates env vars like IDRFLOW_RUNTIME_PORT=tcp://<ip>:<port>
+        for services, which collides with the IDRFLOW_ env prefix. Extract the port
         number from URL-like values instead of failing.
         """
         if value is None:
@@ -522,7 +522,7 @@ class Settings(BaseSettings):
 
         # Add agentic variables if agentic_experience is enabled
         # Check env var directly since we can't access instance attributes in validator
-        if os.getenv("LANGFLOW_AGENTIC_EXPERIENCE", "true").lower() == "true":
+        if os.getenv("IDRFLOW_AGENTIC_EXPERIENCE", "true").lower() == "true":
             result.extend(AGENTIC_VARIABLES)
 
         return list(set(result))
@@ -568,9 +568,9 @@ class Settings(BaseSettings):
             msg = f"Invalid database_url provided: '{sanitized}'"
             raise ValueError(msg)
 
-        if langflow_database_url := os.getenv("LANGFLOW_DATABASE_URL"):
+        if langflow_database_url := os.getenv("IDRFLOW_DATABASE_URL"):
             value = langflow_database_url
-            logger.debug("Using LANGFLOW_DATABASE_URL env variable")
+            logger.debug("Using IDRFLOW_DATABASE_URL env variable")
         else:
             # Originally, we used sqlite:///./langflow.db
             # so we need to migrate to the new format
@@ -641,13 +641,13 @@ class Settings(BaseSettings):
     def set_components_path(cls, value):
         """Processes and updates the components path list, incorporating environment variable overrides.
 
-        If the `LANGFLOW_COMPONENTS_PATH` environment variable is set and points to an existing path, it is
+        If the `IDRFLOW_COMPONENTS_PATH` environment variable is set and points to an existing path, it is
         appended to the provided list if not already present. If the input list is empty or missing, it is
         set to an empty list.
         """
-        if os.getenv("LANGFLOW_COMPONENTS_PATH"):
-            logger.debug("Adding LANGFLOW_COMPONENTS_PATH to components_path")
-            langflow_component_path = os.getenv("LANGFLOW_COMPONENTS_PATH")
+        if os.getenv("IDRFLOW_COMPONENTS_PATH"):
+            logger.debug("Adding IDRFLOW_COMPONENTS_PATH to components_path")
+            langflow_component_path = os.getenv("IDRFLOW_COMPONENTS_PATH")
             if Path(langflow_component_path).exists() and langflow_component_path not in value:
                 if isinstance(langflow_component_path, list):
                     for path in langflow_component_path:
@@ -666,7 +666,7 @@ class Settings(BaseSettings):
             value = [str(p) if isinstance(p, Path) else p for p in value]
         return value
 
-    model_config = SettingsConfigDict(validate_assignment=True, extra="ignore", env_prefix="LANGFLOW_")
+    model_config = SettingsConfigDict(validate_assignment=True, extra="ignore", env_prefix="IDRFLOW_")
 
     async def update_from_yaml(self, file_path: str, *, dev: bool = False) -> None:
         new_settings = await load_settings_from_yaml(file_path)

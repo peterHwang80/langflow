@@ -13,7 +13,7 @@ def upload(file_path: str, host: str, flow_id: str, api_key: str | None = None):
 
     The upload endpoint now requires authentication (see Langflow
     PR #12831).  Callers must supply an API key via ``api_key`` or by
-    setting the ``LANGFLOW_API_KEY`` environment variable; otherwise the
+    setting the ``IDRFLOW_API_KEY`` environment variable; otherwise the
     server will reject the request with 401/403.
 
     Args:
@@ -21,7 +21,7 @@ def upload(file_path: str, host: str, flow_id: str, api_key: str | None = None):
         host (str): The host URL of Langflow.
         flow_id (UUID): The ID of the flow to which the file belongs.
         api_key (str | None): API key sent as ``x-api-key``.  If None,
-            falls back to the ``LANGFLOW_API_KEY`` environment variable.
+            falls back to the ``IDRFLOW_API_KEY`` environment variable.
 
     Returns:
         dict: A dictionary containing the file path.
@@ -31,7 +31,7 @@ def upload(file_path: str, host: str, flow_id: str, api_key: str | None = None):
     """
     try:
         url = f"{host}/api/v1/upload/{flow_id}"
-        resolved_api_key = api_key if api_key is not None else os.environ.get("LANGFLOW_API_KEY")
+        resolved_api_key = api_key if api_key is not None else os.environ.get("IDRFLOW_API_KEY")
         headers = {"x-api-key": resolved_api_key} if resolved_api_key else {}
         with Path(file_path).open("rb") as file:
             response = httpx.post(url, files={"file": file}, headers=headers)
@@ -63,7 +63,7 @@ def upload_file(
         components (str): List of component IDs or names that need the file.
         tweaks (dict): A dictionary of tweaks to be applied to the file.
         api_key (str | None): API key forwarded to :func:`upload`.  Falls back
-            to ``LANGFLOW_API_KEY`` if not supplied.
+            to ``IDRFLOW_API_KEY`` if not supplied.
 
     Returns:
         dict: A dictionary containing the file path and any tweaks that were applied.

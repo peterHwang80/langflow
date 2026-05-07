@@ -7,7 +7,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Link from '@docusaurus/Link';
 
-In general, environment variables, like `LANGFLOW_PORT` or `LANGFLOW_LOG_LEVEL`, configure how idrflow runs.
+In general, environment variables, like `IDRFLOW_PORT` or `IDRFLOW_LOG_LEVEL`, configure how idrflow runs.
 These are broad settings that apply to your entire idrflow deployment.
 
 In contrast, global variables are user-defined values stored in idrflow's database for use in flows, such as `OPENAI_API_KEY`.
@@ -35,8 +35,8 @@ When running a idrflow Docker image, the `-e` flag can be used to set additional
 
 For example:
 
-* If you set `LANGFLOW_PORT=8080` in your system environment and `LANGFLOW_PORT=7860` in `.env`, idrflow uses `7860` from `.env`.
-* If you use the idrflow CLI to run `langflow run --env-file .env --port 9000`, and you set `LANGFLOW_PORT=7860` in `.env`, then idrflow uses `9000` from the CLI option.
+* If you set `IDRFLOW_PORT=8080` in your system environment and `IDRFLOW_PORT=7860` in `.env`, idrflow uses `7860` from `.env`.
+* If you use the idrflow CLI to run `langflow run --env-file .env --port 9000`, and you set `IDRFLOW_PORT=7860` in `.env`, then idrflow uses `9000` from the CLI option.
 
 ### Set environment variables in your terminal {#configure-variables-terminal}
 
@@ -85,35 +85,35 @@ If it detects a supported environment variable, then it automatically adopts the
 
     ```text
     DO_NOT_TRACK=True
-    LANGFLOW_AUTO_LOGIN=False
-    LANGFLOW_AUTO_SAVING=True
-    LANGFLOW_AUTO_SAVING_INTERVAL=1000
-    LANGFLOW_BACKEND_ONLY=False
-    LANGFLOW_BUNDLE_URLS=["https://github.com/user/repo/commit/hash"]
-    LANGFLOW_CACHE_TYPE=async
-    LANGFLOW_COMPONENTS_PATH=/path/to/components/
-    LANGFLOW_COMPONENTS_INDEX_PATH=/path/to/component_index.json
-    LANGFLOW_CONFIG_DIR=/path/to/config/
-    LANGFLOW_DATABASE_URL=postgresql://user:password@localhost:5432/langflow
-    LANGFLOW_DEV=False
-    LANGFLOW_FALLBACK_TO_ENV_VAR=False
-    LANGFLOW_HEALTH_CHECK_MAX_RETRIES=5
-    LANGFLOW_HOST=localhost
-    LANGFLOW_LANGCHAIN_CACHE=InMemoryCache
-    LANGFLOW_MAX_FILE_SIZE_UPLOAD=10000
-    LANGFLOW_MAX_ITEMS_LENGTH=100
-    LANGFLOW_MAX_TEXT_LENGTH=1000
-    LANGFLOW_LOG_LEVEL=error
-    LANGFLOW_OPEN_BROWSER=False
-    LANGFLOW_PORT=7860
-    LANGFLOW_REMOVE_API_KEYS=False
-    LANGFLOW_SAVE_DB_IN_CONFIG_DIR=True
-    LANGFLOW_SECRET_KEY=somesecretkey
-    LANGFLOW_STORE_ENVIRONMENT_VARIABLES=True
-    LANGFLOW_SUPERUSER=adminuser
-    LANGFLOW_SUPERUSER_PASSWORD=adminpass
-    LANGFLOW_WORKER_TIMEOUT=60000
-    LANGFLOW_WORKERS=3
+    IDRFLOW_AUTO_LOGIN=False
+    IDRFLOW_AUTO_SAVING=True
+    IDRFLOW_AUTO_SAVING_INTERVAL=1000
+    IDRFLOW_BACKEND_ONLY=False
+    IDRFLOW_BUNDLE_URLS=["https://github.com/user/repo/commit/hash"]
+    IDRFLOW_CACHE_TYPE=async
+    IDRFLOW_COMPONENTS_PATH=/path/to/components/
+    IDRFLOW_COMPONENTS_INDEX_PATH=/path/to/component_index.json
+    IDRFLOW_CONFIG_DIR=/path/to/config/
+    IDRFLOW_DATABASE_URL=postgresql://user:password@localhost:5432/langflow
+    IDRFLOW_DEV=False
+    IDRFLOW_FALLBACK_TO_ENV_VAR=False
+    IDRFLOW_HEALTH_CHECK_MAX_RETRIES=5
+    IDRFLOW_HOST=localhost
+    IDRFLOW_LANGCHAIN_CACHE=InMemoryCache
+    IDRFLOW_MAX_FILE_SIZE_UPLOAD=10000
+    IDRFLOW_MAX_ITEMS_LENGTH=100
+    IDRFLOW_MAX_TEXT_LENGTH=1000
+    IDRFLOW_LOG_LEVEL=error
+    IDRFLOW_OPEN_BROWSER=False
+    IDRFLOW_PORT=7860
+    IDRFLOW_REMOVE_API_KEYS=False
+    IDRFLOW_SAVE_DB_IN_CONFIG_DIR=True
+    IDRFLOW_SECRET_KEY=somesecretkey
+    IDRFLOW_STORE_ENVIRONMENT_VARIABLES=True
+    IDRFLOW_SUPERUSER=adminuser
+    IDRFLOW_SUPERUSER_PASSWORD=adminpass
+    IDRFLOW_WORKER_TIMEOUT=60000
+    IDRFLOW_WORKERS=3
     ```
 
     For additional examples, see [`.env.example`](https://github.com/langflow-ai/langflow/blob/main/.env.example) in the idrflow repository.
@@ -164,35 +164,35 @@ Create or edit a `.env` file in the root directory of your application or idrflo
 
 ```text title=".env"
 DO_NOT_TRACK=True
-LANGFLOW_AUTO_LOGIN=False
-LANGFLOW_AUTO_SAVING=True
-LANGFLOW_AUTO_SAVING_INTERVAL=1000
-LANGFLOW_BACKEND_ONLY=False
-LANGFLOW_BUNDLE_URLS=["https://github.com/user/repo/commit/hash"]
-LANGFLOW_CACHE_TYPE=async
-LANGFLOW_COMPONENTS_PATH=/path/to/components/
-LANGFLOW_COMPONENTS_INDEX_PATH=/path/to/component_index.json
-LANGFLOW_CONFIG_DIR=/path/to/config/
-LANGFLOW_DATABASE_URL=postgresql://user:password@localhost:5432/langflow
-LANGFLOW_DEV=False
-LANGFLOW_FALLBACK_TO_ENV_VAR=False
-LANGFLOW_HEALTH_CHECK_MAX_RETRIES=5
-LANGFLOW_HOST=localhost
-LANGFLOW_LANGCHAIN_CACHE=InMemoryCache
-LANGFLOW_MAX_FILE_SIZE_UPLOAD=10000
-LANGFLOW_MAX_ITEMS_LENGTH=100
-LANGFLOW_MAX_TEXT_LENGTH=1000
-LANGFLOW_LOG_LEVEL=error
-LANGFLOW_OPEN_BROWSER=False
-LANGFLOW_PORT=7860
-LANGFLOW_REMOVE_API_KEYS=False
-LANGFLOW_SAVE_DB_IN_CONFIG_DIR=True
-LANGFLOW_SECRET_KEY=somesecretkey
-LANGFLOW_STORE_ENVIRONMENT_VARIABLES=True
-LANGFLOW_SUPERUSER=adminuser
-LANGFLOW_SUPERUSER_PASSWORD=adminpass
-LANGFLOW_WORKER_TIMEOUT=60000
-LANGFLOW_WORKERS=3
+IDRFLOW_AUTO_LOGIN=False
+IDRFLOW_AUTO_SAVING=True
+IDRFLOW_AUTO_SAVING_INTERVAL=1000
+IDRFLOW_BACKEND_ONLY=False
+IDRFLOW_BUNDLE_URLS=["https://github.com/user/repo/commit/hash"]
+IDRFLOW_CACHE_TYPE=async
+IDRFLOW_COMPONENTS_PATH=/path/to/components/
+IDRFLOW_COMPONENTS_INDEX_PATH=/path/to/component_index.json
+IDRFLOW_CONFIG_DIR=/path/to/config/
+IDRFLOW_DATABASE_URL=postgresql://user:password@localhost:5432/langflow
+IDRFLOW_DEV=False
+IDRFLOW_FALLBACK_TO_ENV_VAR=False
+IDRFLOW_HEALTH_CHECK_MAX_RETRIES=5
+IDRFLOW_HOST=localhost
+IDRFLOW_LANGCHAIN_CACHE=InMemoryCache
+IDRFLOW_MAX_FILE_SIZE_UPLOAD=10000
+IDRFLOW_MAX_ITEMS_LENGTH=100
+IDRFLOW_MAX_TEXT_LENGTH=1000
+IDRFLOW_LOG_LEVEL=error
+IDRFLOW_OPEN_BROWSER=False
+IDRFLOW_PORT=7860
+IDRFLOW_REMOVE_API_KEYS=False
+IDRFLOW_SAVE_DB_IN_CONFIG_DIR=True
+IDRFLOW_SECRET_KEY=somesecretkey
+IDRFLOW_STORE_ENVIRONMENT_VARIABLES=True
+IDRFLOW_SUPERUSER=adminuser
+IDRFLOW_SUPERUSER_PASSWORD=adminpass
+IDRFLOW_WORKER_TIMEOUT=60000
+IDRFLOW_WORKERS=3
 ```
 
 </details>
@@ -210,37 +210,37 @@ To add environment variables, create or edit a service configuration file and ad
 ```ini title="override.conf"
 [Service]
 Environment="DO_NOT_TRACK=true"
-Environment="LANGFLOW_AUTO_LOGIN=false"
-Environment="LANGFLOW_AUTO_SAVING=true"
-Environment="LANGFLOW_AUTO_SAVING_INTERVAL=1000"
-Environment="LANGFLOW_BACKEND_ONLY=false"
-Environment="LANGFLOW_BUNDLE_URLS=[\"https://github.com/user/repo/commit/hash\"]"
-Environment="LANGFLOW_CACHE_TYPE=async"
-Environment="LANGFLOW_COMPONENTS_PATH=/path/to/components/"
-Environment="LANGFLOW_COMPONENTS_INDEX_PATH=/path/to/component_index.json"
-Environment="LANGFLOW_CONFIG_DIR=/path/to/config"
-Environment="LANGFLOW_DATABASE_URL=postgresql://user:password@localhost:5432/langflow"
-Environment="LANGFLOW_DEV=false"
-Environment="LANGFLOW_FALLBACK_TO_ENV_VAR=false"
-Environment="LANGFLOW_HEALTH_CHECK_MAX_RETRIES=5"
-Environment="LANGFLOW_HOST=localhost"
-Environment="LANGFLOW_LANGCHAIN_CACHE=InMemoryCache"
-Environment="LANGFLOW_MAX_FILE_SIZE_UPLOAD=10000"
-Environment="LANGFLOW_MAX_ITEMS_LENGTH=100"
-Environment="LANGFLOW_MAX_TEXT_LENGTH=1000"
-Environment="LANGFLOW_LOG_ENV=container_json"
-Environment="LANGFLOW_LOG_FILE=logs/langflow.log"
-Environment="LANGFLOW_LOG_LEVEL=error"
-Environment="LANGFLOW_OPEN_BROWSER=false"
-Environment="LANGFLOW_PORT=7860"
-Environment="LANGFLOW_REMOVE_API_KEYS=false"
-Environment="LANGFLOW_SAVE_DB_IN_CONFIG_DIR=true"
-Environment="LANGFLOW_SECRET_KEY=somesecretkey"
-Environment="LANGFLOW_STORE_ENVIRONMENT_VARIABLES=true"
-Environment="LANGFLOW_SUPERUSER=adminuser"
-Environment="LANGFLOW_SUPERUSER_PASSWORD=adminpass"
-Environment="LANGFLOW_WORKER_TIMEOUT=60000"
-Environment="LANGFLOW_WORKERS=3"
+Environment="IDRFLOW_AUTO_LOGIN=false"
+Environment="IDRFLOW_AUTO_SAVING=true"
+Environment="IDRFLOW_AUTO_SAVING_INTERVAL=1000"
+Environment="IDRFLOW_BACKEND_ONLY=false"
+Environment="IDRFLOW_BUNDLE_URLS=[\"https://github.com/user/repo/commit/hash\"]"
+Environment="IDRFLOW_CACHE_TYPE=async"
+Environment="IDRFLOW_COMPONENTS_PATH=/path/to/components/"
+Environment="IDRFLOW_COMPONENTS_INDEX_PATH=/path/to/component_index.json"
+Environment="IDRFLOW_CONFIG_DIR=/path/to/config"
+Environment="IDRFLOW_DATABASE_URL=postgresql://user:password@localhost:5432/langflow"
+Environment="IDRFLOW_DEV=false"
+Environment="IDRFLOW_FALLBACK_TO_ENV_VAR=false"
+Environment="IDRFLOW_HEALTH_CHECK_MAX_RETRIES=5"
+Environment="IDRFLOW_HOST=localhost"
+Environment="IDRFLOW_LANGCHAIN_CACHE=InMemoryCache"
+Environment="IDRFLOW_MAX_FILE_SIZE_UPLOAD=10000"
+Environment="IDRFLOW_MAX_ITEMS_LENGTH=100"
+Environment="IDRFLOW_MAX_TEXT_LENGTH=1000"
+Environment="IDRFLOW_LOG_ENV=container_json"
+Environment="IDRFLOW_LOG_FILE=logs/langflow.log"
+Environment="IDRFLOW_LOG_LEVEL=error"
+Environment="IDRFLOW_OPEN_BROWSER=false"
+Environment="IDRFLOW_PORT=7860"
+Environment="IDRFLOW_REMOVE_API_KEYS=false"
+Environment="IDRFLOW_SAVE_DB_IN_CONFIG_DIR=true"
+Environment="IDRFLOW_SECRET_KEY=somesecretkey"
+Environment="IDRFLOW_STORE_ENVIRONMENT_VARIABLES=true"
+Environment="IDRFLOW_SUPERUSER=adminuser"
+Environment="IDRFLOW_SUPERUSER_PASSWORD=adminpass"
+Environment="IDRFLOW_WORKER_TIMEOUT=60000"
+Environment="IDRFLOW_WORKERS=3"
 ```
 
 </details>
@@ -263,37 +263,37 @@ Create or edit the `.vscode/tasks.json` file in your project root.
     "options": {
         "env": {
             "DO_NOT_TRACK": "true",
-            "LANGFLOW_AUTO_LOGIN": "false",
-            "LANGFLOW_AUTO_SAVING": "true",
-            "LANGFLOW_AUTO_SAVING_INTERVAL": "1000",
-            "LANGFLOW_BACKEND_ONLY": "false",
-            "LANGFLOW_BUNDLE_URLS": "[\"https://github.com/user/repo/commit/hash\"]",
-            "LANGFLOW_CACHE_TYPE": "async",
-            "LANGFLOW_COMPONENTS_PATH": "D:/path/to/components/",
-            "LANGFLOW_COMPONENTS_INDEX_PATH": "D:/path/to/component_index.json",
-            "LANGFLOW_CONFIG_DIR": "D:/path/to/config/",
-            "LANGFLOW_DATABASE_URL": "postgresql://postgres:password@localhost:5432/langflow",
-            "LANGFLOW_DEV": "false",
-            "LANGFLOW_FALLBACK_TO_ENV_VAR": "false",
-            "LANGFLOW_HEALTH_CHECK_MAX_RETRIES": "5",
-            "LANGFLOW_HOST": "localhost",
-            "LANGFLOW_LANGCHAIN_CACHE": "InMemoryCache",
-            "LANGFLOW_MAX_FILE_SIZE_UPLOAD": "10000",
-            "LANGFLOW_MAX_ITEMS_LENGTH": "100",
-            "LANGFLOW_MAX_TEXT_LENGTH": "1000",
-            "LANGFLOW_LOG_ENV": "container_csv",
-            "LANGFLOW_LOG_FILE": "langflow.log",
-            "LANGFLOW_LOG_LEVEL": "error",
-            "LANGFLOW_OPEN_BROWSER": "false",
-            "LANGFLOW_PORT": "7860",
-            "LANGFLOW_REMOVE_API_KEYS": "true",
-            "LANGFLOW_SAVE_DB_IN_CONFIG_DIR": "false",
-            "LANGFLOW_SECRET_KEY": "somesecretkey",
-            "LANGFLOW_STORE_ENVIRONMENT_VARIABLES": "true",
-            "LANGFLOW_SUPERUSER": "adminuser",
-            "LANGFLOW_SUPERUSER_PASSWORD": "adminpass",
-            "LANGFLOW_WORKER_TIMEOUT": "60000",
-            "LANGFLOW_WORKERS": "3"
+            "IDRFLOW_AUTO_LOGIN": "false",
+            "IDRFLOW_AUTO_SAVING": "true",
+            "IDRFLOW_AUTO_SAVING_INTERVAL": "1000",
+            "IDRFLOW_BACKEND_ONLY": "false",
+            "IDRFLOW_BUNDLE_URLS": "[\"https://github.com/user/repo/commit/hash\"]",
+            "IDRFLOW_CACHE_TYPE": "async",
+            "IDRFLOW_COMPONENTS_PATH": "D:/path/to/components/",
+            "IDRFLOW_COMPONENTS_INDEX_PATH": "D:/path/to/component_index.json",
+            "IDRFLOW_CONFIG_DIR": "D:/path/to/config/",
+            "IDRFLOW_DATABASE_URL": "postgresql://postgres:password@localhost:5432/langflow",
+            "IDRFLOW_DEV": "false",
+            "IDRFLOW_FALLBACK_TO_ENV_VAR": "false",
+            "IDRFLOW_HEALTH_CHECK_MAX_RETRIES": "5",
+            "IDRFLOW_HOST": "localhost",
+            "IDRFLOW_LANGCHAIN_CACHE": "InMemoryCache",
+            "IDRFLOW_MAX_FILE_SIZE_UPLOAD": "10000",
+            "IDRFLOW_MAX_ITEMS_LENGTH": "100",
+            "IDRFLOW_MAX_TEXT_LENGTH": "1000",
+            "IDRFLOW_LOG_ENV": "container_csv",
+            "IDRFLOW_LOG_FILE": "langflow.log",
+            "IDRFLOW_LOG_LEVEL": "error",
+            "IDRFLOW_OPEN_BROWSER": "false",
+            "IDRFLOW_PORT": "7860",
+            "IDRFLOW_REMOVE_API_KEYS": "true",
+            "IDRFLOW_SAVE_DB_IN_CONFIG_DIR": "false",
+            "IDRFLOW_SECRET_KEY": "somesecretkey",
+            "IDRFLOW_STORE_ENVIRONMENT_VARIABLES": "true",
+            "IDRFLOW_SUPERUSER": "adminuser",
+            "IDRFLOW_SUPERUSER_PASSWORD": "adminpass",
+            "IDRFLOW_WORKER_TIMEOUT": "60000",
+            "IDRFLOW_WORKERS": "3"
         }
     },
     "tasks": [
@@ -330,8 +330,8 @@ To modify the macOS `.env` file, do the following:
 2. Add your idrflow environment variables, for example:
 
     ```text
-    LANGFLOW_LOG_LEVEL=info
-    LANGFLOW_DOCLING=true
+    IDRFLOW_LOG_LEVEL=info
+    IDRFLOW_DOCLING=true
     ```
 
 3. Save the file.
@@ -346,8 +346,8 @@ To modify the Windows `.env` file, do the following:
 2. Add your idrflow environment variables, for example:
 
     ```text
-    LANGFLOW_LOG_LEVEL=info
-    LANGFLOW_DOCLING=true
+    IDRFLOW_LOG_LEVEL=info
+    IDRFLOW_DOCLING=true
     ```
 
 3. Save the file.
@@ -403,19 +403,19 @@ The following environment variables set base idrflow server configuration, such 
 
 | Variable | Format | Default | Description |
 |----------|--------|---------|-------------|
-| `LANGFLOW_HOST` | String | `localhost` | The host on which the idrflow server will run. |
-| `LANGFLOW_PORT` | Integer | `7860` | The port on which the idrflow server runs. The server automatically selects a free port if the specified port is in use. |
-| `LANGFLOW_BACKEND_ONLY` | Boolean | `False` | Run only the idrflow backend service (no frontend). |
-| `LANGFLOW_DEV` | Boolean | `False` | Whether to run idrflow in development mode (may contain bugs). |
-| `LANGFLOW_OPEN_BROWSER` | Boolean | `False` | Open the system web browser on startup. |
-| `LANGFLOW_HEALTH_CHECK_MAX_RETRIES` | Integer | `5` | Set the maximum number of retries for idrflow's server status health checks. |
-| `LANGFLOW_WORKERS` | Integer | `1` | Number of worker processes. |
-| `LANGFLOW_WORKER_TIMEOUT` | Integer | `300` | Worker timeout in seconds. |
-| `LANGFLOW_SSL_CERT_FILE` | String | Not set | Path to the SSL certificate file for enabling HTTPS on the idrflow web server. This is separate from [database SSL connections](/configuration-custom-database#connect-langflow-to-a-local-postgresql-database). |
-| `LANGFLOW_SSL_KEY_FILE` | String | Not set | Path to the SSL key file for enabling HTTPS on the idrflow web server. This is separate from [database SSL connections](/configuration-custom-database#connect-langflow-to-a-local-postgresql-database). |
-| `LANGFLOW_DEACTIVATE_TRACING` | Boolean | `False` | Deactivate tracing functionality. |
-| `LANGFLOW_CELERY_ENABLED` | Boolean | `False` | Enable Celery for distributed task processing. |
-| `LANGFLOW_ALEMBIC_LOG_TO_STDOUT` | Boolean | `False` | Whether to log Alembic database migration output to stdout instead of a log file. If `true`, Alembic logs to `stdout` and the default log file is ignored. |
+| `IDRFLOW_HOST` | String | `localhost` | The host on which the idrflow server will run. |
+| `IDRFLOW_PORT` | Integer | `7860` | The port on which the idrflow server runs. The server automatically selects a free port if the specified port is in use. |
+| `IDRFLOW_BACKEND_ONLY` | Boolean | `False` | Run only the idrflow backend service (no frontend). |
+| `IDRFLOW_DEV` | Boolean | `False` | Whether to run idrflow in development mode (may contain bugs). |
+| `IDRFLOW_OPEN_BROWSER` | Boolean | `False` | Open the system web browser on startup. |
+| `IDRFLOW_HEALTH_CHECK_MAX_RETRIES` | Integer | `5` | Set the maximum number of retries for idrflow's server status health checks. |
+| `IDRFLOW_WORKERS` | Integer | `1` | Number of worker processes. |
+| `IDRFLOW_WORKER_TIMEOUT` | Integer | `300` | Worker timeout in seconds. |
+| `IDRFLOW_SSL_CERT_FILE` | String | Not set | Path to the SSL certificate file for enabling HTTPS on the idrflow web server. This is separate from [database SSL connections](/configuration-custom-database#connect-langflow-to-a-local-postgresql-database). |
+| `IDRFLOW_SSL_KEY_FILE` | String | Not set | Path to the SSL key file for enabling HTTPS on the idrflow web server. This is separate from [database SSL connections](/configuration-custom-database#connect-langflow-to-a-local-postgresql-database). |
+| `IDRFLOW_DEACTIVATE_TRACING` | Boolean | `False` | Deactivate tracing functionality. |
+| `IDRFLOW_CELERY_ENABLED` | Boolean | `False` | Enable Celery for distributed task processing. |
+| `IDRFLOW_ALEMBIC_LOG_TO_STDOUT` | Boolean | `False` | Whether to log Alembic database migration output to stdout instead of a log file. If `true`, Alembic logs to `stdout` and the default log file is ignored. |
 
 For more information about deploying idrflow servers, see [idrflow deployment overview](/deployment-overview).
 
@@ -433,22 +433,22 @@ See [Telemetry](/contributing-telemetry).
 
 | Variable | Format | Default | Description |
 |----------|--------|---------|-------------|
-| `LANGFLOW_AUTO_SAVING` | Boolean | `True` | Whether to automatically save the current flow draft. Auto-save only updates the live draft, and doesn't create [saved flow versions](/concepts-flows#save-and-restore-flow-versions). |
-| `LANGFLOW_AUTO_SAVING_INTERVAL` | Integer | `1000` | Set the auto-save interval in milliseconds if `LANGFLOW_AUTO_SAVING=True`. |
-| `LANGFLOW_BUNDLE_URLS` | List[String] | `[]` | A list of URLs from which to load custom bundles. Supports GitHub URLs. If `LANGFLOW_AUTO_LOGIN=True`, flows from these bundles are loaded into the database. |
-| `LANGFLOW_COMPONENTS_PATH` | String | Not set | Path to a directory containing custom components. Typically used if you have local custom components or you are building a Docker image with custom components. |
-| `LANGFLOW_COMPONENTS_INDEX_PATH` | String | Not set | File path or URL (`http://` or `https://`) to a prebuilt component index JSON file used to populate built-in components in the visual editor. When not set, idrflow uses the included index. Useful for supplying a curated component index, for example in airgapped deployments. For more information, see [Block custom components](../Deployment/deployment-block-custom-components.mdx). |
-| `LANGFLOW_ALLOW_CUSTOM_COMPONENTS` | Boolean | `True` | If `false`, disables custom components and in-editor editing of component code. This feature is in beta. For more information, see [Block custom components](../Deployment/deployment-block-custom-components.mdx). |
-| `LANGFLOW_LOAD_FLOWS_PATH` | String | Not set | Path to a directory containing flow JSON files to be loaded on startup. Typically used when creating a Docker image with prepackaged flows. Requires `LANGFLOW_AUTO_LOGIN=True`. |
-| `LANGFLOW_CREATE_STARTER_PROJECTS` | Boolean | `True` | Whether to create templates during initialization. If `false`, idrflow doesn't create templates, and `LANGFLOW_UPDATE_STARTER_PROJECTS` is treated as `false`. |
-| `LANGFLOW_UPDATE_STARTER_PROJECTS` | Boolean | `True` | Whether to update templates with the latest component versions when initializing after an upgrade. |
-| `LANGFLOW_LAZY_LOAD_COMPONENTS` | Boolean | `False` | If `true`, idrflow only partially loads components at startup and fully loads them on demand. This significantly reduces startup time but can cause a slight delay when a component is first used. |
-| `LANGFLOW_EVENT_DELIVERY` | String | `streaming` | How to deliver build events to the frontend: `polling`, `streaming` or `direct`. |
-| `LANGFLOW_FRONTEND_PATH` | String | `./frontend` | Path to the frontend directory containing build files. For development purposes only when you need to serve specific frontend code. |
-| `LANGFLOW_MAX_ITEMS_LENGTH` | Integer | `100` | Maximum number of items to store and display in the visual editor. Lists longer than this will be truncated when displayed in the visual editor. Doesn't affect outputs or data passed between components. |
-| `LANGFLOW_MAX_TEXT_LENGTH` | Integer | `1000` | Maximum number of characters to store and display in the visual editor. Responses longer than this will be truncated when displayed in the visual editor. Doesn't truncate outputs or responses passed between components. |
-| `LANGFLOW_MAX_TRANSACTIONS_TO_KEEP` | Integer | `3000` | Maximum number of flow transaction events to keep in the database. |
-| `LANGFLOW_MAX_VERTEX_BUILDS_TO_KEEP` | Integer | `3000` | Maximum number of vertex builds to keep in the database. Relates to [Playground](/concepts-playground) functionality. |
-| `LANGFLOW_MAX_VERTEX_BUILDS_PER_VERTEX` | Integer | `2` | Maximum number of builds to keep per vertex. Older builds are deleted. Relates to [Playground](/concepts-playground) functionality. |
-| `LANGFLOW_PUBLIC_FLOW_CLEANUP_INTERVAL` | Integer | `3600` | The interval in seconds at which data for [shared Playground](/concepts-playground#share-a-flows-playground) flows are cleaned up. Default: 3600 seconds (1 hour). Minimum: 600 seconds (10 minutes). |
-| `LANGFLOW_PUBLIC_FLOW_EXPIRATION` | Integer | `86400` | The time in seconds after which a [shared Playground](/concepts-playground#share-a-flows-playground) flow is considered expired and eligible for cleanup. Default: 86400 seconds (24 hours). Minimum: 600 seconds (10 minutes). |
+| `IDRFLOW_AUTO_SAVING` | Boolean | `True` | Whether to automatically save the current flow draft. Auto-save only updates the live draft, and doesn't create [saved flow versions](/concepts-flows#save-and-restore-flow-versions). |
+| `IDRFLOW_AUTO_SAVING_INTERVAL` | Integer | `1000` | Set the auto-save interval in milliseconds if `IDRFLOW_AUTO_SAVING=True`. |
+| `IDRFLOW_BUNDLE_URLS` | List[String] | `[]` | A list of URLs from which to load custom bundles. Supports GitHub URLs. If `IDRFLOW_AUTO_LOGIN=True`, flows from these bundles are loaded into the database. |
+| `IDRFLOW_COMPONENTS_PATH` | String | Not set | Path to a directory containing custom components. Typically used if you have local custom components or you are building a Docker image with custom components. |
+| `IDRFLOW_COMPONENTS_INDEX_PATH` | String | Not set | File path or URL (`http://` or `https://`) to a prebuilt component index JSON file used to populate built-in components in the visual editor. When not set, idrflow uses the included index. Useful for supplying a curated component index, for example in airgapped deployments. For more information, see [Block custom components](../Deployment/deployment-block-custom-components.mdx). |
+| `IDRFLOW_ALLOW_CUSTOM_COMPONENTS` | Boolean | `True` | If `false`, disables custom components and in-editor editing of component code. This feature is in beta. For more information, see [Block custom components](../Deployment/deployment-block-custom-components.mdx). |
+| `IDRFLOW_LOAD_FLOWS_PATH` | String | Not set | Path to a directory containing flow JSON files to be loaded on startup. Typically used when creating a Docker image with prepackaged flows. Requires `IDRFLOW_AUTO_LOGIN=True`. |
+| `IDRFLOW_CREATE_STARTER_PROJECTS` | Boolean | `True` | Whether to create templates during initialization. If `false`, idrflow doesn't create templates, and `IDRFLOW_UPDATE_STARTER_PROJECTS` is treated as `false`. |
+| `IDRFLOW_UPDATE_STARTER_PROJECTS` | Boolean | `True` | Whether to update templates with the latest component versions when initializing after an upgrade. |
+| `IDRFLOW_LAZY_LOAD_COMPONENTS` | Boolean | `False` | If `true`, idrflow only partially loads components at startup and fully loads them on demand. This significantly reduces startup time but can cause a slight delay when a component is first used. |
+| `IDRFLOW_EVENT_DELIVERY` | String | `streaming` | How to deliver build events to the frontend: `polling`, `streaming` or `direct`. |
+| `IDRFLOW_FRONTEND_PATH` | String | `./frontend` | Path to the frontend directory containing build files. For development purposes only when you need to serve specific frontend code. |
+| `IDRFLOW_MAX_ITEMS_LENGTH` | Integer | `100` | Maximum number of items to store and display in the visual editor. Lists longer than this will be truncated when displayed in the visual editor. Doesn't affect outputs or data passed between components. |
+| `IDRFLOW_MAX_TEXT_LENGTH` | Integer | `1000` | Maximum number of characters to store and display in the visual editor. Responses longer than this will be truncated when displayed in the visual editor. Doesn't truncate outputs or responses passed between components. |
+| `IDRFLOW_MAX_TRANSACTIONS_TO_KEEP` | Integer | `3000` | Maximum number of flow transaction events to keep in the database. |
+| `IDRFLOW_MAX_VERTEX_BUILDS_TO_KEEP` | Integer | `3000` | Maximum number of vertex builds to keep in the database. Relates to [Playground](/concepts-playground) functionality. |
+| `IDRFLOW_MAX_VERTEX_BUILDS_PER_VERTEX` | Integer | `2` | Maximum number of builds to keep per vertex. Older builds are deleted. Relates to [Playground](/concepts-playground) functionality. |
+| `IDRFLOW_PUBLIC_FLOW_CLEANUP_INTERVAL` | Integer | `3600` | The interval in seconds at which data for [shared Playground](/concepts-playground#share-a-flows-playground) flows are cleaned up. Default: 3600 seconds (1 hour). Minimum: 600 seconds (10 minutes). |
+| `IDRFLOW_PUBLIC_FLOW_EXPIRATION` | Integer | `86400` | The time in seconds after which a [shared Playground](/concepts-playground#share-a-flows-playground) flow is considered expired and eligible for cleanup. Default: 86400 seconds (24 hours). Minimum: 600 seconds (10 minutes). |

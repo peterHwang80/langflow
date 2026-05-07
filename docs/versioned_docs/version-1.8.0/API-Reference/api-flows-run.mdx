@@ -29,7 +29,7 @@ This flow requires a chat input string (`input_value`), and uses default values 
 ```python
 import requests
 
-url = "http://LANGFLOW_SERVER_URL/api/v1/run/FLOW_ID"
+url = "http://IDRFLOW_SERVER_URL/api/v1/run/FLOW_ID"
 
 # Request payload
 payload = {
@@ -43,7 +43,7 @@ payload = {
 # Request headers
 headers = {
     "Content-Type": "application/json",
-    "x-api-key": "LANGFLOW_API_KEY"
+    "x-api-key": "IDRFLOW_API_KEY"
 }
 
 try:
@@ -70,12 +70,12 @@ const options = {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
-    'x-api-key': 'LANGFLOW_API_KEY'
+    'x-api-key': 'IDRFLOW_API_KEY'
   },
   body: JSON.stringify(payload)
 };
 
-fetch('http://LANGFLOW_SERVER_URL/api/v1/run/FLOW_ID', options)
+fetch('http://IDRFLOW_SERVER_URL/api/v1/run/FLOW_ID', options)
   .then(response => response.json())
   .then(data => console.log(data))
   .catch(err => console.error(err));
@@ -86,9 +86,9 @@ fetch('http://LANGFLOW_SERVER_URL/api/v1/run/FLOW_ID', options)
 
 ```bash
 curl -X POST \
-  "$LANGFLOW_SERVER_URL/api/v1/run/$FLOW_ID" \
+  "$IDRFLOW_SERVER_URL/api/v1/run/$FLOW_ID" \
   -H "Content-Type: application/json" \
-  -H "x-api-key: $LANGFLOW_API_KEY" \
+  -H "x-api-key: $IDRFLOW_API_KEY" \
   -d '{
     "input_value": "Tell me about something interesting!",
     "session_id": "chat-123",
@@ -156,7 +156,7 @@ To stream LLM token responses, append the `?stream=true` query parameter to the 
 ```python
 import requests
 
-url = "http://LANGFLOW_SERVER_URL/api/v1/run/FLOW_ID?stream=true"
+url = "http://IDRFLOW_SERVER_URL/api/v1/run/FLOW_ID?stream=true"
 
 # Request payload
 payload = {
@@ -168,7 +168,7 @@ payload = {
 headers = {
     "accept": "application/json",
     "Content-Type": "application/json",
-    "x-api-key": "LANGFLOW_API_KEY"
+    "x-api-key": "IDRFLOW_API_KEY"
 }
 
 try:
@@ -197,12 +197,12 @@ const options = {
   headers: {
     'accept': 'application/json',
     'Content-Type': 'application/json',
-    'x-api-key': 'LANGFLOW_API_KEY'
+    'x-api-key': 'IDRFLOW_API_KEY'
   },
   body: JSON.stringify(payload)
 };
 
-fetch('http://LANGFLOW_SERVER_URL/api/v1/run/FLOW_ID?stream=true', options)
+fetch('http://IDRFLOW_SERVER_URL/api/v1/run/FLOW_ID?stream=true', options)
   .then(async response => {
     const reader = response.body?.getReader();
     const decoder = new TextDecoder();
@@ -223,10 +223,10 @@ fetch('http://LANGFLOW_SERVER_URL/api/v1/run/FLOW_ID?stream=true', options)
 
 ```bash
 curl -X POST \
-  "$LANGFLOW_SERVER_URL/api/v1/run/$FLOW_ID?stream=true" \
+  "$IDRFLOW_SERVER_URL/api/v1/run/$FLOW_ID?stream=true" \
   -H "accept: application/json" \
   -H "Content-Type: application/json" \
-  -H "x-api-key: $LANGFLOW_API_KEY" \
+  -H "x-api-key: $IDRFLOW_API_KEY" \
   -d '{
     "message": "Tell me something interesting!",
     "session_id": "chat-123"
@@ -297,7 +297,7 @@ The following example is truncated to illustrate a series of `token` events as w
 ```python
 import requests
 
-url = "http://LANGFLOW_SERVER_URL/api/v1/run/FLOW_ID?stream=true"
+url = "http://IDRFLOW_SERVER_URL/api/v1/run/FLOW_ID?stream=true"
 
 # Request payload with tweaks
 payload = {
@@ -317,7 +317,7 @@ payload = {
 headers = {
     "Content-Type": "application/json",
     "accept": "application/json",
-    "x-api-key": "LANGFLOW_API_KEY"
+    "x-api-key": "IDRFLOW_API_KEY"
 }
 
 try:
@@ -354,12 +354,12 @@ const options = {
   headers: {
     'Content-Type': 'application/json',
     'accept': 'application/json',
-    'x-api-key': 'LANGFLOW_API_KEY'
+    'x-api-key': 'IDRFLOW_API_KEY'
   },
   body: JSON.stringify(payload)
 };
 
-fetch('http://LANGFLOW_SERVER_URL/api/v1/run/FLOW_ID?stream=true', options)
+fetch('http://IDRFLOW_SERVER_URL/api/v1/run/FLOW_ID?stream=true', options)
   .then(async response => {
     const reader = response.body?.getReader();
     const decoder = new TextDecoder();
@@ -380,10 +380,10 @@ fetch('http://LANGFLOW_SERVER_URL/api/v1/run/FLOW_ID?stream=true', options)
 
 ```bash
 curl -X POST \
-  "$LANGFLOW_SERVER_URL/api/v1/run/$FLOW_ID?stream=true" \
+  "$IDRFLOW_SERVER_URL/api/v1/run/$FLOW_ID?stream=true" \
   -H "Content-Type: application/json" \
   -H "accept: application/json" \
-  -H "x-api-key: $LANGFLOW_API_KEY" \
+  -H "x-api-key: $IDRFLOW_API_KEY" \
   -d '{
     "input_value": "Tell me a story",
     "input_type": "chat",
@@ -417,7 +417,7 @@ You don't need to create these variables in idrflow's Global Variables section f
 ```python
 import requests
 
-url = "http://LANGFLOW_SERVER_URL/api/v1/run/FLOW_ID"
+url = "http://IDRFLOW_SERVER_URL/api/v1/run/FLOW_ID"
 
 # Request payload
 payload = {
@@ -429,7 +429,7 @@ payload = {
 # Request headers with global variables
 headers = {
     "Content-Type": "application/json",
-    "x-api-key": "LANGFLOW_API_KEY",
+    "x-api-key": "IDRFLOW_API_KEY",
     "X-LANGFLOW-GLOBAL-VAR-OPENAI_API_KEY": "sk-...",
     "X-LANGFLOW-GLOBAL-VAR-USER_ID": "user123",
     "X-LANGFLOW-GLOBAL-VAR-ENVIRONMENT": "production"
@@ -457,7 +457,7 @@ const options = {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
-    'x-api-key': 'LANGFLOW_API_KEY',
+    'x-api-key': 'IDRFLOW_API_KEY',
     'X-LANGFLOW-GLOBAL-VAR-OPENAI_API_KEY': 'sk-...',
     'X-LANGFLOW-GLOBAL-VAR-USER_ID': 'user123',
     'X-LANGFLOW-GLOBAL-VAR-ENVIRONMENT': 'production'
@@ -465,7 +465,7 @@ const options = {
   body: JSON.stringify(payload)
 };
 
-fetch('http://LANGFLOW_SERVER_URL/api/v1/run/FLOW_ID', options)
+fetch('http://IDRFLOW_SERVER_URL/api/v1/run/FLOW_ID', options)
   .then(response => response.json())
   .then(data => console.log(data))
   .catch(err => console.error(err));
@@ -476,9 +476,9 @@ fetch('http://LANGFLOW_SERVER_URL/api/v1/run/FLOW_ID', options)
 
 ```bash
 curl -X POST \
-  "$LANGFLOW_SERVER_URL/api/v1/run/$FLOW_ID" \
+  "$IDRFLOW_SERVER_URL/api/v1/run/$FLOW_ID" \
   -H "Content-Type: application/json" \
-  -H "x-api-key: $LANGFLOW_API_KEY" \
+  -H "x-api-key: $IDRFLOW_API_KEY" \
   -H "X-LANGFLOW-GLOBAL-VAR-OPENAI_API_KEY: sk-..." \
   -H "X-LANGFLOW-GLOBAL-VAR-USER_ID: user123" \
   -H "X-LANGFLOW-GLOBAL-VAR-ENVIRONMENT: production" \
@@ -492,7 +492,7 @@ curl -X POST \
 </TabItem>
 </Tabs>
 
-If your flow components reference variables that aren't provided in headers or your idrflow database, the flow fails by default. To avoid this, you can set `LANGFLOW_FALLBACK_TO_ENV_VAR=True` in your `.env` file, which allows the flow to use values from OS environment variables if they aren't otherwise specified.
+If your flow components reference variables that aren't provided in headers or your idrflow database, the flow fails by default. To avoid this, you can set `IDRFLOW_FALLBACK_TO_ENV_VAR=True` in your `.env` file, which allows the flow to use values from OS environment variables if they aren't otherwise specified.
 
 
 ## Webhook run flow
@@ -506,9 +506,9 @@ For more information, see [Trigger flows with webhooks](/webhook).
 
 ```bash
 curl -X POST \
-  "$LANGFLOW_SERVER_URL/api/v1/webhook/$FLOW_ID" \
+  "$IDRFLOW_SERVER_URL/api/v1/webhook/$FLOW_ID" \
   -H "Content-Type: application/json" \
-  -H "x-api-key: $LANGFLOW_API_KEY" \
+  -H "x-api-key: $IDRFLOW_API_KEY" \
   -d '{"data": "example-data"}'
 ```
 

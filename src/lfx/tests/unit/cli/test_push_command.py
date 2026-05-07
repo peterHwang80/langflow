@@ -615,7 +615,7 @@ class TestPushCommand:
     def test_environments_file_resolves_url(self, tmp_path):
         """Environment is resolved from a TOML config file (no --target)."""
         p = _write_flow(tmp_path, "flow.json")
-        env_file = tmp_path / "langflow-environments.toml"
+        env_file = tmp_path / "idrflow-environments.toml"
         env_file.write_text(
             f'[environments.ci]\nurl = "{_BASE_URL}"\n',
             encoding="utf-8",

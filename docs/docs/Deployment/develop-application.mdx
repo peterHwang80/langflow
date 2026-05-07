@@ -63,9 +63,9 @@ It contains [idrflow environment variables](/environment-variables) that are use
 For example:
 
 ```text
-LANGFLOW_AUTO_LOGIN=True
-LANGFLOW_SAVE_DB_IN_CONFIG_DIR=True
-LANGFLOW_BASE_URL=http://0.0.0.0:7860
+IDRFLOW_AUTO_LOGIN=True
+IDRFLOW_SAVE_DB_IN_CONFIG_DIR=True
+IDRFLOW_BASE_URL=http://0.0.0.0:7860
 OPENAI_API_KEY=sk-...
 ```
 
@@ -110,11 +110,11 @@ Custom components must be placed inside category folders, not directly in the ba
 1. Create a `/components` folder in your application directory.
 2. Inside `/components`, create category subfolders (for example, `/components/data`, `/components/tools`).
 3. Add your custom component files to the appropriate category folders.
-4. Copy the `/components` folder to your Docker image and set the `LANGFLOW_COMPONENTS_PATH` environment variable:
+4. Copy the `/components` folder to your Docker image and set the `IDRFLOW_COMPONENTS_PATH` environment variable:
 
     ```dockerfile
     COPY components /app/components
-    ENV LANGFLOW_COMPONENTS_PATH=/app/components
+    ENV IDRFLOW_COMPONENTS_PATH=/app/components
     ```
 
 ## idrflow Dockerfile {#dockerfile}
@@ -145,10 +145,10 @@ COPY pyproject.toml uv.lock /app/
 
 # Set environment variables if not set in docker.env
 ENV PYTHONPATH=/app
-ENV LANGFLOW_LOAD_FLOWS_PATH=/app/flows
-ENV LANGFLOW_CONFIG_DIR=/app/langflow-config-dir
-ENV LANGFLOW_COMPONENTS_PATH=/app/components
-ENV LANGFLOW_LOG_ENV=container
+ENV IDRFLOW_LOAD_FLOWS_PATH=/app/flows
+ENV IDRFLOW_CONFIG_DIR=/app/langflow-config-dir
+ENV IDRFLOW_COMPONENTS_PATH=/app/components
+ENV IDRFLOW_LOG_ENV=container
 
 # Command to run the Langflow server on port 7860
 EXPOSE 7860
@@ -158,7 +158,7 @@ CMD ["langflow", "run", "--backend-only", "--env-file","/app/.env","--host", "0.
 The environment variables set directly in this Dockerfile specify resource paths for idrflow.
 If these variables are also set in `docker.env`, the values in `docker.env` override the values set in the Dockerfile.
 
-In this example, `ENV LANGFLOW_LOG_ENV=container` sets the logging behavior for serialized JSON to `stdout` to track the application's behavior in a containerized environment. For more information, see [Logging](/logging).
+In this example, `ENV IDRFLOW_LOG_ENV=container` sets the logging behavior for serialized JSON to `stdout` to track the application's behavior in a containerized environment. For more information, see [Logging](/logging).
 
 ### Backend-only mode
 

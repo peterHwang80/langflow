@@ -36,8 +36,8 @@ class LangflowClient:
         api_key: str | None = None,
         access_token: str | None = None,
     ):
-        self.server_url = (server_url or os.environ.get("LANGFLOW_SERVER_URL", "http://localhost:7860")).rstrip("/")
-        self.api_key = api_key or os.environ.get("LANGFLOW_API_KEY")
+        self.server_url = (server_url or os.environ.get("IDRFLOW_SERVER_URL", "http://localhost:7860")).rstrip("/")
+        self.api_key = api_key or os.environ.get("IDRFLOW_API_KEY")
         self.access_token = access_token
         self._http: httpx.AsyncClient | None = None
         self._lock = asyncio.Lock()

@@ -228,8 +228,17 @@ class TestFindConfigFile:
 
     def test_toml_fallback_when_no_yaml(self, tmp_path, monkeypatch):
         monkeypatch.chdir(tmp_path)
-        p = _write(tmp_path, "langflow-environments.toml", _MINIMAL_TOML)
+        p = _write(tmp_path, "idrflow-environments.toml", _MINIMAL_TOML)
         assert _find_config_file(None) == p
+
+    def test_user_toml_fallback_when_no_project_config(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        (tmp_path / ".git").mkdir()
+        user_toml = tmp_path / "user-config" / "environments.toml"
+        user_toml.parent.mkdir(parents=True, exist_ok=True)
+        user_toml.write_text(_MINIMAL_TOML, encoding="utf-8")
+        monkeypatch.setattr("lfx.config.environments._USER_TOML_FALLBACK", user_toml)
+        assert _find_config_file(None) == user_toml
 
     def test_returns_none_when_nothing_found(self, tmp_path, monkeypatch):
         monkeypatch.chdir(tmp_path)
@@ -341,6 +350,24 @@ class TestResolveConfigMode:
         result = resolve_environment("local", environments_file=str(p))
         assert result.url == "http://localhost:7860"
 
+    def test_idrflow_environments_file_env_var_used(self, tmp_path, monkeypatch):
+        monkeypatch.setenv("MY_LOCAL_KEY", "local-key")  # pragma: allowlist secret
+        p = _write(tmp_path, "custom/env.yaml", _MINIMAL_YAML)
+        monkeypatch.setenv("IDRFLOW_ENVIRONMENTS_FILE", str(p))
+        result = resolve_environment("local")
+        assert result.url == "http://localhost:7860"
+        assert result.api_key == "local-key"  # pragma: allowlist secret
+
+    def test_idrflow_env_env_var_used_before_config_default(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.setenv("MY_STAGING_KEY", "staging-secret")  # pragma: allowlist secret
+        monkeypatch.setenv("IDRFLOW_ENV", "staging")
+        _write(tmp_path, ".lfx/environments.yaml", _MINIMAL_YAML)
+        result = resolve_environment(None)
+        assert result.name == "staging"
+        assert result.url == "https://staging.example.com"
+        assert result.api_key == "staging-secret"  # pragma: allowlist secret
+
     def test_api_key_override_applied(self, tmp_path, monkeypatch):
         monkeypatch.chdir(tmp_path)
         monkeypatch.setenv("MY_LOCAL_KEY", "config-key")  # pragma: allowlist secret
@@ -371,7 +398,7 @@ class TestResolveConfigMode:
     def test_toml_file_also_works(self, tmp_path, monkeypatch):
         monkeypatch.chdir(tmp_path)
         monkeypatch.setenv("MY_LOCAL_KEY", "local-secret")  # pragma: allowlist secret
-        _write(tmp_path, "langflow-environments.toml", _MINIMAL_TOML)
+        _write(tmp_path, "idrflow-environments.toml", _MINIMAL_TOML)
         result = resolve_environment("local")
         assert result.url == "http://localhost:7860"
         assert result.api_key == "local-secret"  # pragma: allowlist secret
@@ -383,11 +410,11 @@ class TestResolveConfigMode:
 
 
 class TestResolveNoConfigFallbacks:
-    def test_langflow_url_env_var_used_as_fallback(self, tmp_path, monkeypatch):
+    def test_idrflow_url_env_var_used_as_fallback(self, tmp_path, monkeypatch):
         monkeypatch.chdir(tmp_path)
         (tmp_path / ".git").mkdir()  # stop file walk here
-        monkeypatch.setenv("LANGFLOW_URL", "http://fallback:7860")
-        monkeypatch.setenv("LANGFLOW_API_KEY", "fallback-key")  # pragma: allowlist secret
+        monkeypatch.setenv("IDRFLOW_URL", "http://fallback:7860")
+        monkeypatch.setenv("IDRFLOW_API_KEY", "fallback-key")  # pragma: allowlist secret
         result = resolve_environment(None)
         assert result.url == "http://fallback:7860"
         assert result.api_key == "fallback-key"  # pragma: allowlist secret
@@ -396,7 +423,7 @@ class TestResolveNoConfigFallbacks:
     def test_lfx_url_env_var_used_as_fallback(self, tmp_path, monkeypatch):
         monkeypatch.chdir(tmp_path)
         (tmp_path / ".git").mkdir()
-        monkeypatch.delenv("LANGFLOW_URL", raising=False)
+        monkeypatch.delenv("IDRFLOW_URL", raising=False)
         monkeypatch.setenv("LFX_URL", "http://lfx-fallback:7860")
         monkeypatch.setenv("LFX_API_KEY", "lfx-key")  # pragma: allowlist secret
         result = resolve_environment(None)
@@ -406,15 +433,24 @@ class TestResolveNoConfigFallbacks:
     def test_named_env_without_config_raises_clear_error(self, tmp_path, monkeypatch):
         monkeypatch.chdir(tmp_path)
         (tmp_path / ".git").mkdir()
-        monkeypatch.delenv("LANGFLOW_URL", raising=False)
+        monkeypatch.delenv("IDRFLOW_URL", raising=False)
         monkeypatch.delenv("LFX_URL", raising=False)
         with pytest.raises(ConfigError, match=r"'staging'.*no config file"):
             resolve_environment("staging")
 
+    def test_idrflow_env_without_config_raises_clear_error(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        (tmp_path / ".git").mkdir()
+        monkeypatch.delenv("IDRFLOW_URL", raising=False)
+        monkeypatch.delenv("LFX_URL", raising=False)
+        monkeypatch.setenv("IDRFLOW_ENV", "staging")
+        with pytest.raises(ConfigError, match=r"'staging'.*no config file"):
+            resolve_environment(None)
+
     def test_no_env_no_config_no_env_vars_raises(self, tmp_path, monkeypatch):
         monkeypatch.chdir(tmp_path)
         (tmp_path / ".git").mkdir()
-        monkeypatch.delenv("LANGFLOW_URL", raising=False)
+        monkeypatch.delenv("IDRFLOW_URL", raising=False)
         monkeypatch.delenv("LFX_URL", raising=False)
         with pytest.raises(ConfigError, match="No --env"):
             resolve_environment(None)
@@ -427,8 +463,8 @@ class TestResolveNoConfigFallbacks:
     def test_inline_api_key_override_with_env_var_url(self, tmp_path, monkeypatch):
         monkeypatch.chdir(tmp_path)
         (tmp_path / ".git").mkdir()
-        monkeypatch.setenv("LANGFLOW_URL", "http://fallback:7860")
-        monkeypatch.delenv("LANGFLOW_API_KEY", raising=False)
+        monkeypatch.setenv("IDRFLOW_URL", "http://fallback:7860")
+        monkeypatch.delenv("IDRFLOW_API_KEY", raising=False)
         # api_key arg should override the env-var based key
         result = resolve_environment(None, api_key="override-key")  # pragma: allowlist secret
         # In fallback mode, api_key_inline takes precedence
@@ -451,7 +487,7 @@ class TestErrorMessages:
     def test_no_config_message_suggests_init(self, tmp_path, monkeypatch):
         monkeypatch.chdir(tmp_path)
         (tmp_path / ".git").mkdir()
-        monkeypatch.delenv("LANGFLOW_URL", raising=False)
+        monkeypatch.delenv("IDRFLOW_URL", raising=False)
         monkeypatch.delenv("LFX_URL", raising=False)
         with pytest.raises(ConfigError, match="lfx init"):
             resolve_environment("staging")

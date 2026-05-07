@@ -18,7 +18,12 @@ def register(app: typer.Typer) -> None:
             None,
             "--env",
             "-e",
-            help="Environment name from .lfx/environments.yaml. Uses [defaults] if omitted.",
+            help=(
+                "Environment name from the discovered environments config "
+                "(.lfx/environments.yaml, idrflow-environments.toml, "
+                "~/.config/idrflow/environments.toml, or IDRFLOW_ENVIRONMENTS_FILE). "
+                "Uses [defaults] if omitted."
+            ),
         ),
         dir_path: str | None = typer.Option(
             None,
@@ -74,7 +79,12 @@ def register(app: typer.Typer) -> None:
             None,
             "--env",
             "-e",
-            help="Environment name from .lfx/environments.yaml. Use --target for inline configuration.",
+            help=(
+                "Environment name from the discovered environments config "
+                "(.lfx/environments.yaml, idrflow-environments.toml, "
+                "~/.config/idrflow/environments.toml, or IDRFLOW_ENVIRONMENTS_FILE). "
+                "Use --target for inline configuration."
+            ),
         ),
         dir_path: str | None = typer.Option(
             None,
@@ -149,7 +159,12 @@ def register(app: typer.Typer) -> None:
             None,
             "--env",
             "-e",
-            help="Environment name from .lfx/environments.yaml. Uses [defaults] if omitted.",
+            help=(
+                "Environment name from the discovered environments config "
+                "(.lfx/environments.yaml, idrflow-environments.toml, "
+                "~/.config/idrflow/environments.toml, or IDRFLOW_ENVIRONMENTS_FILE). "
+                "Uses [defaults] if omitted."
+            ),
         ),
         output_dir: str | None = typer.Option(
             None,
@@ -241,7 +256,12 @@ def register(app: typer.Typer) -> None:
             None,
             "--env",
             "-e",
-            help="Environment name from .lfx/environments.yaml (required for remote mode unless --target is used).",
+            help=(
+                "Environment name from the discovered environments config "
+                "(.lfx/environments.yaml, idrflow-environments.toml, "
+                "~/.config/idrflow/environments.toml, or IDRFLOW_ENVIRONMENTS_FILE). "
+                "Required for remote mode unless --target is used."
+            ),
         ),
         flow_id: str | None = typer.Option(
             None,

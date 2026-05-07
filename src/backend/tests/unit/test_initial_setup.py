@@ -307,9 +307,9 @@ async def test_load_bundles_from_urls():
 
 @pytest.fixture
 def set_fs_flows_polling_interval():
-    os.environ["LANGFLOW_FS_FLOWS_POLLING_INTERVAL"] = "100"
+    os.environ["IDRFLOW_FS_FLOWS_POLLING_INTERVAL"] = "100"
     yield
-    os.unsetenv("LANGFLOW_FS_FLOWS_POLLING_INTERVAL")
+    os.unsetenv("IDRFLOW_FS_FLOWS_POLLING_INTERVAL")
 
 
 @pytest.mark.usefixtures("set_fs_flows_polling_interval")
@@ -375,7 +375,7 @@ def profile_pictures_temp_config(monkeypatch):
     config_path = SyncPath(temp_dir)
 
     # Set the config_dir to our temp directory
-    monkeypatch.setenv("LANGFLOW_CONFIG_DIR", str(config_path))
+    monkeypatch.setenv("IDRFLOW_CONFIG_DIR", str(config_path))
 
     yield config_path
 

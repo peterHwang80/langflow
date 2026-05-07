@@ -397,8 +397,8 @@ class AsyncLocalFlowRunner(_BaseLocalFlowRunner):
 class RemoteFlowRunner(_BaseRemoteFlowRunner):
     """Sync callable that runs flows against a live Langflow instance.
 
-    Returned by :func:`flow_runner` when ``--langflow-env`` or
-    ``--langflow-url`` is passed to pytest.  Call it like a function::
+    Returned by :func:`flow_runner` when ``--idrflow-env`` or
+    ``--idrflow-url`` is passed to pytest.  Call it like a function::
 
         def test_greeting(flow_runner):
             result = flow_runner("greeting-endpoint", "Hello!")
@@ -439,8 +439,8 @@ class RemoteFlowRunner(_BaseRemoteFlowRunner):
 class AsyncRemoteFlowRunner(_BaseRemoteFlowRunner):
     """Async callable that runs flows against a live Langflow instance.
 
-    Returned by :func:`async_flow_runner` when ``--langflow-env`` or
-    ``--langflow-url`` is passed to pytest.  Use with ``await``::
+    Returned by :func:`async_flow_runner` when ``--idrflow-env`` or
+    ``--idrflow-url`` is passed to pytest.  Use with ``await``::
 
         async def test_greeting(async_flow_runner):
             result = await async_flow_runner("greeting-endpoint", "Hello!")

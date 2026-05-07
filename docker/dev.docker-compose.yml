@@ -14,10 +14,10 @@ services:
       - "3000:3000"
     environment:
       - PYTHONDONTWRITEBYTECODE=1
-      - LANGFLOW_DATABASE_URL=postgresql://langflow:langflow@postgres:5432/langflow
-      - LANGFLOW_SUPERUSER=langflow
-      - LANGFLOW_SUPERUSER_PASSWORD=langflow
-      - LANGFLOW_CONFIG_DIR=/var/lib/langflow
+      - IDRFLOW_DATABASE_URL=postgresql://langflow:langflow@postgres:5432/langflow
+      - IDRFLOW_SUPERUSER=langflow
+      - IDRFLOW_SUPERUSER_PASSWORD=langflow
+      - IDRFLOW_CONFIG_DIR=/var/lib/langflow
     env_file:
       - ../.env
     volumes:

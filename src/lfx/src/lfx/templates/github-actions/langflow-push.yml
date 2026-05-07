@@ -10,10 +10,10 @@
 #
 # GITHUB SETUP  (Settings → Environments → New environment → "production")
 #   Variables  (plain text):
-#     LANGFLOW_PROD_URL        e.g. https://langflow.example.com
-#     LANGFLOW_PROJECT_NAME    e.g. "Production Flows"   (optional)
+#     IDRFLOW_PROD_URL        e.g. https://langflow.example.com
+#     IDRFLOW_PROJECT_NAME    e.g. "Production Flows"   (optional)
 #   Secrets    (masked):
-#     LANGFLOW_PROD_API_KEY    your production API key
+#     IDRFLOW_PROD_API_KEY    your production API key
 #
 #   Using a GitHub Environment lets you require manual approval before
 #   each production deploy (Settings → Environments → Required reviewers).
@@ -70,10 +70,10 @@ jobs:
       # ------------------------------------------------------------------ #
       - name: Write environments config
         run: >-
-          printf '[environments.production]\nurl = "%s"\napi_key_env = "LANGFLOW_PROD_API_KEY"\n'
-          "$LANGFLOW_PROD_URL" > langflow-environments.toml
+          printf '[environments.production]\nurl = "%s"\napi_key_env = "IDRFLOW_PROD_API_KEY"\n'
+          "$IDRFLOW_PROD_URL" > idrflow-environments.toml
         env:
-          LANGFLOW_PROD_URL: ${{ vars.LANGFLOW_PROD_URL }}
+          IDRFLOW_PROD_URL: ${{ vars.IDRFLOW_PROD_URL }}
 
       # ------------------------------------------------------------------ #
       # Push flows.  Add --project to group flows into a folder.           #
@@ -82,14 +82,14 @@ jobs:
       - name: Push flows
         env:
           # Resolved from the GitHub variable; falls back to "Main" if unset
-          LANGFLOW_PROJECT_NAME: ${{ vars.LANGFLOW_PROJECT_NAME || 'Main' }}
-          LANGFLOW_ENVIRONMENTS_FILE: langflow-environments.toml
-          LANGFLOW_PROD_API_KEY: ${{ secrets.LANGFLOW_PROD_API_KEY }}
+          IDRFLOW_PROJECT_NAME: ${{ vars.IDRFLOW_PROJECT_NAME || 'Main' }}
+          IDRFLOW_ENVIRONMENTS_FILE: idrflow-environments.toml
+          IDRFLOW_PROD_API_KEY: ${{ secrets.IDRFLOW_PROD_API_KEY }}
         run: |
           lfx push \
             --dir flows/ \
             --env production \
-            --project "$LANGFLOW_PROJECT_NAME" \
+            --project "$IDRFLOW_PROJECT_NAME" \
             ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
 
       - name: Summary

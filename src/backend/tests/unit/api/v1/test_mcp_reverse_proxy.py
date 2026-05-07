@@ -171,6 +171,6 @@ class TestRootPathSetting:
     def test_root_path_can_be_set(self, monkeypatch):
         from lfx.services.settings.base import Settings
 
-        monkeypatch.setenv("LANGFLOW_ROOT_PATH", "/basePath")
+        monkeypatch.setenv("IDRFLOW_ROOT_PATH", "/basePath")
         s = Settings()
         assert s.root_path == "/basePath"

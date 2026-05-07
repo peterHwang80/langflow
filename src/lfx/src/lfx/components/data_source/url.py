@@ -239,7 +239,7 @@ class URLComponent(Component):
 
         # SSRF Protection: Validate URL to prevent access to internal resources
         # Blocks requests to private IPs, localhost, and cloud metadata endpoints
-        # when LANGFLOW_SSRF_PROTECTION_ENABLED=true
+        # when IDRFLOW_SSRF_PROTECTION_ENABLED=true
         try:
             validate_url_for_ssrf(url, warn_only=False)
         except SSRFProtectionError as e:

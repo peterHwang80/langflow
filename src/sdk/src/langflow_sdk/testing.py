@@ -9,13 +9,13 @@ no ``conftest.py`` changes are needed.  Simply pass connection details on the
 command line or via environment variables::
 
     # Direct URL
-    pytest --langflow-url http://localhost:7860 tests/
+    pytest --idrflow-url http://localhost:7860 tests/
 
-    # Named environment from langflow-environments.toml
-    pytest --langflow-env staging tests/
+    # Named environment from idrflow-environments.toml
+    pytest --idrflow-env staging tests/
 
     # Via environment variables (useful in CI)
-    LANGFLOW_URL=http://localhost:7860 pytest tests/
+    IDRFLOW_URL=http://localhost:7860 pytest tests/
 
 Usage inside a test file::
 
@@ -56,29 +56,29 @@ def pytest_addoption(parser: pytest.Parser) -> None:
     """Register Langflow-specific CLI options."""
     group = parser.getgroup("langflow", "Langflow integration testing options")
     options = {
-        "--langflow-env": {
-            "dest": "langflow_env",
+        "--idrflow-env": {
+            "dest": "idrflow_env",
             "default": None,
             "metavar": "NAME",
-            "help": "Environment name from langflow-environments.toml to use for integration tests.",
+            "help": "Environment name from idrflow-environments.toml to use for integration tests.",
         },
-        "--langflow-url": {
-            "dest": "langflow_url",
+        "--idrflow-url": {
+            "dest": "idrflow_url",
             "default": None,
             "metavar": "URL",
-            "help": "Base URL of the Langflow instance (overrides --langflow-env).",
+            "help": "Base URL of the Langflow instance (overrides --idrflow-env).",
         },
-        "--langflow-api-key": {
-            "dest": "langflow_api_key",
+        "--idrflow-api-key": {
+            "dest": "idrflow_api_key",
             "default": None,
             "metavar": "KEY",
             "help": "API key for the Langflow instance (overrides environment config).",
         },
-        "--langflow-environments-file": {
-            "dest": "langflow_environments_file",
+        "--idrflow-environments-file": {
+            "dest": "idrflow_environments_file",
             "default": None,
             "metavar": "PATH",
-            "help": "Path to langflow-environments.toml (overrides default discovery).",
+            "help": "Path to idrflow-environments.toml (overrides default discovery).",
         },
     }
 
@@ -97,16 +97,16 @@ def pytest_addoption(parser: pytest.Parser) -> None:
 
 def _resolve_url_credentials(request: pytest.FixtureRequest) -> tuple[str, str | None] | None:
     """Extract (url, api_key) from CLI options / env vars, or return None."""
-    url: str | None = request.config.getoption("langflow_url") or os.getenv("LANGFLOW_URL")
+    url: str | None = request.config.getoption("idrflow_url") or os.getenv("IDRFLOW_URL")
     if not url:
         return None
     # pragma: allowlist secret
-    api_key: str | None = request.config.getoption("langflow_api_key") or os.getenv("LANGFLOW_API_KEY")
+    api_key: str | None = request.config.getoption("idrflow_api_key") or os.getenv("IDRFLOW_API_KEY")
     return url, api_key
 
 
 def _resolve_url_client(request: pytest.FixtureRequest) -> Client | None:
-    """Return a sync client from --langflow-url / LANGFLOW_URL, or None."""
+    """Return a sync client from --idrflow-url / IDRFLOW_URL, or None."""
     from langflow_sdk.client import Client
 
     creds = _resolve_url_credentials(request)
@@ -114,7 +114,7 @@ def _resolve_url_client(request: pytest.FixtureRequest) -> Client | None:
 
 
 def _resolve_async_url_client(request: pytest.FixtureRequest) -> AsyncClient | None:
-    """Return an async client from --langflow-url / LANGFLOW_URL, or None."""
+    """Return an async client from --idrflow-url / IDRFLOW_URL, or None."""
     from langflow_sdk.client import AsyncClient
 
     creds = _resolve_url_credentials(request)
@@ -122,15 +122,15 @@ def _resolve_async_url_client(request: pytest.FixtureRequest) -> AsyncClient | N
 
 
 def _env_name(request: pytest.FixtureRequest) -> str | None:
-    return request.config.getoption("langflow_env") or os.getenv("LANGFLOW_ENV")
+    return request.config.getoption("idrflow_env") or os.getenv("IDRFLOW_ENV")
 
 
 def _env_file(request: pytest.FixtureRequest) -> str | None:
-    return request.config.getoption("langflow_environments_file") or os.getenv("LANGFLOW_ENVIRONMENTS_FILE")
+    return request.config.getoption("idrflow_environments_file") or os.getenv("IDRFLOW_ENVIRONMENTS_FILE")
 
 
 _SKIP_MSG = (
-    "No Langflow connection configured. Pass --langflow-url <URL> or --langflow-env <NAME> to enable integration tests."
+    "No Langflow connection configured. Pass --idrflow-url <URL> or --idrflow-env <NAME> to enable integration tests."
 )
 
 
@@ -147,10 +147,10 @@ def langflow_client(request: pytest.FixtureRequest) -> Client:
     information is available.  Configure via CLI options or environment
     variables (in priority order):
 
-    1. ``--langflow-url`` / ``LANGFLOW_URL`` — direct base URL
-    2. ``--langflow-api-key`` / ``LANGFLOW_API_KEY`` — API key  # pragma: allowlist secret
-    3. ``--langflow-env`` / ``LANGFLOW_ENV`` — named environment from TOML file
-    4. ``--langflow-environments-file`` / ``LANGFLOW_ENVIRONMENTS_FILE`` — TOML path
+    1. ``--idrflow-url`` / ``IDRFLOW_URL`` — direct base URL
+    2. ``--idrflow-api-key`` / ``IDRFLOW_API_KEY`` — API key  # pragma: allowlist secret
+    3. ``--idrflow-env`` / ``IDRFLOW_ENV`` — named environment from TOML file
+    4. ``--idrflow-environments-file`` / ``IDRFLOW_ENVIRONMENTS_FILE`` — TOML path
     """
     client = _resolve_url_client(request)
     if not client:

@@ -273,9 +273,9 @@ Tweaks are programmatic run-time overrides for component settings.
 To retrieve [idrflow logs](/logging), you must enable log retrieval on your idrflow server by including the following values in your idrflow `.env` file:
 
 ```text
-LANGFLOW_ENABLE_LOG_RETRIEVAL=True
-LANGFLOW_LOG_RETRIEVER_BUFFER_SIZE=10000
-LANGFLOW_LOG_LEVEL=DEBUG
+IDRFLOW_ENABLE_LOG_RETRIEVAL=True
+IDRFLOW_LOG_RETRIEVER_BUFFER_SIZE=10000
+IDRFLOW_LOG_LEVEL=DEBUG
 ```
 
 The following example script starts streaming logs in the background, and then runs a flow so you can monitor the flow run:

@@ -97,7 +97,7 @@ mcp = FastMCP(
         "Langflow MCP server -- build and run AI flows on a Langflow instance.\n"
         "\n"
         "Typical workflow:\n"
-        "  1. login (or set LANGFLOW_API_KEY env var)\n"
+        "  1. login (or set IDRFLOW_API_KEY env var)\n"
         "  2. search_component_types / describe_component_type to discover components\n"
         "  3. create_flow_from_spec to define nodes, edges, and config in one text spec\n"
         "     (or step-by-step: create_flow, add_component, configure_component, connect_components)\n"
@@ -226,7 +226,7 @@ async def login(username: str, password: str, server_url: str | None = None) -> 
     Args:
         username: Langflow username.
         password: Langflow password.
-        server_url: Server URL (defaults to LANGFLOW_SERVER_URL env var or http://localhost:7860).
+        server_url: Server URL (defaults to IDRFLOW_SERVER_URL env var or http://localhost:7860).
     """
     old_client = _client_var.get() or _shared_client
     if old_client is not None:

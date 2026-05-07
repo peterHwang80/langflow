@@ -52,7 +52,7 @@ class NativeTracer(BaseTracer):
     - Component-level traces (via add_trace/end_trace)
     - LangChain-level traces (via get_langchain_callback)
 
-    Enabled by default. Disable with LANGFLOW_NATIVE_TRACING=false if needed.
+    Enabled by default. Disable with IDRFLOW_NATIVE_TRACING=false if needed.
     """
 
     def __init__(
@@ -112,7 +112,7 @@ class NativeTracer(BaseTracer):
     @staticmethod
     def _is_enabled() -> bool:
         """Opt-out rather than opt-in so new deployments get tracing without extra config."""
-        return os.getenv("LANGFLOW_NATIVE_TRACING", "true").lower() not in ("false", "0", "no")
+        return os.getenv("IDRFLOW_NATIVE_TRACING", "true").lower() not in ("false", "0", "no")
 
     @property
     def ready(self) -> bool:

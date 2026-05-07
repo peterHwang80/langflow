@@ -43,25 +43,25 @@ def _make_tracer(
 class TestIsEnabled:
     def test_enabled_by_default(self):
         with patch.dict(os.environ, {}, clear=False):
-            os.environ.pop("LANGFLOW_NATIVE_TRACING", None)
+            os.environ.pop("IDRFLOW_NATIVE_TRACING", None)
             assert NativeTracer._is_enabled() is True
 
     @pytest.mark.parametrize("value", ["false", "False", "FALSE", "0", "no"])
     def test_disabled_by_env_var(self, value):
-        with patch.dict(os.environ, {"LANGFLOW_NATIVE_TRACING": value}):
+        with patch.dict(os.environ, {"IDRFLOW_NATIVE_TRACING": value}):
             assert NativeTracer._is_enabled() is False
 
     @pytest.mark.parametrize("value", ["true", "True", "1", "yes"])
     def test_enabled_by_env_var(self, value):
-        with patch.dict(os.environ, {"LANGFLOW_NATIVE_TRACING": value}):
+        with patch.dict(os.environ, {"IDRFLOW_NATIVE_TRACING": value}):
             assert NativeTracer._is_enabled() is True
 
     def test_ready_property_reflects_is_enabled(self):
-        with patch.dict(os.environ, {"LANGFLOW_NATIVE_TRACING": "false"}):
+        with patch.dict(os.environ, {"IDRFLOW_NATIVE_TRACING": "false"}):
             tracer = _make_tracer()
             assert tracer.ready is False
 
-        with patch.dict(os.environ, {"LANGFLOW_NATIVE_TRACING": "true"}):
+        with patch.dict(os.environ, {"IDRFLOW_NATIVE_TRACING": "true"}):
             tracer = _make_tracer()
             assert tracer.ready is True
 
@@ -137,7 +137,7 @@ class TestAddEndTrace:
         assert tracer._current_component_id == "comp-1"
 
     def test_add_trace_noop_when_not_ready(self):
-        with patch.dict(os.environ, {"LANGFLOW_NATIVE_TRACING": "false"}):
+        with patch.dict(os.environ, {"IDRFLOW_NATIVE_TRACING": "false"}):
             tracer = _make_tracer()
         tracer.add_trace("comp-1", "Comp", "chain", {})
         assert "comp-1" not in tracer.spans
@@ -182,7 +182,7 @@ class TestAddEndTrace:
         assert len(tracer.completed_spans) == 0
 
     def test_end_trace_noop_when_not_ready(self):
-        with patch.dict(os.environ, {"LANGFLOW_NATIVE_TRACING": "false"}):
+        with patch.dict(os.environ, {"IDRFLOW_NATIVE_TRACING": "false"}):
             tracer = _make_tracer()
         tracer.end_trace("comp-1", "Comp")
         assert len(tracer.completed_spans) == 0
@@ -265,7 +265,7 @@ class TestEnd:
 
     @pytest.mark.asyncio
     async def test_end_noop_when_not_ready(self):
-        with patch.dict(os.environ, {"LANGFLOW_NATIVE_TRACING": "false"}):
+        with patch.dict(os.environ, {"IDRFLOW_NATIVE_TRACING": "false"}):
             tracer = _make_tracer()
         tracer.end(inputs={}, outputs={})
         assert tracer._flush_task is None
@@ -496,7 +496,7 @@ class TestLangchainSpans:
         assert tracer.langchain_spans[span_id]["model_name"] == "gpt-4"
 
     def test_add_langchain_span_noop_when_not_ready(self):
-        with patch.dict(os.environ, {"LANGFLOW_NATIVE_TRACING": "false"}):
+        with patch.dict(os.environ, {"IDRFLOW_NATIVE_TRACING": "false"}):
             tracer = _make_tracer()
         span_id = uuid4()
         tracer.add_langchain_span(span_id, "LLM", "llm", {})
@@ -552,7 +552,7 @@ class TestLangchainSpans:
         assert len(tracer.completed_spans) == 0
 
     def test_end_langchain_span_noop_when_not_ready(self):
-        with patch.dict(os.environ, {"LANGFLOW_NATIVE_TRACING": "false"}):
+        with patch.dict(os.environ, {"IDRFLOW_NATIVE_TRACING": "false"}):
             tracer = _make_tracer()
         tracer.end_langchain_span(uuid4())
         assert len(tracer.completed_spans) == 0
@@ -574,7 +574,7 @@ class TestLangchainSpans:
 
 class TestGetLangchainCallback:
     def test_returns_none_when_not_ready(self):
-        with patch.dict(os.environ, {"LANGFLOW_NATIVE_TRACING": "false"}):
+        with patch.dict(os.environ, {"IDRFLOW_NATIVE_TRACING": "false"}):
             tracer = _make_tracer()
         assert tracer.get_langchain_callback() is None
 

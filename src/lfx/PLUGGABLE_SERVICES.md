@@ -440,7 +440,7 @@ def test_custom_service():
 3. Ensure config file is in the correct location:
    - If settings service exists: `{settings.config_dir}/lfx.toml`
    - Otherwise: `./lfx.toml` or `./pyproject.toml` in current directory
-4. Enable debug logging: `export LANGFLOW_LOG_LEVEL=DEBUG`
+4. Enable debug logging: `export IDRFLOW_LOG_LEVEL=DEBUG`
 
 ### Import Errors
 

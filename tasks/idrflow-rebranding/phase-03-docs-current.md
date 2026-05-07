@@ -26,7 +26,7 @@
 # 유지 예시 (코드블록 내부)
 uv run langflow run
 import langflow
-export LANGFLOW_DATABASE_URL=...
+export IDRFLOW_DATABASE_URL=...
 ```
 
 수정 대상은 일반 산문(prose), 제목, 링크 텍스트, 버튼 레이블입니다.

@@ -357,7 +357,7 @@ jobs:
                 ]
               }
             ]
-          }" ${{ secrets.LANGFLOW_ENG_SLACK_WEBHOOK_URL }}
+          }" ${{ secrets.IDRFLOW_ENG_SLACK_WEBHOOK_URL }}
 
       - name: Send success notification to Slack
         if: ${{ !inputs.skip_slack && needs.release-nightly-build.result == 'success' }}
@@ -402,4 +402,4 @@ jobs:
                 ]
               }
             ]
-          }' ${{ secrets.LANGFLOW_ENG_SLACK_WEBHOOK_URL }}
+          }' ${{ secrets.IDRFLOW_ENG_SLACK_WEBHOOK_URL }}

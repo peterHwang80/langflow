@@ -796,8 +796,8 @@ async def install_mcp_config(
                 async with session_scope() as api_key_session:
                     api_key_create = ApiKeyCreate(name=f"MCP Server {project.name}")
                     api_key_response = await create_api_key(api_key_session, api_key_create, current_user.id)
-                    langflow_api_key = api_key_response.api_key
-                    args.extend(["--headers", "x-api-key", langflow_api_key])
+                    idrflow_api_key = api_key_response.api_key
+                    args.extend(["--headers", "x-api-key", idrflow_api_key])
 
             # Add the target URL for mcp-proxy based on requested transport
             proxy_target_url = streamable_http_url if transport_mode == "streamablehttp" else legacy_sse_url

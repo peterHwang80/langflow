@@ -58,13 +58,15 @@ langflow run
 /api/v2/...
 ```
 
-### 1-5. localStorage 키
+### ~~1-5. localStorage 키~~ → 변경 완료
 
-`langflow_*` 패턴 또는 내부적으로 localStorage에 저장되는 식별자 키.
+~~`langflow_*` 패턴 또는 내부적으로 localStorage에 저장되는 식별자 키.~~
+→ `idrflow-*` / `idrflow_*` 패턴으로 전환 완료. 마이그레이션 유틸리티가 첫 로드에서 자동 이전.
 
-### 1-6. 내부 HTTP 헤더명
+### ~~1-6. 내부 HTTP 헤더명~~ → 변경 완료
 
-`x-langflow-*` 패턴의 커스텀 헤더.
+~~`x-langflow-*` 패턴의 커스텀 헤더.~~
+→ `x-idrflow-global-var-*`, `x-idrflow-session` 으로 전환 완료 (breaking change).
 
 ### 1-7. 테스트 유틸리티 파일명 및 식별자
 

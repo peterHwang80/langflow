@@ -46,7 +46,6 @@ Whitelist 밖 잔여 항목만 개별 처리했습니다.
 |------|------|------|
 | `src/frontend/src/locales/` i18n 키 이름 (`builtWithLangflow`, `getLangflowDesktop`) | 21 | 내부 식별자 — 영구 whitelist |
 | SVG/PNG 자산 임포트명 (`LangflowLogo`, `MCPLangflow`, `LangflowLogoColor`, `langflow_assistant`) | ~29 | 파일명 보존 — 자산 교체 시 변경 |
-| API 헤더 `X-Langflow-Global-Var-*` | 6 | 백엔드 계약 (변경 시 backend 협의 필요) |
 | 코드 주석 내 Langflow (비노출) | 6 | 사용자 표면 아님 |
 | 함수·컴포넌트명 (`LangflowButtonRedirectTarget`, `LangflowCounts` 등) | 7 | 내부 식별자 |
 | `t("modal.io.builtWithLangflow")` 등 i18n 키 참조 | 2 | 키 이름 — 값은 idrflow로 변경 완료 |

@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
 from langflow.api.utils import get_suggestion_message, remove_api_keys
+from langflow.api.utils.core import extract_global_variables_from_headers
 from langflow.services.database.models.flow.utils import get_outdated_components
 from langflow.utils.version import get_version_info
 
@@ -190,3 +191,48 @@ def test_remove_api_keys():
     assert len(result["data"]["nodes"]) == 6
     assert result["data"]["nodes"][0]["id"] == "bare-node"
     assert result["data"]["nodes"][1]["data"] is None
+
+
+class TestExtractGlobalVariablesFromHeaders:
+    def test_new_prefix_extracts_variables(self):
+        headers = {
+            "X-IDRFLOW-GLOBAL-VAR-API_KEY": "secret",
+            "X-IDRFLOW-GLOBAL-VAR-USER_ID": "user123",
+            "Content-Type": "application/json",
+        }
+        result = extract_global_variables_from_headers(headers)
+        assert result == {"API_KEY": "secret", "USER_ID": "user123"}
+
+    def test_new_prefix_case_insensitive(self):
+        headers = {
+            "x-idrflow-global-var-my_var": "value1",
+            "X-Idrflow-Global-Var-Other": "value2",
+        }
+        result = extract_global_variables_from_headers(headers)
+        assert result == {"MY_VAR": "value1", "OTHER": "value2"}
+
+    def test_old_prefix_not_recognized(self):
+        headers = {
+            "X-LANGFLOW-GLOBAL-VAR-API_KEY": "secret",
+            "X-LANGFLOW-GLOBAL-VAR-USER_ID": "user123",
+        }
+        result = extract_global_variables_from_headers(headers)
+        assert result == {}
+
+    def test_mixed_old_and_new_only_new_extracted(self):
+        headers = {
+            "X-IDRFLOW-GLOBAL-VAR-NEW_VAR": "new-value",
+            "X-LANGFLOW-GLOBAL-VAR-OLD_VAR": "old-value",
+        }
+        result = extract_global_variables_from_headers(headers)
+        assert result == {"NEW_VAR": "new-value"}
+        assert "OLD_VAR" not in result
+
+    def test_empty_headers(self):
+        result = extract_global_variables_from_headers({})
+        assert result == {}
+
+    def test_no_matching_headers(self):
+        headers = {"Authorization": "Bearer token", "Accept": "application/json"}
+        result = extract_global_variables_from_headers(headers)
+        assert result == {}

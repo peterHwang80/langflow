@@ -135,7 +135,7 @@ Configuration for available LLM providers.
 The frontend implements automatic model selection to ensure a valid model is always sent to the backend:
 
 - **Auto-selection**: When no model is explicitly selected, or when the persisted model's provider is no longer available, the first available model from enabled providers is automatically selected
-- **Persistence**: Selected model is stored in localStorage (`langflow-assistant-selected-model`)
+- **Persistence**: Selected model is stored in localStorage (`idrflow-assistant-selected-model`)
 - **Validation**: On load, persisted model is validated against current enabled providers. If the provider or model no longer exists, the selection is cleared and auto-selection triggers
 - **Provider icon**: The model selector trigger displays the provider's icon (e.g., Anthropic, OpenAI) instead of a generic label
 - **Invariant**: A request must never be sent without a valid model selection to prevent backend fallback to unexpected providers
@@ -694,7 +694,7 @@ Thread `provider_vars` (resolved from database) through `flow_executor` → `flo
 Users expect assistant session history to persist. A decision was needed on whether to store sessions in the database (like the Playground) or in browser localStorage.
 
 #### Decision
-Session history is stored in browser `localStorage` (key: `langflow-assistant-sessions`), limited to 10 sessions. Sessions are serialized/deserialized with `progress` state stripped and in-flight messages marked as `"cancelled"`.
+Session history is stored in browser `localStorage` (key: `idrflow-assistant-sessions`), limited to 10 sessions. Sessions are serialized/deserialized with `progress` state stripped and in-flight messages marked as `"cancelled"`.
 
 #### Consequences
 

@@ -615,7 +615,7 @@ async def create_response(
     """
     start_time = time.perf_counter()
 
-    # Extract global variables from X-LANGFLOW-GLOBAL-VAR-* headers
+    # Extract global variables from X-IDRFLOW-GLOBAL-VAR-* headers
     variables = extract_global_variables_from_headers(http_request.headers)
 
     await logger.adebug(f"All headers received: {list(http_request.headers.keys())}")

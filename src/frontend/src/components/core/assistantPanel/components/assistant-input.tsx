@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import ForwardedIconComponent from "@/components/common/genericIconComponent";
-import type { AgenticStepType } from "@/controllers/API/queries/agentic";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import type { AgenticStepType } from "@/controllers/API/queries/agentic";
 import { cn } from "@/utils/utils";
 import { getAssistantPlaceholder } from "../assistant-panel.constants";
 import type { AssistantModel } from "../assistant-panel.types";
@@ -43,7 +43,7 @@ function useAnimatedPlaceholder(
   return currentMessage;
 }
 
-const ASSISTANT_MODEL_STORAGE_KEY = "langflow-assistant-selected-model";
+const ASSISTANT_MODEL_STORAGE_KEY = "idrflow-assistant-selected-model";
 const MAX_MESSAGE_LENGTH = 500;
 
 interface AssistantInputProps {

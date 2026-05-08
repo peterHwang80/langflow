@@ -9,8 +9,8 @@ api_key = os.environ.get("IDRFLOW_API_KEY", "")
 headers = {
     "Content-Type": "application/json",
     "x-api-key": api_key,
-    "X-LANGFLOW-GLOBAL-VAR-USER_ID": "user123",
-    "X-LANGFLOW-GLOBAL-VAR-ENVIRONMENT": "production",
+    "X-IDRFLOW-GLOBAL-VAR-USER_ID": "user123",
+    "X-IDRFLOW-GLOBAL-VAR-ENVIRONMENT": "production",
 }
 
 payload = {

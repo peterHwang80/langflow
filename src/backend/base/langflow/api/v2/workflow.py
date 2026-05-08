@@ -348,7 +348,7 @@ async def execute_sync_workflow(
         raise WorkflowValidationError(msg)
 
     # Extract request-level variables from headers (similar to V1)
-    # Headers with prefix X-LANGFLOW-GLOBAL-VAR-* are extracted and made available to components
+    # Headers with prefix X-IDRFLOW-GLOBAL-VAR-* are extracted and made available to components
     request_variables = extract_global_variables_from_headers(http_request.headers)
 
     # Build context from request variables (similar to V1's _run_flow_internal)
@@ -439,7 +439,7 @@ async def execute_workflow_background(
             raise ValueError(msg)
 
         # Extract request-level variables from headers (similar to V1)
-        # Headers with prefix X-LANGFLOW-GLOBAL-VAR-* are extracted and made available to components
+        # Headers with prefix X-IDRFLOW-GLOBAL-VAR-* are extracted and made available to components
         request_variables = extract_global_variables_from_headers(http_request.headers)
 
         # Build context from request variables (similar to V1's _run_flow_internal)

@@ -1,4 +1,5 @@
 import asyncio
+import copy
 import json
 from uuid import UUID, uuid4
 
@@ -339,6 +340,98 @@ async def test_successful_run_no_payload(client, simple_api_test, created_api_ke
     inner_results = [output.get("results") for output in outputs_dict.get("outputs")]
 
     assert all(result is not None for result in inner_results), (outputs_dict, output_results_has_results)
+
+
+def _build_request_var_echo_flow_data() -> dict:
+    """Build a minimal flow whose output text reflects ``request_variables["SECRET"]``.
+
+    The flow contains a single custom component (RequestVarEcho) wired to a
+    ChatOutput.  RequestVarEcho reads ``self.graph.context["request_variables"]``
+    and echoes the value of ``SECRET``, or the literal ``"NOT_FOUND"`` when the
+    variable is absent.  This makes global-variable header propagation directly
+    observable in the endpoint response payload.
+    """
+    echo_code = (
+        "from lfx.custom import Component\n"
+        "from lfx.io import Output\n"
+        "from lfx.schema.message import Message\n"
+        "\n"
+        "\n"
+        "class RequestVarEcho(Component):\n"
+        '    display_name = "RequestVarEcho"\n'
+        '    description = "Echo request var."\n'
+        '    name = "Secret"\n'
+        "\n"
+        "    outputs = [\n"
+        '        Output(display_name="Secret", name="text", method="text_response"),\n'
+        "    ]\n"
+        "\n"
+        "    def text_response(self) -> Message:\n"
+        "        ctx = self.graph.context or {}\n"
+        '        val = ctx.get("request_variables", {}).get("SECRET", "NOT_FOUND")\n'
+        "        return Message(text=val)\n"
+    )
+
+    env_flow = json.loads(pytest.ENV_VARIABLE_TEST.read_text(encoding="utf-8"))
+    data = copy.deepcopy(env_flow["data"])
+
+    for node in data["nodes"]:
+        if node["id"].startswith("Secret"):
+            tpl = node["data"]["node"]["template"]
+            tpl["code"]["value"] = echo_code
+            tpl["secret_key_input"]["required"] = False
+            tpl["secret_key_input"]["value"] = ""
+            node["data"]["node"]["display_name"] = "RequestVarEcho"
+            break
+
+    return data
+
+
+async def test_idrflow_header_values_propagated_into_execution(client, logged_in_headers, created_api_key):
+    """X-IDRFLOW-GLOBAL-VAR-SECRET value appears in the flow execution output text."""
+    flow_data = _build_request_var_echo_flow_data()
+    flow = FlowCreate(name="Header Propagation Test", data=flow_data)
+    resp = await client.post("api/v1/flows/", json=flow.model_dump(), headers=logged_in_headers)
+    assert resp.status_code == 201
+    flow_id = resp.json()["id"]
+
+    try:
+        headers = {
+            "x-api-key": created_api_key.api_key,
+            "X-IDRFLOW-GLOBAL-VAR-SECRET": "header-injected-value",
+        }
+        response = await client.post(f"/api/v1/run/{flow_id}", headers=headers)
+        assert response.status_code == status.HTTP_200_OK, response.text
+
+        result = response.json()
+        output_text = result["outputs"][0]["outputs"][0]["results"]["message"]["text"]
+        assert output_text == "header-injected-value", f"Expected header value in output, got: {output_text!r}"
+    finally:
+        await client.delete(f"api/v1/flows/{flow_id}", headers=logged_in_headers)
+
+
+async def test_old_langflow_header_values_not_propagated(client, logged_in_headers, created_api_key):
+    """X-LANGFLOW-GLOBAL-VAR-SECRET value does NOT reach the flow execution output."""
+    flow_data = _build_request_var_echo_flow_data()
+    flow = FlowCreate(name="Header Ignored Test", data=flow_data)
+    resp = await client.post("api/v1/flows/", json=flow.model_dump(), headers=logged_in_headers)
+    assert resp.status_code == 201
+    flow_id = resp.json()["id"]
+
+    try:
+        headers = {
+            "x-api-key": created_api_key.api_key,
+            "X-LANGFLOW-GLOBAL-VAR-SECRET": "should-not-appear",
+        }
+        response = await client.post(f"/api/v1/run/{flow_id}", headers=headers)
+        assert response.status_code == status.HTTP_200_OK, response.text
+
+        result = response.json()
+        output_text = result["outputs"][0]["outputs"][0]["results"]["message"]["text"]
+        assert output_text == "NOT_FOUND", f"Old prefix should be ignored, but got: {output_text!r}"
+        assert "should-not-appear" not in json.dumps(result), "Old header value leaked into response"
+    finally:
+        await client.delete(f"api/v1/flows/{flow_id}", headers=logged_in_headers)
 
 
 async def test_successful_run_with_output_type_text(client, simple_api_test, created_api_key):

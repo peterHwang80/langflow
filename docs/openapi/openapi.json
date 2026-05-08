@@ -812,7 +812,7 @@
             "type": "boolean"
           },
           "wxo_deployments": {
-            "default": false,
+            "default": true,
             "title": "Wxo Deployments",
             "type": "boolean"
           }
@@ -3815,6 +3815,15 @@
         "additionalProperties": {
           "anyOf": [
             {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
               "type": "string"
             },
             {
@@ -3832,7 +3841,9 @@
             "component_id": {
               "parameter_name": "value"
             },
-            "parameter_name": "value"
+            "parameter_name": "value",
+            "stream": false,
+            "temperature": 0.7
           }
         ],
         "title": "Tweaks",
@@ -4544,7 +4555,7 @@
   },
   "info": {
     "title": "Langflow",
-    "version": "1.9.0"
+    "version": "1.9.1"
   },
   "openapi": "3.1.0",
   "paths": {
@@ -8440,26 +8451,6 @@
               "title": "Flow Id Or Name",
               "type": "string"
             }
-          },
-          {
-            "in": "query",
-            "name": "user_id",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "format": "uuid",
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "User Id"
-            }
           }
         ],
         "requestBody": {
@@ -8509,7 +8500,7 @@
     },
     "/api/v1/run/{flow_id_or_name}": {
       "post": {
-        "description": "Executes a specified flow by ID with support for streaming and telemetry (API key auth).<br><br>This endpoint executes a flow identified by ID or name, with options for streaming the response<br>and tracking execution metrics. It handles both streaming and non-streaming execution modes.<br>This endpoint uses API key authentication (Bearer token).<br><br>Args:<br>    background_tasks (BackgroundTasks): FastAPI background task manager<br>    flow (FlowRead | None): The flow to execute, loaded via dependency<br>    input_request (SimplifiedAPIRequest | None): Input parameters for the flow<br>    stream (bool): Whether to stream the response<br>    api_key_user (UserRead): Authenticated user from API key<br>    context (dict | None): Optional context to pass to the flow<br>    http_request (Request): The incoming HTTP request for extracting global variables<br><br>Returns:<br>    Union[StreamingResponse, RunResponse]: Either a streaming response for real-time results<br>    or a RunResponse with the complete execution results<br><br>Raises:<br>    HTTPException: For flow not found (404) or invalid input (400)<br>    APIException: For internal execution errors (500)<br><br>Notes:<br>    - Supports both streaming and non-streaming execution modes<br>    - Tracks execution time and success/failure via telemetry<br>    - Handles graceful client disconnection in streaming mode<br>    - Provides detailed error handling with appropriate HTTP status codes<br>    - Extracts global variables from HTTP headers with prefix X-LANGFLOW-GLOBAL-VAR-*<br>    - Merges extracted variables with the context parameter as \"request_variables\"<br>    - In streaming mode, uses EventManager to handle events:<br>        - \"add_message\": New messages during execution<br>        - \"token\": Individual tokens during streaming<br>        - \"end\": Final execution result<br>    - Authentication: Requires API key (Bearer token)",
+        "description": "Executes a specified flow by ID with support for streaming and telemetry (API key auth).<br><br>This endpoint executes a flow identified by ID or name, with options for streaming the response<br>and tracking execution metrics. It handles both streaming and non-streaming execution modes.<br>This endpoint uses API key authentication (Bearer token).<br><br>Args:<br>    background_tasks (BackgroundTasks): FastAPI background task manager<br>    flow (FlowRead | None): The flow to execute, loaded via dependency<br>    input_request (SimplifiedAPIRequest | None): Input parameters for the flow<br>    stream (bool): Whether to stream the response<br>    api_key_user (UserRead): Authenticated user from API key<br>    context (dict | None): Optional context to pass to the flow<br>    http_request (Request): The incoming HTTP request for extracting global variables<br><br>Returns:<br>    Union[StreamingResponse, RunResponse]: Either a streaming response for real-time results<br>    or a RunResponse with the complete execution results<br><br>Raises:<br>    HTTPException: For flow not found (404) or invalid input (400)<br>    APIException: For internal execution errors (500)<br><br>Notes:<br>    - Supports both streaming and non-streaming execution modes<br>    - Tracks execution time and success/failure via telemetry<br>    - Handles graceful client disconnection in streaming mode<br>    - Provides detailed error handling with appropriate HTTP status codes<br>    - Extracts global variables from HTTP headers with prefix X-IDRFLOW-GLOBAL-VAR-*<br>    - Merges extracted variables with the context parameter as \"request_variables\"<br>    - In streaming mode, uses EventManager to handle events:<br>        - \"add_message\": New messages during execution<br>        - \"token\": Individual tokens during streaming<br>        - \"end\": Final execution result<br>    - Authentication: Requires API key (Bearer token)",
         "operationId": "simplified_run_flow_api_v1_run__flow_id_or_name__post",
         "parameters": [
           {
@@ -8529,26 +8520,6 @@
               "default": false,
               "title": "Stream",
               "type": "boolean"
-            }
-          },
-          {
-            "in": "query",
-            "name": "user_id",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "format": "uuid",
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "User Id"
             }
           }
         ],

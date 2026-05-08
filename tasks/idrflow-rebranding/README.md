@@ -29,8 +29,8 @@
 - `import langflow` / `from langflow` (Python import)
 - `uv run langflow run` 및 모든 CLI 명령
 - `/api/v1`, `/api/v2` API 경로
-- localStorage 키 (`langflow_*` 패턴 포함)
-- 내부 헤더명
+- ~~localStorage 키~~ → `idrflow-*`로 변경 완료
+- ~~내부 헤더명~~ → `x-idrflow-*`로 변경 완료 (breaking change)
 - Python 패키지명 (`langflow`, `langflow-base` 등)
 - 테스트 ID, 테스트 유틸리티 파일명 내부 식별자
 - 코드블록/예제 안의 명령어/환경변수

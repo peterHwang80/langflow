@@ -16,7 +16,7 @@ from langflow.services.auth.utils import get_current_active_user, get_current_ac
 from langflow.services.database.models.flow.model import Flow
 from langflow.services.database.models.user.model import User
 from langflow.services.store.utils import get_lf_version_from_pypi
-from langflow.utils.constants import LANGFLOW_GLOBAL_VAR_HEADER_PREFIX
+from langflow.utils.constants import IDRFLOW_GLOBAL_VAR_HEADER_PREFIX
 
 if TYPE_CHECKING:
     from langflow.services.store.schema import StoreComponentCreate
@@ -399,7 +399,7 @@ def custom_params(
 
 
 def extract_global_variables_from_headers(headers) -> dict[str, str]:
-    """Extract global variables from HTTP headers with prefix X-LANGFLOW-GLOBAL-VAR-*.
+    """Extract global variables from HTTP headers with prefix X-IDRFLOW-GLOBAL-VAR-*.
 
     Args:
         headers: HTTP headers object (e.g., from FastAPI Request.headers)
@@ -408,7 +408,7 @@ def extract_global_variables_from_headers(headers) -> dict[str, str]:
         Dictionary mapping variable names (uppercase) to their values
 
     Example:
-        headers = {"X-LANGFLOW-GLOBAL-VAR-API-KEY": "secret", "Content-Type": "application/json"}
+        headers = {"X-IDRFLOW-GLOBAL-VAR-API-KEY": "secret", "Content-Type": "application/json"}
         result = extract_global_variables_from_headers(headers)
         # Returns: {"API_KEY": "secret"}
     """
@@ -417,11 +417,10 @@ def extract_global_variables_from_headers(headers) -> dict[str, str]:
     try:
         for header_name, header_value in headers.items():
             header_lower = header_name.lower()
-            if header_lower.startswith(LANGFLOW_GLOBAL_VAR_HEADER_PREFIX):
-                var_name = header_lower[len(LANGFLOW_GLOBAL_VAR_HEADER_PREFIX) :].upper()
+            if header_lower.startswith(IDRFLOW_GLOBAL_VAR_HEADER_PREFIX):
+                var_name = header_lower[len(IDRFLOW_GLOBAL_VAR_HEADER_PREFIX) :].upper()
                 variables[var_name] = header_value
     except Exception as exc:  # noqa: BLE001
-        # Log the error but don't raise - we want to continue execution
         logger.exception("Failed to extract global variables from headers: %s", exc)
 
     return variables

@@ -7,9 +7,9 @@ url = f"{os.getenv('IDRFLOW_SERVER_URL', '')}/api/v1/responses"
 headers = {
     "x-api-key": f"{os.getenv('IDRFLOW_API_KEY', '')}",
     "Content-Type": "application/json",
-    "X-LANGFLOW-GLOBAL-VAR-OPENAI_API_KEY": "sk-...",
-    "X-LANGFLOW-GLOBAL-VAR-USER_ID": "user123",
-    "X-LANGFLOW-GLOBAL-VAR-ENVIRONMENT": "production",
+    "X-IDRFLOW-GLOBAL-VAR-OPENAI_API_KEY": "sk-...",
+    "X-IDRFLOW-GLOBAL-VAR-USER_ID": "user123",
+    "X-IDRFLOW-GLOBAL-VAR-ENVIRONMENT": "production",
 }
 
 payload = {"model": "your-flow-id", "input": "Hello"}

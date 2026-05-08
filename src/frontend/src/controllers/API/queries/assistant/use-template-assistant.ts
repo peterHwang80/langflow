@@ -28,9 +28,9 @@ export const useGetTemplateAssistantQuery: useQueryFunctionType<
       },
       {
         headers: {
-          "X-Langflow-Global-Var-COMPONENT_ID": compId,
-          "X-Langflow-Global-Var-FLOW_ID": flowId,
-          "X-Langflow-Global-Var-FIELD_NAME": fieldName,
+          "X-Idrflow-Global-Var-COMPONENT_ID": compId,
+          "X-Idrflow-Global-Var-FLOW_ID": flowId,
+          "X-Idrflow-Global-Var-FIELD_NAME": fieldName,
         },
       },
     );

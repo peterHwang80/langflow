@@ -11,7 +11,17 @@ This release replaces the old `LANGFLOW_*` external settings namespace with `IDR
 Update your shell environment, `.env` files, CI secrets, deploy manifests, and test commands before upgrading.
 
 The `langflow` and `lfx` commands stay the same.
-Package names, import paths, API routes, cookies, local storage keys, and `x-langflow-*` headers are unchanged.
+Package names, import paths, API routes, and cookies are unchanged.
+
+## Browser storage keys
+
+Local storage keys previously prefixed `langflow-` are now `idrflow-`.
+The app auto-migrates existing data on first load — no user action required.
+
+## HTTP headers
+
+The global variable header prefix has changed from `X-LANGFLOW-GLOBAL-VAR-*` to `X-IDRFLOW-GLOBAL-VAR-*`.
+Update any client code that sends these headers. The old prefix is no longer recognized.
 
 ## Environment variables
 

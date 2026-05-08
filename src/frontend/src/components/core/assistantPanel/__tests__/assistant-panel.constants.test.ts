@@ -1,6 +1,5 @@
 import {
   ASSISTANT_PLACEHOLDERS,
-  ASSISTANT_SESSION_STORAGE_KEY_PREFIX,
   ASSISTANT_TITLE,
   getAssistantPlaceholder,
 } from "../assistant-panel.constants";
@@ -9,17 +8,6 @@ describe("assistant-panel.constants", () => {
   describe("ASSISTANT_TITLE", () => {
     it("should be idrflow Assistant", () => {
       expect(ASSISTANT_TITLE).toBe("idrflow Assistant");
-    });
-  });
-
-  describe("ASSISTANT_SESSION_STORAGE_KEY_PREFIX", () => {
-    it("should be a non-empty string", () => {
-      expect(ASSISTANT_SESSION_STORAGE_KEY_PREFIX).toBeTruthy();
-      expect(typeof ASSISTANT_SESSION_STORAGE_KEY_PREFIX).toBe("string");
-    });
-
-    it("should end with a separator for flow ID concatenation", () => {
-      expect(ASSISTANT_SESSION_STORAGE_KEY_PREFIX).toMatch(/-$/);
     });
   });
 

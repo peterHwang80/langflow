@@ -12,6 +12,11 @@ import "./style/applies.css";
 
 // @ts-ignore
 import App from "./customization/custom-App";
+import { useShortcutsStore } from "./stores/shortcuts";
+import { migrateStorageKeys } from "./utils/storage-migration";
+
+migrateStorageKeys();
+useShortcutsStore.getState().getShortcutsFromStorage();
 
 const preferredLanguage =
   localStorage.getItem("languagePreference") || navigator.language || "en";

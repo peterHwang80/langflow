@@ -5,9 +5,9 @@ const options = {
   headers: {
     "x-api-key": `${process.env.IDRFLOW_API_KEY ?? ""}`,
     "Content-Type": `application/json`,
-    "X-LANGFLOW-GLOBAL-VAR-OPENAI_API_KEY": `sk-...`,
-    "X-LANGFLOW-GLOBAL-VAR-USER_ID": `user123`,
-    "X-LANGFLOW-GLOBAL-VAR-ENVIRONMENT": `production`,
+    "X-IDRFLOW-GLOBAL-VAR-OPENAI_API_KEY": `sk-...`,
+    "X-IDRFLOW-GLOBAL-VAR-USER_ID": `user123`,
+    "X-IDRFLOW-GLOBAL-VAR-ENVIRONMENT": `production`,
   },
   body: JSON.stringify({
   "model": "your-flow-id",

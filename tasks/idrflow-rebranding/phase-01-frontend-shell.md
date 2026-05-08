@@ -188,9 +188,14 @@ make run_cli 후:
 
 | 패턴 | 위치 | 이유 |
 |------|------|------|
-| `X-Langflow-Global-Var-*` | HTTP 헤더 | whitelist — 내부 API 헤더 |
 | `LANGFLOW_*` 상수명 | `constants.ts` | whitelist — 환경변수/상수 식별자 |
-| `langflow-assistant-session-*` | sessionStorage 키 | whitelist — 내부 저장소 키 |
+
+### ~~이전 Whitelist — 변경 완료~~
+
+| 패턴 | 변경 후 | 비고 |
+|------|---------|------|
+| ~~`X-Langflow-Global-Var-*`~~ | `X-Idrflow-Global-Var-*` | breaking change로 즉시 교체 |
+| ~~`langflow-assistant-session-*`~~ | 삭제 | live consumer 없는 dead prefix — export 및 테스트 제거 |
 
 ### 3. i18n 키 이름 (키 이름 유지 — 값 변경 완료)
 

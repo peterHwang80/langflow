@@ -7,6 +7,9 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 const { remarkCodeHike } = require("@code-hike/mdx");
 
 const isProduction = process.env.NODE_ENV === "production";
+const baseUrl = process.env.BASE_URL
+  ? `${process.env.BASE_URL.replace(/\/?$/, "/")}`
+  : "/idrflow/";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -14,12 +17,13 @@ const config = {
   tagline:
     "idrflow is a low-code app builder for RAG and multi-agent AI applications.",
   favicon: "img/favicon.ico",
-  url: "https://docs.langflow.org", // TODO: idrflow docs 도메인 확정 후 업데이트
-  baseUrl: process.env.BASE_URL ? process.env.BASE_URL : "/",
+  url: "https://docs.idrsoft.com",
+  // Production docs live under /idrflow; draft previews override BASE_URL at build time.
+  baseUrl,
   onBrokenLinks: "throw",
   onBrokenAnchors: "warn",
-  organizationName: "langflow-ai",
-  projectName: "langflow",
+  organizationName: "langflow-ai", // TODO: replace when the idrflow GitHub org is finalized
+  projectName: "langflow", // TODO: replace when the idrflow repository name is finalized
   trailingSlash: false,
   staticDirectories: ["static"],
   markdown: {
@@ -107,7 +111,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          routeBasePath: "/", // Serve the docs at the site's root
+          routeBasePath: "/", // Serve the docs at the site root within the configured baseUrl
           sidebarPath: require.resolve("./sidebars.js"), // Use sidebars.js file
           sidebarCollapsed: true,
           // Versioning configuration
@@ -172,7 +176,7 @@ const config = {
           },
           {
             id: "workflow",
-            spec: "openapi/langflow-workflows-openapi.json",
+            spec: "openapi/idrflow-workflows-openapi.json",
             route: "/api/workflow",
           },
         ],
@@ -183,10 +187,10 @@ const config = {
     ],
   ],
   plugins: [
-    // Alias so MDX can import code from the Langflow repo with !!raw-loader!@langflow/src/...
-    function langflowCodeImportPlugin(context) {
+    // Alias so MDX can import code from the workspace source tree with !!raw-loader!@langflow/src/...
+    function idrflowCodeImportPlugin(context) {
       return {
-        name: "langflow-code-import",
+        name: "idrflow-code-import",
         configureWebpack() {
           return {
             resolve: {
@@ -214,6 +218,18 @@ const config = {
               "/guides-new-to-llms",
               "/about-langflow",
             ],
+          },
+          {
+            to: "/idrflow-mcp-client",
+            from: ["/langflow-mcp-client"],
+          },
+          {
+            to: "/idrflow-assistant",
+            from: ["/langflow-assistant"],
+          },
+          {
+            to: "/luna-for-idrflow",
+            from: ["/luna-for-langflow"],
           },
           {
             to: "/get-started-installation",
@@ -447,49 +463,6 @@ const config = {
             type: 'docsVersionDropdown',
             position: 'left',
           },
-          // right
-          {
-            position: "right",
-            href: "https://github.com/langflow-ai/langflow",
-            className: "header-github-link",
-            target: "_blank",
-            rel: null,
-            "aria-label": "GitHub",
-            'data-event': 'UI Interaction',
-            'data-action': 'clicked',
-            'data-channel': 'docs',
-            'data-element-id': 'social-github',
-            'data-namespace': 'header',
-            'data-platform-title': 'idrflow'
-          },
-          {
-            position: "right",
-            href: "https://twitter.com/langflow_ai",
-            className: "header-twitter-link",
-            target: "_blank",
-            rel: null,
-            "aria-label": "Twitter",
-            'data-event': 'UI Interaction',
-            'data-action': 'clicked',
-            'data-channel': 'docs',
-            'data-element-id': 'social-twitter',
-            'data-namespace': 'header',
-            'data-platform-title': 'idrflow'
-          },
-          {
-            position: "right",
-            href: "https://discord.gg/EqksyE2EX9",
-            className: "header-discord-link",
-            target: "_blank",
-            rel: null,
-            "aria-label": "Discord",
-            'data-event': 'UI Interaction',
-            'data-action': 'clicked',
-            'data-channel': 'docs',
-            'data-element-id': 'social-discord',
-            'data-namespace': 'header',
-            'data-platform-title': 'idrflow'
-          },
         ],
       },
       colorMode: {
@@ -535,7 +508,7 @@ const config = {
         appId: "UZK6BDPCVY",
         // public key, safe to commit
         apiKey: "adbd7686dceb1cd510d5ce20d04bf74c",
-        indexName: "langflow",
+        indexName: "idrflow",
         contextualSearch: true,
         searchParameters: {},
         searchPagePath: "search",

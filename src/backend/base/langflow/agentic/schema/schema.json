@@ -82,7 +82,7 @@
         "type": "button_preview",
         "trigger": {
           "action": "navigate",
-          "payload": { "path": "https://docs.langflow.org" }
+          "payload": { "path": "https://docs.idrsoft.com/idrflow" }
         },
         "ui": {
           "icon": "book-open",

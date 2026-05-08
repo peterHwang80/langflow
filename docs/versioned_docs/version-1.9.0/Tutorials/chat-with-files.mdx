@@ -102,7 +102,7 @@ For an example of constructing file upload requests in JavaScript, see the [Crea
       'x-api-key': 'IDRFLOW_API_KEY'
     }
 
-    # 3. Upload the file to Langflow
+    # 3. Upload the file to idrflow
     response = requests.request("POST", url, headers=headers, data=payload, files=files)
     print(response.text)
 
@@ -110,7 +110,7 @@ For an example of constructing file upload requests in JavaScript, see the [Crea
     uploaded_data = response.json()
     uploaded_path = uploaded_data.get('path')
 
-    # 5. Call the Langflow run endpoint with the uploaded file path
+    # 5. Call the idrflow run endpoint with the uploaded file path
     run_url = "http://IDRFLOW_SERVER_ADDRESS/api/v1/run/FLOW_ID"
     run_payload = {
         "input_value": "CHAT_INPUT",

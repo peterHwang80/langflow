@@ -8,7 +8,6 @@ import { useEffect } from "react";
 import { IS_AUTO_LOGIN } from "@/constants/constants";
 import { baseURL } from "@/customization/constants";
 import { useCustomApiHeaders } from "@/customization/hooks/use-custom-api-headers";
-import { customGetAccessToken } from "@/customization/utils/custom-get-access-token";
 import {
   getAxiosWithCredentials,
   getFetchCredentials,
@@ -100,6 +99,7 @@ function ApiInterceptor() {
 
     const isAuthorizedURL = (url) => {
       const authorizedDomains = [
+        // TODO: replace these upstream example sources once idrflow-owned examples are published.
         "https://raw.githubusercontent.com/langflow-ai/langflow_examples/main/examples",
         "https://api.github.com/repos/langflow-ai/langflow_examples/contents/examples",
         "https://api.github.com/repos/langflow-ai/langflow",
@@ -356,9 +356,11 @@ async function performStreamingRequest({
         await onData(data);
       }
     }
-  } catch (e: any) {
+  } catch (e: unknown) {
+    const networkError =
+      e instanceof Error ? e : new Error("Unknown network error");
     if (onNetworkError) {
-      onNetworkError(e);
+      onNetworkError(networkError);
     } else {
       throw e;
     }

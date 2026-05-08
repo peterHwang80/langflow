@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import langflowAssistantIcon from "@/assets/langflow_assistant.svg";
+import idrflowAssistantIcon from "@/assets/idrflow_assistant.svg";
 import SimplifiedCodeTabComponent from "@/components/core/codeTabsComponent";
 import { CustomProfileIcon } from "@/customization/components/custom-profile-icon";
 import { extractLanguage, isCodeBlock } from "@/utils/codeBlockUtils";
@@ -257,7 +257,7 @@ export function AssistantMessageItem({
         ) : (
           <div className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-lg">
             <img
-              src={langflowAssistantIcon}
+              src={idrflowAssistantIcon}
               alt="idrflow Assistant"
               className="h-full w-full object-cover"
             />

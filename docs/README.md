@@ -22,7 +22,7 @@ This command starts a local development server and opens up a browser window. Mo
 $ npm run build
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service, including `npm run serve`.
+This command generates static content into the `build` directory for the canonical docs site at `https://docs.idrsoft.com/idrflow`. You can preview the output locally with `npm run serve`.
 
 ### Import code snippets from the repo with a line range
 
@@ -96,16 +96,17 @@ See the [Docusaurus docs](https://docusaurus.io/docs/versioning) for more info.
 
 ### Deployment
 
-Using SSH:
+Production docs are served by external idrsoft-managed infrastructure at `https://docs.idrsoft.com/idrflow`.
 
+Build the static site:
 ```
-$ USE_SSH=true npm run deploy
-```
-
-Not using SSH:
-
-```
-$ GIT_USER=<Your GitHub username> npm run deploy
+$ npm run build
 ```
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+The resulting `build/` directory should be published by the production web tier under the `/idrflow` subpath.
+
+For draft or preview deployments that need a different subpath, override `BASE_URL` at build time:
+
+```
+$ BASE_URL=/langflow-drafts/<branch> npm run build
+```

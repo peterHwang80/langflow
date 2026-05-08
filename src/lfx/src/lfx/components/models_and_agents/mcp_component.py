@@ -94,7 +94,7 @@ class MCPToolsComponent(ComponentWithCache):
 
     display_name = "MCP Tools"
     description = "Connect to an MCP server to use its tools."
-    documentation: str = "https://docs.langflow.org/mcp-tools"
+    documentation: str = "https://docs.idrsoft.com/idrflow/mcp-tools"
     icon = "Mcp"
     name = "MCPTools"
 

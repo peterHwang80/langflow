@@ -28,7 +28,7 @@ If you need to change or uninstall custom dependencies, edit the `requirements.t
 
 To install your own custom dependencies in your idrflow environment, add them with your package manager.
 
-If you're working within a cloned idrflow repository, add dependencies with `uv add` because there is already a `pyproject.toml` file for uv to reference:
+If you're working within a cloned upstream Langflow repository, add dependencies with `uv add` because there is already a `pyproject.toml` file for uv to reference:
 
 ```bash
 uv add DEPENDENCY
@@ -104,7 +104,7 @@ You can also install `langflow-base` with specific optional dependency groups in
 uv pip install "langflow-base[postgresql,openai]" matplotlib
 ```
 
-If you're working within a cloned idrflow repository, add dependencies with `uv add` to reference the existing `pyproject.toml` files:
+If you're working within a cloned upstream Langflow repository, add dependencies with `uv add` to reference the existing `pyproject.toml` files:
 
 ```bash
 uv add matplotlib

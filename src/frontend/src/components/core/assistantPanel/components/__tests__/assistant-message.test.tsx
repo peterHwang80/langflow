@@ -43,7 +43,7 @@ jest.mock("@/customization/components/custom-profile-icon", () => ({
   ),
 }));
 
-jest.mock("@/assets/langflow_assistant.svg", () => "langflow-icon.svg");
+jest.mock("@/assets/idrflow_assistant.svg", () => "idrflow-icon.svg");
 
 jest.mock("../assistant-component-result", () => ({
   AssistantComponentResult: ({

@@ -51,7 +51,7 @@ class URLComponent(Component):
 
     display_name = "URL"
     description = "Fetch content from one or more web pages, following links recursively."
-    documentation: str = "https://docs.langflow.org/url"
+    documentation: str = "https://docs.idrsoft.com/idrflow/url"
     icon = "layout-template"
     name = "URLComponent"
 

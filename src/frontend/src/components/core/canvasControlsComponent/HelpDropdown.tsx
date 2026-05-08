@@ -2,7 +2,6 @@ import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { HelpDropdownView } from "@/components/core/canvasControlsComponent/HelpDropdownView";
 import {
-  BUG_REPORT_URL,
   DATASTAX_DOCS_URL,
   DESKTOP_URL,
   DOCS_URL,
@@ -44,7 +43,7 @@ const HelpDropdown = () => {
       onToggleInspectionPanel={onToggleInspectionPanel}
       navigateTo={(path) => navigate(path)}
       openLink={(url) => window.open(url, "_blank")}
-      urls={{ docs: docsUrl, bugReport: BUG_REPORT_URL, desktop: DESKTOP_URL }}
+      urls={{ docs: docsUrl, desktop: DESKTOP_URL }}
     />
   );
 };

@@ -1,4 +1,4 @@
-import { test, expect } from "../../fixtures";
+import { expect, test } from "../../fixtures";
 import { awaitBootstrapTest } from "../../utils/await-bootstrap-test";
 
 test.describe("Assistant Panel UI", { tag: ["@release"] }, () => {
@@ -16,7 +16,7 @@ test.describe("Assistant Panel UI", { tag: ["@release"] }, () => {
     await expect(page.getByTestId("assistant-panel")).toBeVisible();
 
     // Verify core UI elements
-    await expect(page.getByText("Langflow Assistant")).toBeVisible();
+    await expect(page.getByText("idrflow Assistant")).toBeVisible();
     await expect(page.getByTestId("assistant-input-textarea")).toBeVisible();
     await expect(page.getByTestId("assistant-model-selector")).toBeVisible();
     await expect(page.getByTestId("assistant-new-session")).toBeDisabled();

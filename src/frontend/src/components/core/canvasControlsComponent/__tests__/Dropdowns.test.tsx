@@ -1,25 +1,29 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import type { ComponentPropsWithoutRef } from "react";
 import { MemoryRouter, useNavigate } from "react-router-dom";
 import HelpDropdown from "../HelpDropdown";
 
+type MockButtonProps = ComponentPropsWithoutRef<"button">;
+type MockDivProps = ComponentPropsWithoutRef<"div">;
+
 jest.mock("@/components/ui/button", () => ({
-  Button: ({ children, ...props }: any) => (
+  Button: ({ children, ...props }: MockButtonProps) => (
     <button {...props}>{children}</button>
   ),
 }));
 
 jest.mock("@/components/ui/dropdown-menu", () => ({
-  DropdownMenu: ({ children, ...props }: any) => (
+  DropdownMenu: ({ children, ...props }: MockDivProps) => (
     <div data-testid="dropdown-menu" {...props}>
       {children}
     </div>
   ),
-  DropdownMenuTrigger: ({ children, ...props }: any) => (
+  DropdownMenuTrigger: ({ children, ...props }: MockDivProps) => (
     <div data-testid="dropdown-trigger" {...props}>
       {children}
     </div>
   ),
-  DropdownMenuContent: ({ children, ...props }: any) => (
+  DropdownMenuContent: ({ children, ...props }: MockDivProps) => (
     <div data-testid="dropdown-content" {...props}>
       {children}
     </div>
@@ -41,8 +45,8 @@ jest.mock("@/components/common/genericIconComponent", () => ({
 jest.mock("@/constants/constants", () => ({
   __esModule: true,
   DATASTAX_DOCS_URL: "https://docs.datastax.com",
-  DOCS_URL: "https://docs.langflow.org",
-  DESKTOP_URL: "https://desktop.langflow.org",
+  DOCS_URL: "https://docs.idrsoft.com/idrflow",
+  DESKTOP_URL: "",
 }));
 
 jest.mock("@/customization/feature-flags", () => ({
@@ -50,7 +54,7 @@ jest.mock("@/customization/feature-flags", () => ({
 }));
 
 jest.mock("@/utils/utils", () => ({
-  cn: (...args: any[]) => args.filter(Boolean).join(" "),
+  cn: (...args: unknown[]) => args.filter(Boolean).join(" "),
   getOS: () => "macos",
 }));
 
@@ -100,19 +104,15 @@ describe("HelpDropdown", () => {
 
     fireEvent.click(screen.getByTestId("canvas_controls_dropdown_docs"));
     expect(window.open).toHaveBeenCalledWith(
-      "https://docs.langflow.org",
+      "https://docs.idrsoft.com/idrflow",
       "_blank",
     );
 
     fireEvent.click(screen.getByTestId("canvas_controls_dropdown_shortcuts"));
     expect(mockNavigate).toHaveBeenCalledWith("/settings/shortcuts");
 
-    fireEvent.click(
-      screen.getByTestId("canvas_controls_dropdown_get_langflow_desktop"),
-    );
-    expect(window.open).toHaveBeenCalledWith(
-      "https://desktop.langflow.org",
-      "_blank",
-    );
+    expect(
+      screen.queryByTestId("canvas_controls_dropdown_get_langflow_desktop"),
+    ).not.toBeInTheDocument();
   });
 });

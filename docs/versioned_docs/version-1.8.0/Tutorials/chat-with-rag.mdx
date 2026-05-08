@@ -88,7 +88,7 @@ const data = new FormData();
 data.append('file', new Blob([fileBuffer]), 'FILE_NAME');
 const headers = { 'x-api-key': 'IDRFLOW_API_KEY' };
 
-// 2. Upload the file to Langflow
+// 2. Upload the file to idrflow
 const uploadRes = await fetch('IDRFLOW_SERVER_ADDRESS/api/v2/files/', {
   method: 'POST',
   headers,
@@ -97,7 +97,7 @@ const uploadRes = await fetch('IDRFLOW_SERVER_ADDRESS/api/v2/files/', {
 const uploadData = await uploadRes.json();
 const uploadedPath = uploadData.path;
 
-// 3. Call the Langflow run endpoint with the uploaded file path
+// 3. Call the idrflow run endpoint with the uploaded file path
 const payload = {
   input_value: "Analyze this file",
   output_type: "chat",
@@ -170,7 +170,7 @@ This tutorial uses JavaScript for demonstration purposes.
     }
 
     function chat() {
-        console.log('🤖 Langflow RAG Chatbot (type "quit" to exit)\n');
+        console.log('🤖 idrflow RAG Chatbot (type "quit" to exit)\n');
 
         const ask = () => {
             rl.question('👤 You: ', async (input) => {

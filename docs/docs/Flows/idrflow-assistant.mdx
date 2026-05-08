@@ -1,6 +1,6 @@
 ---
 title: Build components with idrflow Assistant
-slug: /langflow-assistant
+slug: /idrflow-assistant
 ---
 
 import Icon from "@site/src/components/icon";
@@ -116,7 +116,7 @@ You'll then iterate on the code based on the results in the **Playground**.
             request = Request(
                 url,
                 headers={
-                    "User-Agent": "Mozilla/5.0 (compatible; Langflow URLTitleExtractor/1.0)"
+                    "User-Agent": "Mozilla/5.0 (compatible; idrflow URLTitleExtractor/1.0)"
                 },
             )
 
@@ -186,7 +186,7 @@ You'll then iterate on the code based on the results in the **Playground**.
 6. Open the **Playground**, and tell idrflow to check a list of URLs.
     For example:
     ```
-    Check these links: https://langflow.org
+    Check these links: https://example.com
     https://github.com/langflow-ai/langflow
     https://python.org
     https://this-domain-should-not-resolve-12345.invalid
@@ -196,7 +196,7 @@ You'll then iterate on the code based on the results in the **Playground**.
 
     | url | title | status |
     | --- | --- | --- |
-    | https://langflow.org | idrflow \| Low-code AI builder for agentic and RAG applications | 200 |
+    | https://example.com | Example Domain | 200 |
     | https://github.com/langflow-ai/langflow | GitHub - langflow-ai/langflow: idrflow is a powerful tool for building and deploying AI-powered agents and workflows. - GitHub | 200 |
     | https://python.org | Welcome to Python.org | 200 |
     | https://this-domain-should-not-resolve-12345.invalid |  |  |
@@ -209,18 +209,18 @@ You'll then iterate on the code based on the results in the **Playground**.
     Set **max_urls** to `3`.
     In the **Playground**, enter a list that includes a duplicate URL and the invalid URL from before:
     ```
-    Check these links: https://langflow.org
+    Check these links: https://example.com
     https://github.com/langflow-ai/langflow
     https://python.org
-    https://langflow.org
+    https://example.com
     https://this-domain-should-not-resolve-12345.invalid
     ```
 
 10. Run the flow.
-    The output will be similar to the following, with the duplicate `https://langflow.org` removed and only 3 valid URLs displayed.
+    The output will be similar to the following, with the duplicate `https://example.com` removed and only 3 valid URLs displayed.
 
     | url | title | status |
     | --- | --- | --- |
-    | https://langflow.org | idrflow \| Low-code AI builder for agentic and RAG applications | 200 |
+    | https://example.com | Example Domain | 200 |
     | https://github.com/langflow-ai/langflow | GitHub - langflow-ai/langflow: idrflow is a powerful tool for building and deploying AI-powered agents and workflows. - GitHub | 200 |
     | https://python.org | Welcome to Python.org | 200 |

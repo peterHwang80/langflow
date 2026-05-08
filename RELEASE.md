@@ -1,6 +1,6 @@
-# Releasing Langflow
+# Releasing idrflow
 
-Langflow follows a **release-when-ready** cadence, with each cycle typically lasting 4–6 weeks depending on QA and stabilization needs.
+idrflow follows a **release-when-ready** cadence, with each cycle typically lasting 4–6 weeks depending on QA and stabilization needs.
 
 ## Goals
 
@@ -39,8 +39,8 @@ This step also usually lasts about a week.
 After QA and bugfixing are complete for both OSS and Desktop:
 
 * Final releases are cut from their respective RC branches.
-* Release timing is coordinated with Langflow’s DevRel team.
-* For at least 24 hours after release, Discord, GitHub, and other support channels should be monitored for critical bug reports.
+* Release timing is coordinated with the active idrflow release owner.
+* For at least 24 hours after release, the team should monitor the support channels it currently operates for critical bug reports.
 
 ## Branch Model
 

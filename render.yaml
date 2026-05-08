@@ -1,9 +1,10 @@
 services:
   # A Docker web service
   - type: web
-    name: langflow
+    name: idrflow
     runtime: docker
     dockerfilePath: ./docker/render.Dockerfile
+    # Upstream repository reference until the dedicated idrflow GitHub repo is finalized.
     repo: https://github.com/langflow-ai/langflow
     branch: main
     plan: standard
@@ -20,5 +21,5 @@ services:
       - key: IDRFLOW_LOG_LEVEL
         value: INFO
     disk:
-      name: langflow-data
+      name: idrflow-data
       mountPath: /app/data

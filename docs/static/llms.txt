@@ -6,30 +6,29 @@ idrflow is open source (MIT). Run locally with `uv run langflow run` (Python 3.1
 
 ## Docs
 
-- [About idrflow](https://docs.langflow.org/about-langflow): Platform overview and introduction
-- [Install idrflow](https://docs.langflow.org/get-started-installation): Installation options (OSS, Docker, from source)
-- [Quickstart](https://docs.langflow.org/get-started-quickstart): Get up and running quickly
-- [Use the visual editor](https://docs.langflow.org/concepts-overview): Visual flow builder overview
-- [Trigger flows with the API](https://docs.langflow.org/concepts-publish): Run flows via the idrflow API
-- [Agents](https://docs.langflow.org/agents): Agents and tools
-- [MCP client and server](https://docs.langflow.org/mcp-client): Model Context Protocol integration
-- [Deployment overview](https://docs.langflow.org/deployment-overview): How to deploy idrflow
-- [Security](https://docs.langflow.org/security): Deployment and security guidance
-- [Release notes](https://docs.langflow.org/release-notes): Version history and release notes
+- [About idrflow](https://docs.idrsoft.com/idrflow/): Platform overview and introduction
+- [Install idrflow](https://docs.idrsoft.com/idrflow/get-started-installation): Installation options (OSS, Docker, from source)
+- [Quickstart](https://docs.idrsoft.com/idrflow/get-started-quickstart): Get up and running quickly
+- [Use the visual editor](https://docs.idrsoft.com/idrflow/concepts-overview): Visual flow builder overview
+- [Trigger flows with the API](https://docs.idrsoft.com/idrflow/concepts-publish): Run flows via the idrflow API
+- [Agents](https://docs.idrsoft.com/idrflow/agents): Agents and tools
+- [MCP client and server](https://docs.idrsoft.com/idrflow/mcp-client): Model Context Protocol integration
+- [Deployment overview](https://docs.idrsoft.com/idrflow/deployment-overview): How to deploy idrflow
+- [Security](https://docs.idrsoft.com/idrflow/security): Deployment and security guidance
+- [Release notes](https://docs.idrsoft.com/idrflow/release-notes): Version history and release notes
 
-## Community
+## Source code
 
-- [GitHub repository](https://github.com/langflow-ai/langflow): Source code and issues
-- [idrflow website](https://langflow.org): Main product site
-- [idrflow Desktop](https://langflow.org/desktop): Desktop app download
-- [Discord](https://discord.com/invite/EqksyE2EX9): Community chat
-- [Twitter/X](https://x.com/langflow_ai): Updates and news
-- [YouTube](https://www.youtube.com/@Langflow): Tutorials and demos
+- [Upstream Langflow repository](https://github.com/langflow-ai/langflow): Source-code reference for the current Langflow-compatible runtime
+
+## Brand status
+
+- Official idrflow website, desktop download links, and public community channels are still being finalized.
 
 ## Optional
 
-- [Build flows](https://docs.langflow.org/concepts-flows): Concepts for building flows
-- [Test flows](https://docs.langflow.org/concepts-playground): Playground and testing
-- [Components overview](https://docs.langflow.org/concepts-components): Component reference introduction
-- [API reference](https://docs.langflow.org/api-reference-api-examples): Get started with the idrflow API
-- [Troubleshooting](https://docs.langflow.org/troubleshoot): Troubleshooting guide
+- [Build flows](https://docs.idrsoft.com/idrflow/concepts-flows): Concepts for building flows
+- [Test flows](https://docs.idrsoft.com/idrflow/concepts-playground): Playground and testing
+- [Components overview](https://docs.idrsoft.com/idrflow/concepts-components): Component reference introduction
+- [API reference](https://docs.idrsoft.com/idrflow/api-reference-api-examples): Get started with the idrflow API
+- [Troubleshooting](https://docs.idrsoft.com/idrflow/troubleshoot): Troubleshooting guide

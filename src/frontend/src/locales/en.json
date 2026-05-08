@@ -310,7 +310,7 @@
   "node.errorNoTemplateContact": "Please contact the developer of the component to fix this issue.",
   "node.errorUpdatingCode": "Error updating Component code",
   "node.errorUpdatingCodeDetail": "There was an error updating the Component.",
-  "node.errorUpdatingCodeReport": "If the error persists, please report it on our Discord or GitHub.",
+  "node.errorUpdatingCodeReport": "If the error persists, contact your idrflow administrator or support team.",
   "help.title": "Help",
   "help.docs": "Docs",
   "help.shortcuts": "Shortcuts",

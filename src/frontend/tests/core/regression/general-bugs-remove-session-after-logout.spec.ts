@@ -30,7 +30,7 @@ test(
 
     await page.goto("/");
 
-    await page.waitForSelector("text=sign in to langflow", { timeout: 30000 });
+    await page.waitForSelector("text=sign in to idrflow", { timeout: 30000 });
 
     await page.getByPlaceholder("Username").fill("langflow");
     await page.getByPlaceholder("Password").fill("langflow");
@@ -57,7 +57,7 @@ test(
 
     await page.reload();
 
-    await page.waitForSelector("text=sign in to langflow", { timeout: 30000 });
+    await page.waitForSelector("text=sign in to idrflow", { timeout: 30000 });
 
     const isLoggedIn = await page
       .getByTestId("mainpage_title")

@@ -67,6 +67,7 @@ services:
         - traefik.http.routers.${STACK_NAME?Variable not set}-proxy-http.middlewares=${STACK_NAME?Variable not set}-www-redirect,${STACK_NAME?Variable not set}-https-redirect
 
   backend: &backend
+    # Upstream-compatible image reference until idrflow container publishing is available.
     image: "langflowai/langflow-backend:latest"
     depends_on:
       - db
@@ -165,6 +166,7 @@ services:
         - traefik.http.services.${STACK_NAME?Variable not set}-flower.loadbalancer.server.port=5555
 
   frontend:
+    # Upstream-compatible image reference until idrflow container publishing is available.
     image: "langflowai/langflow-frontend:latest"
     env_file:
       - .env

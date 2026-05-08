@@ -64,7 +64,7 @@ jest.mock("../HelpDropdown", () => ({
   default: () => <div data-testid="help-dropdown" />,
 }));
 
-jest.mock("@/assets/langflow_assistant.svg", () => "mock-assistant-icon.svg");
+jest.mock("@/assets/idrflow_assistant.svg", () => "mock-assistant-icon.svg");
 
 jest.mock("@/stores/assistantManagerStore", () => ({
   __esModule: true,

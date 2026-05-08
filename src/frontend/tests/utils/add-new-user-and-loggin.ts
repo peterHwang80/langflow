@@ -31,7 +31,7 @@ export const addNewUserAndLogin = async (page: Page) => {
 
   await page.goto("/");
 
-  await page.waitForSelector("text=sign in to langflow", { timeout: 30000 });
+  await page.waitForSelector("text=sign in to idrflow", { timeout: 30000 });
 
   await page.getByPlaceholder("Username").fill("langflow");
   await page.getByPlaceholder("Password").fill("langflow");
@@ -93,7 +93,7 @@ export const addNewUserAndLogin = async (page: Page) => {
 
   await page.getByText("Logout", { exact: true }).click();
 
-  await page.waitForSelector("text=sign in to langflow", { timeout: 30000 });
+  await page.waitForSelector("text=sign in to idrflow", { timeout: 30000 });
 
   await page.getByPlaceholder("Username").fill(randomName);
   await page.getByPlaceholder("Password").fill(randomPassword);

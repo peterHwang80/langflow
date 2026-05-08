@@ -1,9 +1,9 @@
 # idrflow Documentation (full)
 
-> Comprehensive guide for AI language models: idrflow documentation at docs.langflow.org. Covers the visual flow builder, API and webhook triggers, MCP, deployment, components, and API reference. Use this file for deeper context than llms.txt.
+> Comprehensive guide for AI language models: idrflow documentation at https://docs.idrsoft.com/idrflow. Covers the visual flow builder, API and webhook triggers, MCP, deployment, components, and API reference. Use this file for deeper context than llms.txt.
 
 **Platform overview**
-Official documentation for idrflow, a low-code platform for building and deploying AI-powered agents and workflows. Type: Technical Documentation – AI Development Platform. URL: https://docs.langflow.org. Category: Developer Documentation, AI/ML, Workflow Automation, RAG, MCP. Target: developers and teams adopting idrflow (OSS or Desktop) for AI applications.
+Official documentation for idrflow, a low-code platform for building and deploying AI-powered agents and workflows. Type: Technical Documentation – AI Development Platform. URL: https://docs.idrsoft.com/idrflow. Category: Developer Documentation, AI/ML, Workflow Automation, RAG, MCP. Target: developers and teams adopting idrflow (OSS or Desktop) for AI applications.
 
 **Technical specifications (idrflow product)**
 Application type: Python web application (OSS); Tauri-based desktop (idrflow Desktop). Supported platforms: Windows, macOS, Linux. Minimum requirements: Windows 10 (64-bit), macOS 10.15 Catalina, Ubuntu 18.04 LTS or equivalent; 4GB RAM minimum (8GB recommended), 2GB storage, internet for model integrations; Python 3.10–3.13 for OSS. Architecture: modular component system. License: MIT. Runtime: Python 3.10–3.13 (OSS); Node.js and Python (Desktop). Package format: pip/uv (OSS), Docker image, native Desktop installers (.exe, .dmg, .deb/.rpm). Default URL: http://127.0.0.1:7860. Repository: https://github.com/langflow-ai/langflow.
@@ -21,54 +21,52 @@ OSS: uv pip install langflow -U; uv run langflow run. Docker: docker run -p 7860
 RAG applications, multi-agent workflows, MCP servers and clients, API-backed AI services, document processing, custom components and bundles, deployment (Docker, Kubernetes, cloud). Target users: developers, data scientists, devops, contributors.
 
 **Support**
-Documentation sections: get started, flows, agents, develop, deploy, components, API, contribute, support. Community: Discord, GitHub discussions, YouTube, release notes. Technical: GitHub issues, troubleshooting docs, IBM Elite Support (Luna).
+Documentation sections: get started, flows, agents, develop, deploy, components, API, contribute, support. Technical support guidance: troubleshooting docs, repository workflows used by your idrflow fork, and IBM Elite Support (Luna).
 
 **Privacy & security**
-Deployment security and API keys/auth documented at docs.langflow.org. Repository: SECURITY.md and GitHub security advisories. Data handling and env vars in Develop section.
+Deployment security and API keys/auth documented at https://docs.idrsoft.com/idrflow. Repository: SECURITY.md and GitHub security advisories. Data handling and env vars in Develop section.
 
 **Performance**
 Default port 7860; observability docs (LangSmith, LangFuse, etc.); deployment best practices for scaling.
 
 **Documentation for AI agents**
-Documentation URL: https://docs.langflow.org. llms.txt: https://docs.langflow.org/llms.txt. llms-full.txt: https://docs.langflow.org/llms-full.txt. Release notes: https://docs.langflow.org/release-notes.
+Documentation URL: https://docs.idrsoft.com/idrflow. llms.txt: https://docs.idrsoft.com/idrflow/llms.txt. llms-full.txt: https://docs.idrsoft.com/idrflow/llms-full.txt. Release notes: https://docs.idrsoft.com/idrflow/release-notes.
 
 **Roadmap**
-Follow idrflow releases and GitHub for product direction; release notes at docs.
+Follow idrflow release notes and documentation updates for product direction.
 
 ## Docs
 
-- [About idrflow](https://docs.langflow.org/about-langflow): Platform overview and introduction
-- [Install idrflow](https://docs.langflow.org/get-started-installation): Installation options (OSS, Docker, from source)
-- [Quickstart](https://docs.langflow.org/get-started-quickstart): Get up and running quickly
-- [Use the visual editor](https://docs.langflow.org/concepts-overview): Visual flow builder overview
-- [Build flows](https://docs.langflow.org/concepts-flows): Concepts for building flows
-- [Trigger flows with the API](https://docs.langflow.org/concepts-publish): Run flows via the idrflow API
-- [Trigger flows with webhooks](https://docs.langflow.org/webhook): Webhook triggers
-- [Test flows](https://docs.langflow.org/concepts-playground): Playground and testing
-- [Import and export flows](https://docs.langflow.org/concepts-flows-import): Import/export
-- [Agents](https://docs.langflow.org/agents): Agents and tools
-- [MCP client](https://docs.langflow.org/mcp-client): Model Context Protocol client and server
-- [API keys and authentication](https://docs.langflow.org/api-keys-and-authentication): Configure API keys and auth
-- [Deployment overview](https://docs.langflow.org/deployment-overview): How to deploy idrflow
-- [Docker deployment](https://docs.langflow.org/deployment-docker): idrflow Docker images
-- [Security](https://docs.langflow.org/security): Deployment and security guidance
-- [Components overview](https://docs.langflow.org/concepts-components): Component reference introduction
-- [API reference – get started](https://docs.langflow.org/api-reference-api-examples): Get started with the idrflow API
-- [Troubleshooting](https://docs.langflow.org/troubleshoot): Troubleshooting guide
-- [Release notes](https://docs.langflow.org/release-notes): Version history and release notes
+- [About idrflow](https://docs.idrsoft.com/idrflow/): Platform overview and introduction
+- [Install idrflow](https://docs.idrsoft.com/idrflow/get-started-installation): Installation options (OSS, Docker, from source)
+- [Quickstart](https://docs.idrsoft.com/idrflow/get-started-quickstart): Get up and running quickly
+- [Use the visual editor](https://docs.idrsoft.com/idrflow/concepts-overview): Visual flow builder overview
+- [Build flows](https://docs.idrsoft.com/idrflow/concepts-flows): Concepts for building flows
+- [Trigger flows with the API](https://docs.idrsoft.com/idrflow/concepts-publish): Run flows via the idrflow API
+- [Trigger flows with webhooks](https://docs.idrsoft.com/idrflow/webhook): Webhook triggers
+- [Test flows](https://docs.idrsoft.com/idrflow/concepts-playground): Playground and testing
+- [Import and export flows](https://docs.idrsoft.com/idrflow/concepts-flows-import): Import/export
+- [Agents](https://docs.idrsoft.com/idrflow/agents): Agents and tools
+- [MCP client](https://docs.idrsoft.com/idrflow/mcp-client): Model Context Protocol client and server
+- [API keys and authentication](https://docs.idrsoft.com/idrflow/api-keys-and-authentication): Configure API keys and auth
+- [Deployment overview](https://docs.idrsoft.com/idrflow/deployment-overview): How to deploy idrflow
+- [Docker deployment](https://docs.idrsoft.com/idrflow/deployment-docker): idrflow Docker images
+- [Security](https://docs.idrsoft.com/idrflow/security): Deployment and security guidance
+- [Components overview](https://docs.idrsoft.com/idrflow/concepts-components): Component reference introduction
+- [API reference – get started](https://docs.idrsoft.com/idrflow/api-reference-api-examples): Get started with the idrflow API
+- [Troubleshooting](https://docs.idrsoft.com/idrflow/troubleshoot): Troubleshooting guide
+- [Release notes](https://docs.idrsoft.com/idrflow/release-notes): Version history and release notes
 
-## Community
+## Source code
 
-- [GitHub repository](https://github.com/langflow-ai/langflow): Source code and issues
-- [idrflow website](https://langflow.org): Main product site
-- [idrflow Desktop](https://langflow.org/desktop): Desktop app download
-- [Discord](https://discord.com/invite/EqksyE2EX9): Community chat
-- [Twitter/X](https://x.com/langflow_ai): Updates and news
-- [YouTube](https://www.youtube.com/@Langflow): Tutorials and demos
-- [GitHub Discussions](https://github.com/langflow-ai/langflow/discussions): Community discussions
+- [Upstream Langflow repository](https://github.com/langflow-ai/langflow): Source-code reference for the current Langflow-compatible runtime
+
+## Brand status
+
+- Official idrflow website, desktop download links, and public community channels are still being finalized.
 
 ## Optional
 
-- [Contributing community](https://docs.langflow.org/contributing-community): Community guidelines
-- [How to contribute](https://docs.langflow.org/contributing-how-to-contribute): Contribution guide
-- [Get help and request enhancements](https://docs.langflow.org/contributing-github-issues): GitHub issues and help
+- [Contributing community](https://docs.idrsoft.com/idrflow/contributing-community): Community guidelines
+- [How to contribute](https://docs.idrsoft.com/idrflow/contributing-how-to-contribute): Contribution guide
+- [Get help and request enhancements](https://docs.idrsoft.com/idrflow/contributing-github-issues): Repository workflow and support guidance

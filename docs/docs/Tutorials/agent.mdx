@@ -90,7 +90,7 @@ If not, modify the `const email = "isabella.rodriguez@example.com"` to search fo
                 apiKey: IDRFLOW_API_KEY
             });
 
-            console.log(`Connecting to Langflow server at: ${IDRFLOW_SERVER_ADDRESS} `);
+            console.log(`Connecting to idrflow server at: ${IDRFLOW_SERVER_ADDRESS} `);
             console.log(`Flow ID: ${FLOW_ID}`);
             console.log(`Email: ${email}`);
 
@@ -103,7 +103,7 @@ If not, modify the `const email = "isabella.rodriguez@example.com"` to search fo
                 session_id: email // Use email as session ID for context
             });
 
-            console.log('\n=== Response from Langflow ===');
+            console.log('\n=== Response from idrflow ===');
             console.log('Session ID:', response.sessionId);
 
             // Extract URLs from the chat message
@@ -120,7 +120,7 @@ If not, modify the `const email = "isabella.rodriguez@example.com"` to search fo
             // Provide error messages
             if (error instanceof Error) {
                 if (error.message.includes('fetch')) {
-                    console.error('\nMake sure your Langflow server is running and accessible at:', IDRFLOW_SERVER_ADDRESS);
+                    console.error('\nMake sure your idrflow server is running and accessible at:', IDRFLOW_SERVER_ADDRESS);
                 }
                 if (error.message.includes('401') || error.message.includes('403')) {
                     console.error('\nCheck your API key configuration');
@@ -133,7 +133,7 @@ If not, modify the `const email = "isabella.rodriguez@example.com"` to search fo
     }
 
     // Run the function
-    console.log('Starting Langflow Agent...\n');
+    console.log('Starting idrflow Agent...\n');
     runAgentFlow().catch(console.error);
     ```
 
@@ -147,15 +147,15 @@ If not, modify the `const email = "isabella.rodriguez@example.com"` to search fo
     The following is an example response from this tutorial's flow. Due to the nature of LLMs and variations in your inputs, your response might be different.
 
     ```
-    Starting Langflow Agent...
+    Starting idrflow Agent...
 
-    Connecting to Langflow server at: http://localhost:7860
+    Connecting to idrflow server at: http://localhost:7860
     Flow ID: local-db-search
     Email: isabella.rodriguez@example.com
 
     Sending request to agent...
 
-    === Response from Langflow ===
+    === Response from idrflow ===
     Session ID: isabella.rodriguez@example.com
 
     URLs found:

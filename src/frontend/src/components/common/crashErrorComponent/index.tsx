@@ -1,5 +1,4 @@
 import { XCircle } from "lucide-react";
-import { BUG_REPORT_URL } from "../../../constants/constants";
 import type { crashComponentPropsType } from "../../../types/components";
 import { Button } from "../../ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "../../ui/card";
@@ -27,18 +26,9 @@ export default function CrashErrorComponent({
             <CardContent className="grid">
               <div>
                 <p>
-                  Please report errors with detailed tracebacks on the{" "}
-                  <a
-                    href={BUG_REPORT_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-medium hover:underline"
-                  >
-                    GitHub Issues
-                  </a>{" "}
-                  page.
-                  <br></br>
-                  Thank you!
+                  Please capture the traceback and browser logs before
+                  restarting. If this keeps happening, share those details with
+                  your idrflow administrator or support contact.
                 </p>
               </div>
             </CardContent>
@@ -46,16 +36,6 @@ export default function CrashErrorComponent({
             <CardFooter>
               <div className="m-auto mt-4 flex justify-center">
                 <Button onClick={resetErrorBoundary}>Restart idrflow</Button>
-
-                <a
-                  href={`${BUG_REPORT_URL}/new`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button className="ml-3" ignoreTitleCase variant={"outline"}>
-                    Report on GitHub
-                  </Button>
-                </a>
               </div>
             </CardFooter>
           </Card>

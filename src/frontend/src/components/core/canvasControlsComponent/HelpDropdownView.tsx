@@ -20,9 +20,8 @@ export type HelpDropdownViewProps = {
   navigateTo: (path: string) => void;
   openLink: (url: string) => void;
   urls: {
-    docs: string;
-    bugReport: string;
-    desktop: string;
+    docs?: string;
+    desktop?: string;
   };
 };
 
@@ -60,34 +59,33 @@ export const HelpDropdownView = ({
         align="center"
         className="flex flex-col w-full"
       >
-        <DropdownControlButton
-          iconName="book-open"
-          testId="canvas_controls_dropdown_docs"
-          label={t("help.docs")}
-          externalLink
-          onClick={() => openLink(urls.docs)}
-        />
+        {urls.docs && (
+          <DropdownControlButton
+            iconName="book-open"
+            testId="canvas_controls_dropdown_docs"
+            label={t("help.docs")}
+            externalLink
+            onClick={() => openLink(urls.docs!)}
+          />
+        )}
         <DropdownControlButton
           iconName="keyboard"
           testId="canvas_controls_dropdown_shortcuts"
           label={t("help.shortcuts")}
           onClick={() => navigateTo("/settings/shortcuts")}
         />
-        <DropdownControlButton
-          iconName="bug"
-          testId="canvas_controls_dropdown_report_a_bug"
-          externalLink
-          label={t("help.reportBug")}
-          onClick={() => openLink(urls.bugReport)}
-        />
-        <Separator />
-        <DropdownControlButton
-          iconName="download"
-          testId="canvas_controls_dropdown_get_langflow_desktop"
-          label={t("help.getLangflowDesktop")}
-          externalLink
-          onClick={() => openLink(urls.desktop)}
-        />
+        {urls.desktop && (
+          <>
+            <Separator />
+            <DropdownControlButton
+              iconName="download"
+              testId="canvas_controls_dropdown_get_langflow_desktop"
+              label={t("help.getLangflowDesktop")}
+              externalLink
+              onClick={() => openLink(urls.desktop!)}
+            />
+          </>
+        )}
         <DropdownControlButton
           iconName={!helperLineEnabled ? "UnfoldHorizontal" : "FoldHorizontal"}
           testId="canvas_controls_dropdown_enable_smart_guides"

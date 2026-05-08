@@ -618,20 +618,11 @@ def print_banner(host: str, port: int, protocol: str) -> None:
     import platform
 
     if platform.system() == "Windows":
-        github_icon = "*"
-        discord_icon = "#"
         arrow = "->"
         status_icon = "[OK]"
     else:
-        github_icon = ":star2:"
-        discord_icon = ":speech_balloon:"
         arrow = "→"
         status_icon = "🟢"
-
-    info_text = (
-        f"{github_icon} GitHub: Star for updates {arrow} https://github.com/langflow-ai/langflow\n"
-        f"{discord_icon} Discord: Join for support {arrow} https://discord.com/invite/EqksyE2EX9"
-    )
     telemetry_text = (
         (
             "We collect anonymous usage data to improve idrflow.\n"
@@ -646,7 +637,7 @@ def print_banner(host: str, port: int, protocol: str) -> None:
     access_host = get_best_access_host(host, port)
     access_link = f"[bold]{status_icon} Open idrflow {arrow}[/bold] [link={protocol}://{access_host}:{port}]{protocol}://{access_host}:{port}[/link]"
 
-    message = f"{title}\n{info_text}\n\n{telemetry_text}\n\n{access_link}"
+    message = f"{title}\n{telemetry_text}\n\n{access_link}"
 
     # Handle Unicode encoding errors on Windows
     try:
@@ -655,11 +646,7 @@ def print_banner(host: str, port: int, protocol: str) -> None:
     except UnicodeEncodeError:
         # Fallback to a simpler banner without emojis for Windows systems with encoding issues
         fallback_message = (
-            "Welcome to idrflow\n\n"
-            "* GitHub: https://github.com/langflow-ai/langflow\n"
-            "# Discord: https://discord.com/invite/EqksyE2EX9\n\n"
-            f"{telemetry_text}\n\n"
-            f"[OK] Open idrflow -> {protocol}://{access_host}:{port}"
+            f"Welcome to idrflow\n\n{telemetry_text}\n\n[OK] Open idrflow -> {protocol}://{access_host}:{port}"
         )
         try:
             console.print()  # Add line break before fallback banner
@@ -667,18 +654,16 @@ def print_banner(host: str, port: int, protocol: str) -> None:
         except UnicodeEncodeError:
             # Last resort: use logger instead of print
             logger.info("Welcome to idrflow")
-            logger.info("GitHub: https://github.com/langflow-ai/langflow")
-            logger.info("Discord: https://discord.com/invite/EqksyE2EX9")
             logger.info(f"Open idrflow: {protocol}://{access_host}:{port}")
 
 
 @app.command()
 def superuser(
     username: str = typer.Option(
-        None, help="Username for the superuser. Defaults to 'langflow' when AUTO_LOGIN is enabled."
+        None, help="Username for the superuser. Uses the runtime default when AUTO_LOGIN is enabled."
     ),
     password: str = typer.Option(
-        None, help="Password for the superuser. Defaults to 'langflow' when AUTO_LOGIN is enabled."
+        None, help="Password for the superuser. Uses the runtime default when AUTO_LOGIN is enabled."
     ),
     log_level: str = typer.Option("error", help="Logging level.", envvar="IDRFLOW_LOG_LEVEL"),
     auth_token: str = typer.Option(
@@ -925,7 +910,7 @@ def show_version(*, value: bool):
         default = "DEV"
         raw_info = get_version_info()
         version = raw_info.get("version", default) if raw_info else default
-        typer.echo(f"langflow {version}")
+        typer.echo(f"idrflow {version}")
         raise typer.Exit
 
 

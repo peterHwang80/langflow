@@ -1,7 +1,7 @@
+import type { BrowserContext, Page, Route } from "@playwright/test";
 import * as dotenv from "dotenv";
 import path from "path";
 import { expect, test } from "../../fixtures";
-import { adjustScreenView } from "../../utils/adjust-screen-view";
 import { awaitBootstrapTest } from "../../utils/await-bootstrap-test";
 import { initialGPTsetup } from "../../utils/initialGPTsetup";
 
@@ -11,11 +11,20 @@ import { initialGPTsetup } from "../../utils/initialGPTsetup";
 // and persistence features are not active.
 // Set IDRFLOW_AUTO_LOGIN=false in your .env to run these tests.
 
+type BrowserProcess = {
+  env?: Record<string, string>;
+};
+
+type BrowserWindowWithProcess = Window &
+  typeof globalThis & {
+    process?: BrowserProcess;
+  };
+
 /**
  * Helper: mock auto-login as disabled and log in manually.
  */
-async function setupAutoLoginOff(page: any) {
-  await page.route("**/api/v1/auto_login", (route: any) => {
+async function setupAutoLoginOff(page: Page) {
+  await page.route("**/api/v1/auto_login", (route: Route) => {
     route.fulfill({
       status: 500,
       contentType: "application/json",
@@ -24,12 +33,13 @@ async function setupAutoLoginOff(page: any) {
   });
 
   await page.addInitScript(() => {
-    window.process = window.process || ({} as any);
+    const browserWindow = window as BrowserWindowWithProcess;
+    browserWindow.process ??= {};
     const newEnv = {
-      ...(window.process as any).env,
+      ...(browserWindow.process.env ?? {}),
       IDRFLOW_AUTO_LOGIN: "false",
     };
-    Object.defineProperty(window.process, "env", {
+    Object.defineProperty(browserWindow.process, "env", {
       value: newEnv,
       writable: true,
       configurable: true,
@@ -38,7 +48,7 @@ async function setupAutoLoginOff(page: any) {
   });
 
   await page.goto("/");
-  await page.waitForSelector("text=sign in to langflow", { timeout: 30000 });
+  await page.waitForSelector("text=sign in to idrflow", { timeout: 30000 });
 
   await page.getByPlaceholder("Username").fill("langflow");
   await page.getByPlaceholder("Password").fill("langflow");
@@ -59,8 +69,8 @@ async function setupAutoLoginOff(page: any) {
  * and return the shareable playground URL.
  */
 async function createPublishAndGetUrl(
-  page: any,
-  context: any,
+  page: Page,
+  context: BrowserContext,
 ): Promise<string> {
   await page.waitForSelector('[id="new-project-btn"]', { timeout: 30000 });
 
@@ -98,7 +108,7 @@ async function createPublishAndGetUrl(
 /**
  * Helper: send a message and wait for the build to complete.
  */
-async function sendMessageAndWait(page: any, message: string) {
+async function sendMessageAndWait(page: Page, message: string) {
   await page.getByPlaceholder("Send a message...").fill(message);
   await page.getByTestId("button-send").last().click();
 

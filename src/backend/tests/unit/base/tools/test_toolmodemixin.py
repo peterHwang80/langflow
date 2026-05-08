@@ -27,7 +27,7 @@ from pydantic import BaseModel
 class AllInputsComponent(Component):
     display_name = "All Inputs Component"
     description = "A component with all input types available in Langflow."
-    documentation: str = "http://docs.langflow.org/components/all_inputs"
+    documentation: str = "https://docs.idrsoft.com/idrflow/components/all_inputs"
     icon = "code"
     name = "AllInputsComponent"
 

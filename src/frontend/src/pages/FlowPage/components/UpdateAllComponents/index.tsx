@@ -1,6 +1,6 @@
 import { useUpdateNodeInternals } from "@xyflow/react";
-import { cloneDeep } from "lodash";
 import { AnimatePresence, motion } from "framer-motion";
+import { cloneDeep } from "lodash";
 import { useMemo, useRef, useState } from "react";
 import { processNodeAdvancedFields } from "@/CustomNodes/helpers/process-node-advanced-fields";
 import useUpdateAllNodes, {
@@ -11,8 +11,8 @@ import { usePostValidateComponentCode } from "@/controllers/API/queries/nodes/us
 import UpdateComponentModal from "@/modals/updateComponentModal";
 import useAlertStore from "@/stores/alertStore";
 import useFlowStore, {
-  registerNodeUpdate,
   completeNodeUpdate,
+  registerNodeUpdate,
 } from "@/stores/flowStore";
 import useFlowsManagerStore from "@/stores/flowsManagerStore";
 import { useTypesStore } from "@/stores/typesStore";
@@ -23,7 +23,7 @@ import { cn } from "@/utils/utils";
 const ERROR_MESSAGE_UPDATING_COMPONENTS = "Error updating components";
 const ERROR_MESSAGE_UPDATING_COMPONENTS_LIST = [
   "There was an error updating the components.",
-  "If the error persists, please report it on our Discord or GitHub.",
+  "If the error persists, contact your idrflow administrator or support team.",
 ];
 const ERROR_MESSAGE_EDGES_LOST =
   "Some edges were lost after updating the components. Please review the flow and reconnect them.";

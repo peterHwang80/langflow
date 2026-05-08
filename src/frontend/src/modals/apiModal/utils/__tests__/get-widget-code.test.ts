@@ -1,3 +1,4 @@
+import type { GetCodeType } from "@/types/tweaks";
 import getWidgetCode from "../get-widget-code";
 
 // Mock the customGetHostProtocol
@@ -9,7 +10,7 @@ jest.mock("@/customization/utils/custom-get-host-protocol", () => ({
 }));
 
 describe("getWidgetCode", () => {
-  const baseOptions = {
+  const baseOptions: GetCodeType = {
     flowId: "test-flow-123",
     flowName: "Test Flow",
     isAuth: false,
@@ -20,76 +21,53 @@ describe("getWidgetCode", () => {
     it("should generate widget code with API key when isAuth is false", () => {
       const code = getWidgetCode(baseOptions);
 
-      // Check for script tag with CDN link
-      expect(code).toContain("<script");
-      expect(code).toContain("src=");
       expect(code).toContain(
-        "https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat",
+        "idrflow embedded chat package is not published yet.",
       );
-      expect(code).toContain("@v1.0.7");
-      expect(code).toContain("</script>");
-
-      // Check for langflow-chat component
-      expect(code).toContain("<langflow-chat");
+      expect(code).not.toContain("<script");
+      expect(code).not.toContain("langflow-embedded-chat");
+      expect(code).toContain("<idrflow-chat");
       expect(code).toContain('window_title="Test Flow"');
       expect(code).toContain('flow_id="test-flow-123"');
       expect(code).toContain('host_url="https://localhost:3000"');
 
-      // Should include api_key placeholder when isAuth is false
       expect(code).toContain('api_key="..."');
-
-      // Check closing tag
-      expect(code).toContain("</langflow-chat>");
+      expect(code).toContain("</idrflow-chat>");
     });
 
     it("should generate widget code without API key when isAuth is true", () => {
       const code = getWidgetCode({
         ...baseOptions,
         isAuth: true,
-      } as any);
+      });
 
-      // Check for script tag
-      expect(code).toContain("<script");
-      expect(code).toContain(
-        "https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.7",
-      );
-
-      // Check for langflow-chat component
-      expect(code).toContain("<langflow-chat");
+      expect(code).toContain("<idrflow-chat");
       expect(code).toContain('window_title="Test Flow"');
       expect(code).toContain('flow_id="test-flow-123"');
       expect(code).toContain('host_url="https://localhost:3000"');
 
-      // Should NOT include api_key when isAuth is true
       expect(code).not.toContain("api_key");
-
-      // Check closing tag
-      expect(code).toContain("</langflow-chat>");
+      expect(code).toContain("</idrflow-chat>");
     });
 
-    it("should use single-line CDN URL when copy is false", () => {
+    it("should return the placeholder snippet when copy is false", () => {
       const code = getWidgetCode({
         ...baseOptions,
         copy: false,
       });
 
-      // Should use multi-line format for non-copy mode
-      expect(code).toContain("src=");
-      expect(code).toContain("https://cdn.jsdelivr.net/gh/logspace-ai");
-      expect(code).toContain("build/static/js/bundle.min.js");
+      expect(code).toContain("Replace this placeholder");
+      expect(code).toContain("<idrflow-chat");
     });
 
-    it("should use formatted CDN URL when copy is true", () => {
+    it("should return the same placeholder snippet when copy is true", () => {
       const code = getWidgetCode({
         ...baseOptions,
         copy: true,
       });
 
-      // Should use single-line format for copy mode
-      expect(code).toContain(
-        "https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.7/dist/build/static/js/bundle.min.js",
-      );
-      expect(code).not.toContain("\nbuild/static");
+      expect(code).toContain("Replace this placeholder");
+      expect(code).toContain("<idrflow-chat");
     });
   });
 
@@ -212,7 +190,7 @@ describe("getWidgetCode", () => {
       const code = getWidgetCode({
         ...baseOptions,
         isAuth: false,
-      } as any);
+      });
 
       expect(code).toContain('api_key="..."');
     });
@@ -221,7 +199,7 @@ describe("getWidgetCode", () => {
       const code = getWidgetCode({
         ...baseOptions,
         isAuth: true,
-      } as any);
+      });
 
       expect(code).not.toContain("api_key");
     });
@@ -232,7 +210,7 @@ describe("getWidgetCode", () => {
         flowName: "Test",
         isAuth: undefined,
         webhookAuthEnable: false,
-      } as any);
+      });
 
       // When isAuth is undefined/falsy, api_key should be included
       expect(code).toContain('api_key="..."');
@@ -240,59 +218,49 @@ describe("getWidgetCode", () => {
   });
 
   describe("Copy mode handling", () => {
-    it("should use compact format when copy is true", () => {
+    it("should use the same placeholder format when copy is true", () => {
       const code = getWidgetCode({
         ...baseOptions,
         copy: true,
       });
 
-      // Single-line CDN URL
-      expect(code).toContain(
-        "https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.7/dist/build/static/js/bundle.min.js",
-      );
-      expect(code).not.toContain("\nbuild/static");
+      expect(code).toContain("Replace this placeholder");
+      expect(code).toContain("<idrflow-chat");
     });
 
-    it("should use readable format when copy is false", () => {
+    it("should use the same placeholder format when copy is false", () => {
       const code = getWidgetCode({
         ...baseOptions,
         copy: false,
       });
 
-      // Multi-line CDN URL
-      expect(code).toContain("src=");
-      expect(code).toContain("build/static/js/bundle.min.js");
+      expect(code).toContain("Replace this placeholder");
+      expect(code).toContain("<idrflow-chat");
     });
 
-    it("should default to readable format when copy is undefined", () => {
+    it("should default to the placeholder format when copy is undefined", () => {
       const code = getWidgetCode({
         flowId: "test",
         flowName: "Test",
         isAuth: false,
         webhookAuthEnable: false,
-      } as any);
+      });
 
-      // Should use multi-line format by default
-      expect(code).toContain("\nbuild/static");
+      expect(code).toContain("Replace this placeholder");
     });
   });
 
   describe("Code structure", () => {
-    it("should have proper HTML structure with script and langflow-chat tags", () => {
+    it("should have a placeholder HTML structure with a commented idrflow-chat tag", () => {
       const code = getWidgetCode(baseOptions);
 
-      // Check for opening and closing script tags
-      const scriptTagCount = (code.match(/<script/g) || []).length;
-      const scriptCloseTagCount = (code.match(/<\/script>/g) || []).length;
-      expect(scriptTagCount).toBe(1);
-      expect(scriptCloseTagCount).toBe(1);
-
-      // Check for opening and closing langflow-chat tags
-      expect(code).toContain("<langflow-chat");
-      expect(code).toContain("</langflow-chat>");
+      expect(code).not.toContain("<script");
+      expect(code).toContain("<idrflow-chat");
+      expect(code).toContain("</idrflow-chat>");
+      expect(code).toContain("<!--");
     });
 
-    it("should have all required attributes in langflow-chat component", () => {
+    it("should have all required attributes in the placeholder component", () => {
       const code = getWidgetCode(baseOptions);
 
       expect(code).toMatch(/window_title="[^"]*"/);
@@ -300,17 +268,16 @@ describe("getWidgetCode", () => {
       expect(code).toMatch(/host_url="[^"]*"/);
     });
 
-    it("should have correct CDN version reference", () => {
+    it("should not reference the upstream CDN bundle", () => {
       const code = getWidgetCode(baseOptions);
 
-      expect(code).toContain("@v1.0.7");
+      expect(code).not.toContain("langflow-embedded-chat");
     });
 
-    it("should have correct bundle path", () => {
+    it("should identify the snippet as a placeholder", () => {
       const code = getWidgetCode(baseOptions);
 
-      // Bundle path may span multiple lines in non-copy mode
-      expect(code).toContain("build/static/js/bundle.min.js");
+      expect(code).toContain("approved idrflow-owned embed bundle");
     });
   });
 
@@ -321,10 +288,9 @@ describe("getWidgetCode", () => {
         flowName: "",
         isAuth: false,
         webhookAuthEnable: false,
-      } as any);
+      });
 
-      expect(code).toContain("<script");
-      expect(code).toContain("<langflow-chat");
+      expect(code).toContain("<idrflow-chat");
       expect(code).toContain('window_title=""');
       expect(code).toContain('flow_id=""');
     });
@@ -335,11 +301,10 @@ describe("getWidgetCode", () => {
         flowName: "Test",
         isAuth: false,
         webhookAuthEnable: false,
-      } as any);
+      });
 
-      expect(code).toContain("<script");
-      expect(code).toContain("<langflow-chat");
-      expect(code).toContain("</langflow-chat>");
+      expect(code).toContain("<idrflow-chat");
+      expect(code).toContain("</idrflow-chat>");
     });
 
     it("should produce consistent output for same inputs", () => {
@@ -378,8 +343,7 @@ describe("getWidgetCode", () => {
     it("should not have leading or trailing whitespace issues", () => {
       const code = getWidgetCode(baseOptions);
 
-      // Should start with script tag
-      expect(code.trimStart()).toMatch(/^<script/);
+      expect(code.trimStart()).toMatch(/^<!--/);
     });
 
     it("should be copyable HTML code", () => {
@@ -404,7 +368,7 @@ describe("getWidgetCode", () => {
         isAuth: true,
         webhookAuthEnable: false,
         copy: false,
-      } as any);
+      });
 
       expect(code).toContain('flow_id="prod-flow-123"');
       expect(code).toContain('window_title="Production Chat Bot"');
@@ -418,7 +382,7 @@ describe("getWidgetCode", () => {
         isAuth: false,
         webhookAuthEnable: false,
         copy: true,
-      } as any);
+      });
 
       expect(code).toContain('flow_id="dev-flow-456"');
       expect(code).toContain('window_title="Dev Chat Bot"');

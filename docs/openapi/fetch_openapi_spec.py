@@ -21,7 +21,7 @@ from pathlib import Path
 REPO = "langflow-ai/sdk"
 BRANCH = "main"
 SPECS_DIR = "specs"
-FILES = ["langflow-workflows-openapi.json", "langflow-openapi.json"]
+FILES = ["idrflow-workflows-openapi.json", "langflow-openapi.json"]
 
 
 def fetch_file(repo: str, filepath: str, branch: str) -> str:

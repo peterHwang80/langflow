@@ -1,6 +1,6 @@
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { StickToBottom } from "use-stick-to-bottom";
-import LangflowLogo from "@/assets/LangflowLogo.svg?react";
+import IdrflowLogo from "@/assets/IdrflowLogo.svg?react";
 import { SafariScrollFix } from "@/components/common/safari-scroll-fix";
 import { TextEffectPerChar } from "@/components/ui/textAnimation";
 import CustomChatInput from "@/customization/components/custom-chat-input";
@@ -193,7 +193,7 @@ export default function ChatView({
             ) : (
               <div className="flex flex-grow w-full flex-col items-center justify-center">
                 <div className="flex flex-col items-center justify-center gap-4 p-8">
-                  <LangflowLogo
+                  <IdrflowLogo
                     title="idrflow logo"
                     className="h-10 w-10 scale-[1.5]"
                   />

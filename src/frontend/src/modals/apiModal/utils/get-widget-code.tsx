@@ -12,19 +12,14 @@ export default function getWidgetCode({
   isAuth,
   copy = false,
 }: GetCodeType): string {
-  const source = copy
-    ? `<script
-  src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.7/dist/build/static/js/bundle.min.js">
-</script>`
-    : `<script
-  src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.7/dist/
-build/static/js/bundle.min.js">
-</script>`;
+  void copy;
 
   const { protocol, host } = customGetHostProtocol();
 
-  return `${source}
-  <langflow-chat
+  return `<!-- idrflow embedded chat package is not published yet.
+Replace this placeholder with your approved idrflow-owned embed bundle and web component. -->
+<!--
+  <idrflow-chat
     window_title="${flowName}"
     flow_id="${flowId}"
     host_url="${protocol}//${host}"${
@@ -33,5 +28,6 @@ build/static/js/bundle.min.js">
     api_key="..."`
         : ""
     }>
-</langflow-chat>`;
+</idrflow-chat>
+-->`;
 }

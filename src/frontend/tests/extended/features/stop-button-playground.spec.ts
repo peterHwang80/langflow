@@ -2,8 +2,6 @@ import { expect, test } from "../../fixtures";
 import { adjustScreenView } from "../../utils/adjust-screen-view";
 import { awaitBootstrapTest } from "../../utils/await-bootstrap-test";
 
-import { zoomOut } from "../../utils/zoom-out";
-
 test(
   "User must be able to stop building from inside Playground",
   { tag: ["@release", "@api"] },
@@ -64,7 +62,7 @@ from langflow.schema.message import Message
 class CustomComponent(Component):
     display_name = "Custom Component"
     description = "Use as a template to create your own component."
-    documentation: str = "https://docs.langflow.org/components-custom-components"
+    documentation: str = "https://docs.idrsoft.com/idrflow/components-custom-components"
     icon = "custom_components"
     name = "CustomComponent"
 

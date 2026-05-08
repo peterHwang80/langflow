@@ -3,7 +3,6 @@ import { adjustScreenView } from "../../utils/adjust-screen-view";
 import { awaitBootstrapTest } from "../../utils/await-bootstrap-test";
 
 import { renameFlow } from "../../utils/rename-flow";
-import { zoomOut } from "../../utils/zoom-out";
 
 test(
   "when auto_login is false, admin can CRUD user's and should see just your own flows",
@@ -41,7 +40,7 @@ test(
 
     await page.goto("/");
 
-    await page.waitForSelector("text=sign in to langflow", { timeout: 30000 });
+    await page.waitForSelector("text=sign in to idrflow", { timeout: 30000 });
 
     await page.getByPlaceholder("Username").fill("langflow");
     await page.getByPlaceholder("Password").fill("langflow");
@@ -184,7 +183,7 @@ test(
 
     await page.getByText("Logout", { exact: true }).click();
 
-    await page.waitForSelector("text=sign in to langflow", { timeout: 30000 });
+    await page.waitForSelector("text=sign in to idrflow", { timeout: 30000 });
 
     await page.getByPlaceholder("Username").fill(secondRandomName);
     await page.getByPlaceholder("Password").fill(randomPassword);
@@ -205,7 +204,7 @@ test(
 
     expect(
       (
-        await page.waitForSelector("text=Welcome to LangFlow", {
+        await page.waitForSelector("text=Welcome to idrflow", {
           timeout: 30000,
         })
       ).isVisible(),
@@ -251,7 +250,7 @@ test(
 
     await page.getByText("Logout", { exact: true }).click();
 
-    await page.waitForSelector("text=sign in to langflow", { timeout: 30000 });
+    await page.waitForSelector("text=sign in to idrflow", { timeout: 30000 });
 
     await page.getByPlaceholder("Username").fill("langflow");
     await page.getByPlaceholder("Password").fill("langflow");

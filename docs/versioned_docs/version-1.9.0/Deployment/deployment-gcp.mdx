@@ -7,15 +7,13 @@ This guide demonstrates how to deploy idrflow on [Google Cloud Platform](https:/
 
 To use this script, you need a Google Cloud project with the necessary permissions to create resources.
 
-1. Follow this link to launch the Cloud Shell with the GCP deployment script from the idrflow repository:
+1. Clone or fork the upstream Langflow repository into a workspace you control.
 
-   [![Deploy to Google Cloud](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/langflow-ai/langflow&working_dir=scripts/gcp&shellonly=true&tutorial=walkthroughtutorial.md)
+2. Open Google Cloud Shell, change to `scripts/gcp`, and run the walkthrough from your own repository copy.
 
-2. Click **Trust repo**.
+   The upstream one-click launcher is intentionally omitted from the idrflow docs until an idrflow-owned deployment source is published.
 
-    Some `gcloud` commands may not run in an ephemeral Cloud Shell environment.
-
-3. Click **Start**, and then follow the tutorial to deploy idrflow.
+3. Follow the tutorial to deploy idrflow.
 
 :::info
 This deployment uses a [spot (preemptible) instance](https://cloud.google.com/compute/docs/instances/preemptible) as a cost-effective option to demonstrate how to deploy idrflow on GCP.

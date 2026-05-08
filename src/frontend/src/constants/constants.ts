@@ -989,19 +989,11 @@ export const OPENAI_VOICES = [
 export const DEFAULT_POLLING_INTERVAL = 5000;
 export const DEFAULT_TIMEOUT = 30000;
 export const DEFAULT_FILE_PICKER_TIMEOUT = 60000;
-export const DISCORD_URL = "https://discord.com/invite/EqksyE2EX9";
 export const DATASTAX_DOCS_URL =
   "https://docs.datastax.com/en/langflow/index.html";
 
 // Public brand URLs — re-exported from canonical source: @/customization/utils/urls
-export {
-  BUG_REPORT_URL,
-  DESKTOP_URL,
-  DOCS_URL,
-  GITHUB_URL,
-  STORE_URL,
-  TWITTER_URL,
-} from "@/customization/utils/urls";
+export { DESKTOP_URL, DOCS_URL } from "@/customization/utils/urls";
 
 export const UUID_PARSING_ERROR = "uuid_parsing";
 

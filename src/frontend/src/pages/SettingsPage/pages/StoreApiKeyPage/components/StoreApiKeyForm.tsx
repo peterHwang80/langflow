@@ -10,7 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../../../../../components/ui/card";
-import { STORE_URL } from "../../../../../constants/constants";
 import type { inputHandlerEventType } from "../../../../../types/components";
 
 type StoreApiKeyFormComponentProps = {
@@ -73,15 +72,7 @@ const StoreApiKeyFormComponent = ({
                 </Form.Field>
               </div>
               <span className="pr-1 text-xs text-muted-foreground">
-                {t("store.createApiKey")}{" "}
-                <a
-                  className="text-high-indigo underline"
-                  href={STORE_URL}
-                  target="_blank"
-                  rel="noopener"
-                >
-                  idrflow Store
-                </a>
+                {t("store.createApiKey")}
               </span>
             </div>
           </CardContent>

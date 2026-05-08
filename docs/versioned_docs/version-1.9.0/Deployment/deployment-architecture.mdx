@@ -7,7 +7,7 @@ There are two broad types of idrflow deployments:
 
 * **idrflow IDE (development)**: Deploy both the idrflow visual editor (frontend) and API (backend). Typically, this is used for development environments where developers use the visual editor to create and manage flows before packaging and serving them through a production runtime deployment.
 
-    The idrflow repository's example [`docker-compose.yml`](https://github.com/langflow-ai/langflow/blob/main/docker_example/docker-compose.yml) file builds a idrflow IDE image.
+    The upstream Langflow repository's example [`docker-compose.yml`](https://github.com/langflow-ai/langflow/blob/main/docker_example/docker-compose.yml) file builds a idrflow IDE image.
 
     For information about IDE deployments on Kubernetes, see [Deploy the idrflow development environment on Kubernetes](/deployment-kubernetes-dev).
 
@@ -46,7 +46,7 @@ A typical idrflow deployment includes:
 * **Load balancer**: Balances traffic across multiple idrflow replicas.
 * **Vector database**: If you are using idrflow for RAG, you can integrate with the vector database in Astra Serverless.
 
-![idrflow reference architecture on Kubernetes](/img/langflow-reference-architecture.png)
+![idrflow reference architecture on Kubernetes](/img/idrflow-reference-architecture.png)
 
 ## Environment isolation
 
@@ -55,7 +55,7 @@ It is recommended to deploy and run separate development and production environm
 * Deploy the IDE in your development environment where your developers prototype and test new flows.
 * Deploy the runtime in your production environment to serve flows as standalone services.
 
-![idrflow environments](/img/langflow-env.png)
+![idrflow environments](/img/idrflow-env.png)
 
 This separation is designed to enhance security, support an organized software development pipeline, and optimize infrastructure resource allocation:
 

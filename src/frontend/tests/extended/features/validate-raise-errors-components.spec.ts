@@ -3,8 +3,6 @@ import { addCustomComponent } from "../../utils/add-custom-component";
 import { adjustScreenView } from "../../utils/adjust-screen-view";
 import { awaitBootstrapTest } from "../../utils/await-bootstrap-test";
 
-import { zoomOut } from "../../utils/zoom-out";
-
 test(
   "user should be able to see errors on popups when raise an error",
   { tag: ["@release", "@workspace", "@components"] },
@@ -19,7 +17,7 @@ from langflow.schema import Data
 class CustomComponent(Component):
     display_name = "Custom Component"
     description = "Use as a template to create your own component."
-    documentation: str = "https://docs.langflow.org/components-custom-components"
+    documentation: str = "https://docs.idrsoft.com/idrflow/components-custom-components"
     icon = "code"
     name = "CustomComponent"
 

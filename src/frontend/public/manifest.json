@@ -4,22 +4,17 @@
   "description": "idrflow is a low-code builder that makes it easier to build powerful AIs that can use any API, model, or database.",
   "icons": [
     {
-      "src": "icons/32x32.png",
+      "src": "android-chrome-192x192.png",
       "type": "image/png",
-      "sizes": "32x32"
+      "sizes": "192x192"
     },
     {
-      "src": "icons/128x128.png",
+      "src": "android-chrome-512x512.png",
       "type": "image/png",
-      "sizes": "128x128"
+      "sizes": "512x512"
     },
     {
-      "src": "icons/128x128@2x.png",
-      "type": "image/png",
-      "sizes": "256x256"
-    },
-    {
-      "src": "icons/icon.ico",
+      "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     }

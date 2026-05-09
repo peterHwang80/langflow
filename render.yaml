@@ -4,7 +4,7 @@ services:
     name: idrflow
     runtime: docker
     dockerfilePath: ./docker/render.Dockerfile
-    # Upstream repository reference until the dedicated idrflow GitHub repo is finalized.
+    # Upstream-compatible repository reference until idrflow source publishing is available.
     repo: https://github.com/langflow-ai/langflow
     branch: main
     plan: standard

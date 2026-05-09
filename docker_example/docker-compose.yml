@@ -1,5 +1,6 @@
 services:
   langflow:
+    # Upstream-compatible image reference until idrflow container publishing is available.
     image: langflowai/langflow:latest # or another version tag on https://hub.docker.com/r/langflowai/langflow
     pull_policy: always               # set to 'always' when using 'latest' image
     ports:

@@ -1,6 +1,8 @@
-# Running LangFlow with Docker
+# Running idrflow with Docker
 
-This guide will help you get LangFlow up and running using Docker and Docker Compose.
+This guide will help you get idrflow up and running using Docker and Docker Compose.
+
+> Note: This example currently uses the upstream `langflowai/langflow` Docker image. When the official idrflow image is published, replace the `image` field in `docker-compose.yml` with the idrflow-owned image. The compose service name, volume names, and image identifier are kept aligned with the upstream image so the example works out of the box.
 
 ## Prerequisites
 
@@ -9,16 +11,12 @@ This guide will help you get LangFlow up and running using Docker and Docker Com
 
 ## Steps
 
-1. Clone the LangFlow repository:
+1. Clone the idrflow repository into your local environment.
+
+2. Navigate to the `docker_example` directory at the repository root:
 
    ```sh
-   git clone https://github.com/langflow-ai/langflow.git
-   ```
-
-2. Navigate to the `docker_example` directory:
-
-   ```sh
-   cd langflow/docker_example
+   cd <repo-dir>/docker_example
    ```
 
 3. Run the Docker Compose file:
@@ -27,20 +25,20 @@ This guide will help you get LangFlow up and running using Docker and Docker Com
    docker compose up
    ```
 
-LangFlow will now be accessible at [http://localhost:7860/](http://localhost:7860/).
+idrflow will now be accessible at [http://localhost:7860/](http://localhost:7860/).
 
 ## Docker Compose Configuration
 
-The Docker Compose configuration spins up two services: `langflow` and `postgres`.
+The Docker Compose configuration spins up two services: the idrflow runtime and `postgres`.
 
-### LangFlow Service
+### idrflow service
 
-The `langflow` service uses the `langflowai/langflow:latest` Docker image and exposes port 7860. It depends on the `postgres` service.
+The `langflow` service (named for image compatibility with the upstream container) uses the `langflowai/langflow:latest` Docker image and exposes port 7860. It depends on the `postgres` service.
 
 Environment variables:
 
 - `IDRFLOW_DATABASE_URL`: The connection string for the PostgreSQL database.
-- `IDRFLOW_CONFIG_DIR`: The directory where LangFlow stores logs, file storage, monitor data, and secret keys.
+- `IDRFLOW_CONFIG_DIR`: The directory where idrflow stores logs, file storage, monitor data, and secret keys.
 
 Volumes:
 
@@ -60,6 +58,6 @@ Volumes:
 
 - `langflow-postgres`: This volume is mapped to `/var/lib/postgresql/data` in the container.
 
-## Switching to a Specific LangFlow Version
+## Switching to a specific upstream image version
 
-If you want to use a specific version of LangFlow, you can modify the `image` field under the `langflow` service in the Docker Compose file. For example, to use version 1.0-alpha, change `langflowai/langflow:latest` to `langflowai/langflow:1.0-alpha`.
+If you want to pin a specific version of the upstream image, modify the `image` field under the `langflow` service in the Docker Compose file. For example, to use version `1.0-alpha`, change `langflowai/langflow:latest` to `langflowai/langflow:1.0-alpha`.

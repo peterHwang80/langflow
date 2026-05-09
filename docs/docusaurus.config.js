@@ -11,6 +11,10 @@ const baseUrl = process.env.BASE_URL
   ? `${process.env.BASE_URL.replace(/\/?$/, "/")}`
   : "/idrflow/";
 
+// Upstream reference: idrflow tracks the langflow-ai/langflow upstream project.
+// While the idrflow GitHub org/repo are not public, organizationName/projectName
+// are placeholders that satisfy Docusaurus build requirements but are not used to
+// construct any public-facing URLs.
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "idrflow Documentation",
@@ -22,8 +26,8 @@ const config = {
   baseUrl,
   onBrokenLinks: "throw",
   onBrokenAnchors: "warn",
-  organizationName: "langflow-ai", // TODO: replace when the idrflow GitHub org is finalized
-  projectName: "langflow", // TODO: replace when the idrflow repository name is finalized
+  organizationName: "idrflow-docs", // Placeholder: replace when the idrflow GitHub org is finalized.
+  projectName: "idrflow", // Placeholder: replace when the idrflow repository name is finalized.
   trailingSlash: false,
   staticDirectories: ["static"],
   markdown: {

@@ -4,7 +4,7 @@ This file provides guidance to AI coding agents when working with code in this r
 
 ## Project Overview
 
-Langflow is a visual workflow builder for AI-powered agents. It has a Python/FastAPI backend, React/TypeScript frontend, and a lightweight executor CLI (lfx).
+idrflow is a visual workflow builder for AI-powered agents, running on a Langflow-compatible runtime. It has a Python/FastAPI backend, React/TypeScript frontend, and a lightweight executor CLI (lfx). Some package names, imports, file paths, and CLI commands still use `langflow` for runtime compatibility.
 
 ## Prerequisites
 
@@ -19,7 +19,7 @@ Langflow is a visual workflow builder for AI-powered agents. It has a Python/Fas
 ### Development Setup
 ```bash
 make init              # Install all dependencies + pre-commit hooks
-make run_cli           # Build and run Langflow (http://localhost:7860)
+make run_cli           # Build and run idrflow (http://localhost:7860)
 make run_clic          # Clean build and run (use when frontend issues occur)
 ```
 
@@ -69,7 +69,7 @@ src/
 ├── backend/
 │   ├── base/langflow/     # Core backend package (langflow-base)
 │   │   ├── api/           # FastAPI routes (v1/, v2/)
-│   │   ├── components/    # Built-in Langflow components
+│   │   ├── components/    # Built-in components
 │   │   ├── services/      # Service layer (auth, database, cache, etc.)
 │   │   ├── graph/         # Flow graph execution engine
 │   │   └── custom/        # Custom component framework

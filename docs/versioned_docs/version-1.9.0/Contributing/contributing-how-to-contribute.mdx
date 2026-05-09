@@ -35,17 +35,26 @@ Install idrflow from source by forking the repository and setting up your develo
 * [Node.js](https://nodejs.org/en/download/package-manager)
 * [Make](https://www.gnu.org/software/make/#documentation) (Linux and macOS only)
 
-### Clone the upstream Langflow repository
+### Clone the idrflow repository
 
-1. Fork the [upstream Langflow GitHub repository](https://github.com/langflow-ai/langflow).
+1. Fork the idrflow repository on the GitHub host configured by your maintainers.
 
-2. Add the new remote to your local repository on your local machine:
+2. Clone your fork to your local machine:
 ```bash
-git remote add FORK_NAME https://github.com/GIT_USERNAME/langflow.git
+git clone <fork-repository-url>
+cd <repo-dir>
 ```
 Replace the following:
-* `FORK_NAME`: A name for your fork of the repository
-* `GIT_USERNAME`: Your Git username
+* `<fork-repository-url>`: The HTTPS or SSH URL of your fork
+* `<repo-dir>`: The directory created by `git clone`
+
+3. Optional: If your team uses an upstream repository for tracking shared changes, register it as `upstream`:
+```bash
+git remote add upstream <upstream-repository-url>
+git remote set-url --push upstream no_push
+```
+
+> Note: idrflow tracks the upstream `langflow-ai/langflow` project as an implementation reference. Public contributors should target their team's idrflow fork rather than the upstream repository.
 
 ### Run idrflow from source {#run-langflow-from-source}
 
@@ -71,7 +80,7 @@ The idrflow frontend is served at `http://localhost:7860`.
 <details>
 <summary>Run from source with Windows CMD</summary>
 
-To run idrflow from source on Windows, you can use the upstream Langflow repository's included scripts, or run the commands in the terminal.
+To run idrflow from source on Windows, you can use the repository's included scripts, or run the commands in the terminal.
 
 Do one of the following:
 
@@ -102,7 +111,7 @@ The idrflow frontend is served at `http://localhost:7860`.
 <details>
 <summary>Run from source with PowerShell</summary>
 
-To run idrflow from source on Windows, you can use the upstream Langflow repository's included scripts, or run the commands in the terminal.
+To run idrflow from source on Windows, you can use the repository's included scripts, or run the commands in the terminal.
 
 Do one of the following:
 
@@ -241,18 +250,19 @@ For style guidance, see the [Google Developer Documentation Style Guide](https:/
 
 1. Install [Node.js](https://nodejs.org/en/download/package-manager).
 
-2. Fork the [upstream Langflow GitHub repository](https://github.com/langflow-ai/langflow).
+2. Fork the idrflow repository on the GitHub host configured by your maintainers.
 
-3. Add the new remote to your local repository on your local machine:
+3. Clone your fork to your local machine:
 
     ```bash
-    git remote add FORK_NAME https://github.com/GIT_USERNAME/langflow.git
+    git clone <fork-repository-url>
+    cd <repo-dir>
     ```
 
     Replace the following:
 
-    * `FORK_NAME`: A name for your fork of the repository
-    * `GIT_USERNAME`: Your Git username
+    * `<fork-repository-url>`: The HTTPS or SSH URL of your fork
+    * `<repo-dir>`: The directory created by `git clone`
 
 4. From the root of your local idrflow fork, change to the `/docs` directory:
 

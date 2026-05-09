@@ -8,13 +8,12 @@ import TabItem from '@theme/TabItem';
 
 idrflow can be installed in multiple ways:
 
-* [**idrflow Desktop (Recommended)**](#install-and-run-langflow-desktop): Download and install the standalone desktop application for the least complicated setup experience.
-This option includes dependency management and facilitated upgrades.
-
-* [**Docker**](#install-and-run-langflow-docker): Pull and run the idrflow Docker image to start a idrflow container and run idrflow in isolation.
+* [**Docker (Recommended)**](#install-and-run-langflow-docker): Pull and run the idrflow Docker image to start a idrflow container and run idrflow in isolation.
 
 * [**Python package**](#install-and-run-the-langflow-oss-python-package): Install and run the idrflow OSS Python package.
 This option offers more control over the environment, dependencies, and versioning.
+
+* [**idrflow Desktop (Coming soon)**](#install-and-run-langflow-desktop): Standalone desktop application with dependency management and facilitated upgrades. Not yet available.
 
 * [**Install from source**](/contributing-how-to-contribute#install-langflow-from-source): Use this option if you want to contribute to the idrflow codebase or documentation.
 
@@ -23,37 +22,9 @@ This option offers more control over the environment, dependencies, and versioni
 idrflow Desktop is a desktop version of idrflow that simplifies dependency management and upgrades.
 However, some features aren't available for idrflow Desktop, such as the **Shareable Playground** and **Voice Mode**.
 
-<Tabs>
-<TabItem value="macos" label="macOS" default>
-
-idrflow Desktop requires macOS 13 or later.
-
-1. Official idrflow Desktop download URLs are not published yet.
-2. When the installer is available, download the package for your platform from this page.
-3. Mount and install the idrflow application.
-4. When the installation completes, open the idrflow application, and then create your first flow with the [Quickstart](/get-started-quickstart).
-
-</TabItem>
-<TabItem value="Windows" label="Windows">
-
-    :::warning
-    If you are upgrading idrflow Desktop on Windows, **don't** use the in-app update feature to upgrade to idrflow version 1.6.0.
-    For more information, see [Known issues for 1.6.0](/release-notes#windows-desktop-update-issue).
-    :::
-
-1. Official idrflow Desktop download URLs are not published yet.
-2. When the installer is available, download the package for your platform from this page.
-3. Open the **File Explorer**, and then navigate to **Downloads**.
-4. Double-click the downloaded `.msi` file, and then use the install wizard to install idrflow Desktop.
-
-    :::tip
-    Windows installations of idrflow Desktop require a C++ compiler that may not be present on your system. If you receive a `C++ Build Tools Required!` error, follow the on-screen prompt to install Microsoft C++ Build Tools, or [install Microsoft Visual Studio](https://visualstudio.microsoft.com/downloads/).
-    :::
-
-5. When the installation completes, open the idrflow application, and then create your first flow with the [Quickstart](/get-started-quickstart).
-
-</TabItem>
-</Tabs>
+:::info Coming soon
+The official idrflow Desktop installer build is not yet available. For this release, install idrflow with [Docker](#install-and-run-langflow-docker) or the [Python package](#install-and-run-the-langflow-oss-python-package). When the official build is published, download links will appear on this page.
+:::
 
 For upgrade information, see the [Release notes](/release-notes).
 

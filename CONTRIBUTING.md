@@ -2,17 +2,20 @@
 
 Thank you for your interest in contributing!
 
+The canonical idrflow repository is hosted on GitLab:
+`http://218.50.209.93:9001/peter/idrflow.git`
+
 ## How to Contribute
 
-1. Fork the repository workflow your team uses for idrflow development.
+1. Clone the canonical GitLab repository, or fork it inside GitLab if your team's permissions require a fork-based workflow.
 2. Create a new branch for your changes.
-3. Open a GitHub pull request against the active `release-X.Y.Z` release candidate branch.
+3. Open a GitLab merge request against the active `release-X.Y.Z` release candidate branch.
 Do not target `main`.
-For example, if the latest released version is `1.8.0`, your pull request should target the `release-1.9.0` branch.
+For example, if the latest released version is `1.8.0`, your merge request should target the `release-1.9.0` branch.
 Include a clear title and description.
 Reference any issues fixed, for example `Fixes #1234`.
-Ensure your PR title follows [semantic commit conventions](https://www.conventionalcommits.org/).
-4. A maintainer will review your PR and may request changes.
+Ensure your MR title follows [semantic commit conventions](https://www.conventionalcommits.org/).
+4. A maintainer will review your merge request and may request changes.
 
 ## Development Environment Setup
 

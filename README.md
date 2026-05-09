@@ -10,6 +10,8 @@
 
 idrflow is a visual workflow builder for AI agents and applications. It provides a rebranded product experience on top of a Langflow-compatible runtime, so some package names, imports, and CLI commands still use `langflow`.
 
+> **Canonical repository:** idrflow is now maintained from the internal GitLab repository at `http://218.50.209.93:9001/peter/idrflow.git`. The legacy GitHub fork remains a historical upstream reference during the cutover window.
+>
 > **Note:** idrflow currently runs on a Langflow-compatible runtime. Installation and execution commands still use the `langflow` package and CLI names.
 
 ## Highlights
@@ -60,4 +62,4 @@ The `langflowai/langflow` image name is retained here as an upstream runtime ref
 
 ## Contributing
 
-Contributions are welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) for workflow guidance, and treat any remaining GitHub links in the docs as upstream Langflow source-code references rather than idrflow brand channels.
+Contributions are welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) for GitLab merge request and issue workflow guidance, and treat any remaining GitHub links in the docs as upstream Langflow source-code references rather than idrflow brand channels.

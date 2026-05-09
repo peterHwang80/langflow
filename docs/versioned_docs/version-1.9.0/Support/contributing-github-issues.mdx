@@ -3,13 +3,14 @@ title: Get help and request enhancements
 slug: /contributing-github-issues
 ---
 
-idrflow issue tracking depends on the repository or fork your team uses to maintain the product.
+idrflow issue tracking is coordinated from the canonical GitLab repository:
+`http://218.50.209.93:9001/peter/idrflow`
 
-Use your team's primary repository workflow to report bugs, request enhancements, and track follow-up work.
+Use that repository's issue tracker and merge request workflow to report bugs, request enhancements, and track follow-up work.
 
 ## Report bugs and request enhancements
 
-Create issues in the repository that corresponds to your idrflow deployment or fork. If your team still tracks technical work against the upstream Langflow codebase, treat those links as upstream implementation references rather than idrflow brand channels.
+Create issues in the canonical GitLab project unless your team has documented a different internal escalation path. If you still reference the upstream Langflow codebase, treat those GitHub links as implementation references rather than idrflow brand channels.
 
 :::tip
 The best way to promote a request or bug is to comment on an existing issue.
@@ -23,9 +24,9 @@ Use repository labels and release branches to help filter your search.
 
 If you need help with your code or idrflow in general, use the support path defined by your team, deployment owner, or repository maintainers. Refer to [Join the idrflow community](/contributing-community) for the current high-level guidance.
 
-## Community guidelines and tips
+## Issue workflow guidelines
 
-Because the Issues and Discussion pages are public, the idrflow team asks that you follow these guidelines when submitting questions and issues:
+Follow these guidelines when submitting issues or merge requests:
 
 * **Provide as many details as possible**: Simply stating that a feature doesn't work isn't helpful. The idrflow team needs details in order to recreate and find the issue.
 * **Explain what exactly went wrong**: Including error messages and descriptions of _how_ your code failed, not just the fact that it failed.
@@ -33,7 +34,7 @@ Because the Issues and Discussion pages are public, the idrflow team asks that y
 * **Describe your environment**: Include your operating system, idrflow version, Python version, and any other environment-related details that could have contributed to the issue.
 * **Include snippets of the code that failed**: Be sure to omit any sensitive values, and only provide parts relevant to the failure, rather than the entire script. Providing code snippets makes it much easier to reproduce errors, troubleshoot, and provide specific advice.
   * If your submission includes long sections of code, logs, or tracebacks, wrap them in [details tags](https://developer.mozilla.org/en/docs/Web/HTML/Element/details) (`<details> PASTE CODE HERE </details>`) to collapse the content and make it easier to read your submission.
-* **Omit sensitive information**: Other than the information available on your public GitHub profile, don't include sensitive or personally identifying data, such as security keys, full names, personal identification numbers, addresses, and phone numbers.
+* **Omit sensitive information**: Don't include sensitive or personally identifying data, such as security keys, full names, personal identification numbers, addresses, and phone numbers.
 * **Be kind**: Although bugs can be frustrating with any software, remember that your messages are read by real people who want to help. While you don't have to be saccharine, there's no need to be rude to get support.
-  * If you are using a public repository workflow, remember that your submissions can be visible to anyone on the internet.
+  * If your repository workflow is visible outside your immediate team, assume your submissions can be read by other authorized collaborators.
   * Follow the code of conduct and moderation rules for the repository or support space where you post.

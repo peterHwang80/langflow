@@ -12,9 +12,8 @@ const baseUrl = process.env.BASE_URL
   : "/idrflow/";
 
 // Upstream reference: idrflow tracks the langflow-ai/langflow upstream project.
-// While the idrflow GitHub org/repo are not public, organizationName/projectName
-// are placeholders that satisfy Docusaurus build requirements but are not used to
-// construct any public-facing URLs.
+// The canonical source repository now lives in GitLab under peter/idrflow, so the
+// Docusaurus repository metadata reflects that namespace/project pairing.
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "idrflow Documentation",
@@ -26,8 +25,8 @@ const config = {
   baseUrl,
   onBrokenLinks: "throw",
   onBrokenAnchors: "warn",
-  organizationName: "idrflow-docs", // Placeholder: replace when the idrflow GitHub org is finalized.
-  projectName: "idrflow", // Placeholder: replace when the idrflow repository name is finalized.
+  organizationName: "peter",
+  projectName: "idrflow",
   trailingSlash: false,
   staticDirectories: ["static"],
   markdown: {

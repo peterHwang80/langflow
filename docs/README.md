@@ -76,7 +76,7 @@ npm run build
 npm run serve
 ```
 
-5. Create a pull request to main, and merge to create your new release.
+5. Create a GitLab merge request to the active release branch, and merge it to create your new release.
 6. To create version 2.0.x, repeat the process: update the active release branch docs to `2.0.x` when you begin working on it, then when ready to release, run `npm run docs:version -- 2.0.0`, update `docusaurus.config.js` with labels using `.x` notation, and merge to main.
 
 - `lastVersion` = the most recent released version (shown as "latest" in the UI).

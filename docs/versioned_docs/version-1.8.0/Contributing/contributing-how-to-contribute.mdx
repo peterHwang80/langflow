@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 This guide is intended to help you start contributing to idrflow.
 As an open-source codebase in a rapidly developing field, idrflow welcomes contributions, whether it be in the form of a new feature, improved infrastructure, or better documentation.
 
-To contribute code or documentation to idrflow, follow the [pull request guide](#open-a-pull-request).
+To contribute code or documentation to idrflow, follow the [merge request guide](#open-a-pull-request).
 
 ## idrflow services overview
 
@@ -37,7 +37,7 @@ Install idrflow from source by forking the repository and setting up your develo
 
 ### Clone the idrflow repository
 
-1. Fork the idrflow repository on the GitHub host configured by your maintainers.
+1. Clone the canonical GitLab repository or create a GitLab fork if your team's permissions require it.
 
 2. Clone your fork to your local machine:
 ```bash
@@ -45,7 +45,7 @@ git clone <fork-repository-url>
 cd <repo-dir>
 ```
 Replace the following:
-* `<fork-repository-url>`: The HTTPS or SSH URL of your fork
+* `<fork-repository-url>`: The HTTPS or SSH URL of your GitLab clone or fork
 * `<repo-dir>`: The directory created by `git clone`
 
 3. Optional: If your team uses an upstream repository for tracking shared changes, register it as `upstream`:
@@ -54,7 +54,7 @@ git remote add upstream <upstream-repository-url>
 git remote set-url --push upstream no_push
 ```
 
-> Note: idrflow tracks the upstream `langflow-ai/langflow` project as an implementation reference. Public contributors should target their team's idrflow fork rather than the upstream repository.
+> Note: idrflow tracks the upstream `langflow-ai/langflow` project as an implementation reference. Contributors should target the GitLab-hosted idrflow repository or the GitLab fork defined by their team rather than the upstream repository.
 
 ### Run idrflow from source {#run-langflow-from-source}
 
@@ -292,20 +292,20 @@ For style guidance, see the [Google Developer Documentation Style Guide](https:/
     For example, if a page has a `slug` of `/cool-page`, you can link to it with `[Cool page](/cool-page)` from any other `/docs` page.
 
 7. Recommended: After making some changes, run `npm run build` to build the site locally with more robust logging.
-This can help you find broken links before creating a PR.
+This can help you find broken links before creating an MR.
 
-## Open a pull request
+## Open a merge request {#open-a-pull-request}
 
-To submit a pull request, do the following:
+To submit a merge request, do the following:
 
-1. Open a new GitHub pull request with your patch against the `main` branch.
-2. Ensure the PR title follows semantic commit conventions. For example, features are `feat: add new feature` and fixes are `fix: correct issue with X`.
+1. Open a new GitLab merge request with your patch against the branch defined by your team's current release workflow.
+2. Ensure the MR title follows semantic commit conventions. For example, features are `feat: add new feature` and fixes are `fix: correct issue with X`.
 
-Some additional guidance on pull request titles:
-* Ensure the pull request description clearly describes the problem and solution. If the PR fixes an issue, include a link to the fixed issue in the PR description with `Fixes #1234`.
-* Pull request titles appear in idrflow's release notes, so they should explain what the PR does as explicitly as possible.
-* Pull requests should strive to fix one thing **only**, and should contain a good description of what is being fixed.
+Some additional guidance on merge request titles:
+* Ensure the merge request description clearly describes the problem and solution. If the MR fixes an issue, include a link to the fixed issue in the description with `Fixes #1234`.
+* Merge request titles appear in idrflow's release notes, so they should explain what the change does as explicitly as possible.
+* Merge requests should strive to fix one thing **only**, and should contain a good description of what is being fixed.
 
-3. A idrflow maintainer will review your pull request and may request changes, so ensure you pay attention to your PRs. Thanks for your contribution!
+3. A idrflow maintainer will review your merge request and may request changes, so ensure you pay attention to your MRs. Thanks for your contribution!
 
 For more information, see the [Python Developer's Guide](https://devguide.python.org/getting-started/pull-request-lifecycle/index.html#making-good-commits).

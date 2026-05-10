@@ -1,5 +1,5 @@
-// TODO(idrflow): restore the docs chat widget after the idrflow-owned
-// embedded chat package is published from the dedicated GitLab source repo.
+// TODO(idrflow): the V1 embedded chat widget now exists, but docs-hosted
+// live demos remain out of scope until we decide on a public docs-safe demo flow.
 export default function ChatWidget() {
   return null;
 }

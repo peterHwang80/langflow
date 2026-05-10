@@ -16,31 +16,28 @@ describe("getWidgetCode", () => {
     webhookAuthEnable: false,
   };
 
-  describe("Placeholder state", () => {
-    it("returns the placeholder snippet (idrflow embed bundle is not yet published)", () => {
+  describe("live widget snippet", () => {
+    it("returns the live script tag and widget element", () => {
+      const code = getWidgetCode(baseOptions);
+
+      expect(code).toContain(
+        'src="https://localhost:3000/embedded-chat/idrflow-chat.js"',
+      );
+      expect(code).toContain("<idrflow-chat");
+      expect(code).toContain("</idrflow-chat>");
+      expect(code).not.toContain("Publish-ready package coordinates");
+      expect(code).not.toContain("<!--\n  <idrflow-chat");
+    });
+
+    it("references the embedded chat source repository", () => {
       const code = getWidgetCode(baseOptions);
 
       expect(code).toContain(
         "http://218.50.209.93:9001/peter/idrflow-embedded-chat",
       );
-      expect(code).toContain(
-        "Publish-ready package coordinates are not available yet",
-      );
-      expect(code).toContain("<idrflow-chat");
-      expect(code).toContain("</idrflow-chat>");
-      expect(code).toContain("<!--");
-      expect(code).toContain("-->");
     });
 
-    it("does not advertise any unpublished CDN script tag", () => {
-      const code = getWidgetCode(baseOptions);
-
-      expect(code).not.toMatch(/<script[^>]*src=/);
-      expect(code).not.toContain("cdn.idrsoft.com");
-      expect(code).not.toContain("langflow-embedded-chat");
-    });
-
-    it("interpolates flowName, flowId, and host_url inside the commented snippet", () => {
+    it("interpolates flowName, flowId, and host_url in the live widget tag", () => {
       const code = getWidgetCode(baseOptions);
 
       expect(code).toContain('window_title="Test Flow"');
@@ -48,12 +45,14 @@ describe("getWidgetCode", () => {
       expect(code).toContain('host_url="https://localhost:3000"');
     });
 
-    it("includes api_key only when isAuth is false", () => {
-      const codeNoAuth = getWidgetCode({ ...baseOptions, isAuth: false });
-      const codeAuth = getWidgetCode({ ...baseOptions, isAuth: true });
+    it("includes api_key only for private flow mode", () => {
+      const privateCode = getWidgetCode({ ...baseOptions, isAuth: false });
+      const publicCode = getWidgetCode({ ...baseOptions, isAuth: true });
 
-      expect(codeNoAuth).toContain('api_key="..."');
-      expect(codeAuth).not.toContain("api_key");
+      expect(privateCode).toContain('api_key="YOUR_API_KEY_HERE"');
+      expect(privateCode).toContain("Replace YOUR_API_KEY_HERE");
+      expect(publicCode).not.toContain("api_key=");
+      expect(publicCode).toContain("same hostname");
     });
 
     it("produces identical output regardless of copy flag", () => {
@@ -143,29 +142,8 @@ describe("getWidgetCode", () => {
     });
   });
 
-  describe("Host URL handling", () => {
-    it("constructs host_url from protocol and host", () => {
-      const code = getWidgetCode(baseOptions);
-
-      expect(code).toContain('host_url="https://localhost:3000"');
-    });
-  });
-
-  describe("Authentication handling", () => {
-    it("omits api_key when isAuth is undefined (treated as falsy)", () => {
-      const code = getWidgetCode({
-        flowId: "test-flow",
-        flowName: "Test",
-        isAuth: undefined,
-        webhookAuthEnable: false,
-      });
-
-      expect(code).toContain('api_key="..."');
-    });
-  });
-
   describe("Output format", () => {
-    it("returns a string starting with the placeholder comment", () => {
+    it("returns a string starting with the source comment", () => {
       const code = getWidgetCode(baseOptions);
 
       expect(typeof code).toBe("string");

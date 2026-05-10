@@ -113,14 +113,57 @@ The automatically generated code snippets now use your new endpoint name instead
 
 ## Embed a flow into a website {#embedded-chat-widget}
 
-The public idrflow embedded chat package is still being finalized. The **Share > Embed into site** action currently returns a placeholder snippet while the official source remains the dedicated [idrflow-embedded-chat GitLab repository](http://218.50.209.93:9001/peter/idrflow-embedded-chat).
+idrflow now ships a first working version of the `<idrflow-chat>` widget.
 
-### Current status
+The widget's source code lives in the dedicated [idrflow-embedded-chat GitLab repository](http://218.50.209.93:9001/peter/idrflow-embedded-chat), and deployed idrflow servers serve the built widget bundle from the same host at `/embedded-chat/idrflow-chat.js`.
 
-- The dedicated source repository for the embed package is [idrflow-embedded-chat](http://218.50.209.93:9001/peter/idrflow-embedded-chat).
-- The official idrflow-owned embed bundle, custom element name, and framework-specific examples are not published yet.
-- If you need embedded chat immediately, review the source repository and your internal packaging process before exposing it to end users.
-- When the idrflow-owned package is published, this section will be updated with supported React, Angular, and HTML examples plus the final snippet format.
+### Use the generated snippet
+
+In idrflow, open the flow that you want to embed, click **Share**, and then select **Embed into site**.
+
+The generated snippet loads the widget bundle and mounts the custom element:
+
+```html
+<script
+  type="module"
+  src="http://IDRFLOW_SERVER_ADDRESS/embedded-chat/idrflow-chat.js"
+></script>
+
+<idrflow-chat
+  window_title="My Assistant"
+  flow_id="FLOW_ID"
+  host_url="http://IDRFLOW_SERVER_ADDRESS"
+></idrflow-chat>
+```
+
+### Authentication modes
+
+The widget supports two V1 execution modes:
+
+- **Private/internal flow mode**: Add an `api_key` attribute. The widget uses the authenticated build path and includes your `x-api-key` header.
+- **Public flow mode**: Omit `api_key`. The widget uses the public flow build path.
+
+For a private flow, the snippet should look like this:
+
+```html
+<script
+  type="module"
+  src="http://IDRFLOW_SERVER_ADDRESS/embedded-chat/idrflow-chat.js"
+></script>
+
+<idrflow-chat
+  window_title="Private Assistant"
+  flow_id="FLOW_ID"
+  host_url="http://IDRFLOW_SERVER_ADDRESS"
+  api_key="IDRFLOW_API_KEY"
+></idrflow-chat>
+```
+
+### Important V1 limits
+
+- Public flow mode currently requires the host page and `host_url` to share the same hostname so the widget can send the `client_id` cookie used by the shareable playground flow path.
+- Private flow embed through browser session cookies isn't supported in V1. Use `api_key` for private/internal embeds.
+- V1 doesn't yet cover attachments, voice mode, theming APIs, or public npm/CDN distribution.
 
 ## Serve flows through a idrflow MCP server {#serve-flows-through-a-langflow-mcp-server}
 

@@ -16,24 +16,29 @@ export default function getWidgetCode({
   isAuth,
 }: GetCodeType): string {
   const { protocol, host } = customGetHostProtocol();
+  const usesPublicFlowMode = Boolean(isAuth);
 
   const safeFlowName = escapeHtmlAttribute(flowName ?? "");
   const safeFlowId = escapeHtmlAttribute(flowId ?? "");
-  const safeHostUrl = escapeHtmlAttribute(`${protocol}//${host}`);
+  const hostUrl = `${protocol}//${host}`;
+  const safeHostUrl = escapeHtmlAttribute(hostUrl);
+  const safeScriptUrl = escapeHtmlAttribute(
+    `${hostUrl}/embedded-chat/idrflow-chat.js`,
+  );
 
-  return `<!-- idrflow embedded chat package source lives in:
-http://218.50.209.93:9001/peter/idrflow-embedded-chat
-Publish-ready package coordinates are not available yet, so this placeholder stays commented out. -->
-<!--
-  <idrflow-chat
-    window_title="${safeFlowName}"
-    flow_id="${safeFlowId}"
-    host_url="${safeHostUrl}"${
-      !isAuth
-        ? `
-    api_key="..."`
-        : ""
-    }>
-</idrflow-chat>
--->`;
+  return `<!-- idrflow embedded chat source:
+http://218.50.209.93:9001/peter/idrflow-embedded-chat -->
+<script type="module" src="${safeScriptUrl}"></script>
+
+<!-- ${usesPublicFlowMode ? "Public flow mode requires this page and host_url to share the same hostname so the client_id cookie can be sent." : "Replace YOUR_API_KEY_HERE with an API key that can access this private flow."} -->
+<idrflow-chat
+  window_title="${safeFlowName}"
+  flow_id="${safeFlowId}"
+  host_url="${safeHostUrl}"${
+    usesPublicFlowMode
+      ? ""
+      : `
+  api_key="YOUR_API_KEY_HERE"`
+  }
+></idrflow-chat>`;
 }

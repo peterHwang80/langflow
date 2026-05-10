@@ -3,9 +3,6 @@ title: Deploy the idrflow development environment on Kubernetes
 slug: /deployment-kubernetes-dev
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 The [idrflow integrated development environment (IDE) Helm chart](http://218.50.209.93:9001/peter/idrflow-helm-charts/-/tree/main/charts/langflow-ide) is designed to provide a complete environment for developers to create, test, and debug their flows. It includes both the idrflow API and visual editor.
 
 ## Prerequisites
@@ -53,24 +50,23 @@ This example uses [Minikube](https://minikube.sigs.k8s.io/docs/start/), but you 
 
 ## Access the idrflow IDE
 
-Enable local port forwarding to access idrflow from your local machine:
+The IDE chart creates a single Service that serves both the visual editor and API on port 7860.
 
-1. Make the idrflow API accessible from your local machine at port 7860:
-
-    ```shell
-    kubectl port-forward -n langflow svc/langflow-service-backend 7860:7860
-    ```
-
-2. Make the visual editor accessible from your local machine at port 8080:
+1. Find the service name:
 
     ```shell
-    kubectl port-forward -n langflow svc/langflow-service 8080:8080
+    kubectl get svc -n langflow
     ```
 
-Now you can do the following:
+    If you installed with `helm install langflow-ide ...`, the service name is `langflow-ide-langflow-ide`.
 
-- Access the idrflow API at `http://localhost:7860`.
-- Access the visual editor at `http://localhost:8080`.
+2. Enable local port forwarding:
+
+    ```shell
+    kubectl port-forward -n langflow svc/langflow-ide-langflow-ide 7860:7860
+    ```
+
+3. Access idrflow at `http://localhost:7860`. Both the visual editor and the API (`/api/v1/...`) are served from the same URL.
 
 ## Modify your idrflow IDE deployment
 
@@ -97,88 +93,48 @@ Or with the `--set` flag:
 helm install langflow-ide ./charts/langflow-ide -n langflow --create-namespace --set image.tag=1.0.0a59
 ```
 
-### Use external storage for the idrflow database
+### Use an external database
 
-The idrflow IDE Helm chart uses the default idrflow database configuration, specifically a SQLite database stored in a local persistent disk.
-
-If you want to use an [external PostgreSQL database](/configuration-custom-database), use `postgresql` chart or `externalDatabase` to configure the database connection in `values.yaml`.
-
-<Tabs>
-<TabItem value="postgresql" label="postgresql" default>
-
-Use the built-in PostgreSQL chart:
+The IDE chart uses the default idrflow SQLite database by default. To use an external PostgreSQL database, pass the connection URL via the `env` list:
 
 ```yaml
-postgresql:
-  enabled: true
-  auth:
-    username: "langflow"
-    password: "langflow-postgres"
-    database: "langflow-db"
+env:
+  - name: IDRFLOW_DATABASE_URL
+    value: "postgresql://user:password@postgres-host:5432/langflow"
 ```
 
-</TabItem>
-<TabItem value="externaldatabase" label="externalDatabase">
-
-If you don't want to use the built-in PostgreSQL chart, set `postgresql.enabled` to `false`, and then configure the database connection in `langflow.backend.externalDatabase`:
+Or reference a Kubernetes secret:
 
 ```yaml
-postgresql:
-  enabled: false
-
-langflow:
-  backend:
-    externalDatabase:
-      enabled: true
-      driver:
-        value: "postgresql"
-      port:
-        value: "5432"
-      user:
-        value: "langflow"
-      password:
-        valueFrom:
-          secretKeyRef:
-            key: "password"
-            name: "your-secret-name"
-      database:
-        value: "langflow-db"
-    sqlite:
-      enabled: false
+env:
+  - name: IDRFLOW_DATABASE_URL
+    valueFrom:
+      secretKeyRef:
+        name: db-credentials
+        key: database-url
 ```
 
-</TabItem>
-</Tabs>
+For more information, see [Configure a custom database](/configuration-custom-database).
 
 ### Configure scaling
 
-To configure scaling for the idrflow IDE Helm chart deployment, you must set `replicaCount` (horizontal scaling) and `resources` (vertical scaling) for both the `langflow.backend` and `langflow.frontend`.
-
-If your flows rely on a shared state, such as [built-in chat memory](/memory), you must also set up a shared database when scaling horizontally.
+Use `replicaCount` for horizontal scaling and `resources` for vertical scaling:
 
 ```yaml
-langflow:
-  backend:
-    replicaCount: 1
-    resources:
-      requests:
-        cpu: 0.5
-        memory: 1Gi
-      # limits:
-      #   cpu: 0.5
-      #   memory: 1Gi
+replicaCount: 3
 
-  frontend:
-    enabled: true
-    replicaCount: 1
-    resources:
-      requests:
-        cpu: 0.3
-        memory: 512Mi
-      # limits:
-      #   cpu: 0.3
-      #   memory: 512Mi
+resources:
+  requests:
+    cpu: 0.5
+    memory: 1Gi
+  limits:
+    cpu: 1
+    memory: 2Gi
 ```
+
+:::note
+If you scale horizontally (`replicaCount > 1`), you must use an external database instead of the default SQLite, because SQLite does not support concurrent access from multiple pods.
+:::
 
 ## See also
 

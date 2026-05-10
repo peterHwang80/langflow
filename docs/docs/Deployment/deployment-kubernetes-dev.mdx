@@ -83,17 +83,18 @@ If you need to set secrets, Kubernetes secrets are recommended.
 
 The idrflow IDE Helm chart deploys the latest idrflow version by default.
 
-To specify a different idrflow version, set the `langflow.backend.image.tag` and `langflow.frontend.image.tag` values to your preferred version.
+To specify a different idrflow version, set the `image.tag` value to your preferred version.
 For example:
 
 ```yaml
-langflow:
-  backend:
-    image:
-      tag: "1.0.0a59"
-  frontend:
-    image:
-      tag: "1.0.0a59"
+image:
+  tag: "1.0.0a59"
+```
+
+Or with the `--set` flag:
+
+```shell
+helm install langflow-ide ./charts/langflow-ide -n langflow --create-namespace --set image.tag=1.0.0a59
 ```
 
 ### Use external storage for the idrflow database

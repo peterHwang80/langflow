@@ -1,24 +1,25 @@
 import asyncio
+import io
 import os
 import shutil
 import tempfile
 import uuid
+import zipfile
 from copy import deepcopy
 from datetime import datetime
 from pathlib import Path as SyncPath
-from unittest.mock import AsyncMock, patch
-from urllib.parse import urlparse
+from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
 from anyio import Path
-from httpx import AsyncClient
+from httpx import AsyncClient, Request, Response
 from langflow.initial_setup.constants import STARTER_FOLDER_NAME
 from langflow.initial_setup.setup import (
     copy_profile_pictures,
-    detect_github_url,
     get_project_data,
     load_bundles_from_urls,
     load_starter_projects,
+    resolve_bundle_archive_url,
     update_projects_components_with_latest_component_versions,
 )
 from langflow.interface.components import get_and_cache_all_types_dict
@@ -198,68 +199,106 @@ async def test_refresh_starter_projects():
 
 
 @pytest.mark.parametrize(
-    ("url", "expected"),
+    ("url", "expected", "expects_default_branch_lookup"),
     [
         (
-            "https://github.com/langflow-ai/langflow-bundles",
-            "https://github.com/langflow-ai/langflow-bundles/archive/refs/heads/main.zip",
+            "https://github.com/example-org/example-bundle-repo",
+            "https://github.com/example-org/example-bundle-repo/archive/refs/heads/main.zip",
+            True,
         ),
         (
-            "https://github.com/langflow-ai/langflow-bundles/",
-            "https://github.com/langflow-ai/langflow-bundles/archive/refs/heads/main.zip",
+            "https://github.com/example-org/example-bundle-repo/",
+            "https://github.com/example-org/example-bundle-repo/archive/refs/heads/main.zip",
+            True,
         ),
         (
-            "https://github.com/langflow-ai/langflow-bundles.git",
-            "https://github.com/langflow-ai/langflow-bundles/archive/refs/heads/main.zip",
+            "https://github.com/example-org/example-bundle-repo.git",
+            "https://github.com/example-org/example-bundle-repo/archive/refs/heads/main.zip",
+            True,
         ),
         (
-            "https://github.com/langflow-ai/langflow-bundles/tree/some.branch-0_1",
-            "https://github.com/langflow-ai/langflow-bundles/archive/refs/heads/some.branch-0_1.zip",
+            "https://github.com/example-org/example-bundle-repo/tree/some.branch-0_1",
+            "https://github.com/example-org/example-bundle-repo/archive/refs/heads/some.branch-0_1.zip",
+            False,
         ),
         (
-            "https://github.com/langflow-ai/langflow-bundles/tree/some/branch",
-            "https://github.com/langflow-ai/langflow-bundles/archive/refs/heads/some/branch.zip",
+            "https://github.com/example-org/example-bundle-repo/tree/some/branch",
+            "https://github.com/example-org/example-bundle-repo/archive/refs/heads/some/branch.zip",
+            False,
         ),
         (
-            "https://github.com/langflow-ai/langflow-bundles/tree/some/branch/",
-            "https://github.com/langflow-ai/langflow-bundles/archive/refs/heads/some/branch.zip",
+            "https://github.com/example-org/example-bundle-repo/tree/some/branch/",
+            "https://github.com/example-org/example-bundle-repo/archive/refs/heads/some/branch.zip",
+            False,
         ),
         (
-            "https://github.com/langflow-ai/langflow-bundles/releases/tag/v1.0.0-0_1",
-            "https://github.com/langflow-ai/langflow-bundles/archive/refs/tags/v1.0.0-0_1.zip",
+            "https://github.com/example-org/example-bundle-repo/releases/tag/v1.0.0-0_1",
+            "https://github.com/example-org/example-bundle-repo/archive/refs/tags/v1.0.0-0_1.zip",
+            False,
         ),
         (
-            "https://github.com/langflow-ai/langflow-bundles/releases/tag/foo/v1.0.0",
-            "https://github.com/langflow-ai/langflow-bundles/archive/refs/tags/foo/v1.0.0.zip",
+            "https://github.com/example-org/example-bundle-repo/releases/tag/foo/v1.0.0",
+            "https://github.com/example-org/example-bundle-repo/archive/refs/tags/foo/v1.0.0.zip",
+            False,
         ),
         (
-            "https://github.com/langflow-ai/langflow-bundles/releases/tag/foo/v1.0.0/",
-            "https://github.com/langflow-ai/langflow-bundles/archive/refs/tags/foo/v1.0.0.zip",
+            "https://github.com/example-org/example-bundle-repo/releases/tag/foo/v1.0.0/",
+            "https://github.com/example-org/example-bundle-repo/archive/refs/tags/foo/v1.0.0.zip",
+            False,
         ),
         (
-            "https://github.com/langflow-ai/langflow-bundles/commit/68428ce16729a385fe1bcc0f1ec91fd5f5f420b9",
-            "https://github.com/langflow-ai/langflow-bundles/archive/68428ce16729a385fe1bcc0f1ec91fd5f5f420b9.zip",
+            "https://github.com/example-org/example-bundle-repo/commit/68428ce16729a385fe1bcc0f1ec91fd5f5f420b9",
+            "https://github.com/example-org/example-bundle-repo/archive/68428ce16729a385fe1bcc0f1ec91fd5f5f420b9.zip",
+            False,
         ),
         (
-            "https://github.com/langflow-ai/langflow-bundles/commit/68428ce16729a385fe1bcc0f1ec91fd5f5f420b9/",
-            "https://github.com/langflow-ai/langflow-bundles/archive/68428ce16729a385fe1bcc0f1ec91fd5f5f420b9.zip",
+            "https://github.com/example-org/example-bundle-repo/commit/68428ce16729a385fe1bcc0f1ec91fd5f5f420b9/",
+            "https://github.com/example-org/example-bundle-repo/archive/68428ce16729a385fe1bcc0f1ec91fd5f5f420b9.zip",
+            False,
         ),
-        ("https://example.com/myzip.zip", "https://example.com/myzip.zip"),
+        (
+            "http://218.50.209.93:9001/peter/idrflow-bundles",
+            "http://218.50.209.93:9001/api/v4/projects/peter%2Fidrflow-bundles/repository/archive.zip?sha=main",
+            True,
+        ),
+        (
+            "http://218.50.209.93:9001/peter/idrflow-bundles.git",
+            "http://218.50.209.93:9001/api/v4/projects/peter%2Fidrflow-bundles/repository/archive.zip?sha=main",
+            True,
+        ),
+        (
+            "http://218.50.209.93:9001/peter/idrflow-bundles/-/tree/some/branch",
+            "http://218.50.209.93:9001/api/v4/projects/peter%2Fidrflow-bundles/repository/archive.zip?sha=some%2Fbranch",
+            False,
+        ),
+        (
+            "http://218.50.209.93:9001/peter/idrflow-bundles/-/tags/v1.0.0",
+            "http://218.50.209.93:9001/api/v4/projects/peter%2Fidrflow-bundles/repository/archive.zip?sha=v1.0.0",
+            False,
+        ),
+        (
+            "http://218.50.209.93:9001/peter/idrflow-bundles/-/releases/v1.0.0",
+            "http://218.50.209.93:9001/api/v4/projects/peter%2Fidrflow-bundles/repository/archive.zip?sha=v1.0.0",
+            False,
+        ),
+        (
+            "http://218.50.209.93:9001/peter/idrflow-bundles/-/commit/68428ce16729a385fe1bcc0f1ec91fd5f5f420b9",
+            "http://218.50.209.93:9001/api/v4/projects/peter%2Fidrflow-bundles/repository/archive.zip?sha=68428ce16729a385fe1bcc0f1ec91fd5f5f420b9",
+            False,
+        ),
+        ("https://example.com/myzip.zip", "https://example.com/myzip.zip", False),
     ],
 )
-async def test_detect_github_url(url, expected):
-    # Mock the GitHub API response for the default branch case
-    mock_response = AsyncMock()
-    mock_response.json = lambda: {"default_branch": "main"}  # Not async, just returns a dict
+async def test_resolve_bundle_archive_url(url, expected, expects_default_branch_lookup):
+    mock_response = Mock()
+    mock_response.json.return_value = {"default_branch": "main"}
     mock_response.raise_for_status.return_value = None
 
     with patch("httpx.AsyncClient.get", return_value=mock_response) as mock_get:
-        result = await detect_github_url(url)
+        result = await resolve_bundle_archive_url(url)
         assert result == expected
 
-        # Verify the API call was only made for GitHub repo URLs
-        parsed = urlparse(url)
-        if parsed.hostname == "github.com" and not any(x in url for x in ["/tree/", "/releases/", "/commit/"]):
+        if expects_default_branch_lookup:
             mock_get.assert_called_once()
         else:
             mock_get.assert_not_called()
@@ -267,13 +306,13 @@ async def test_detect_github_url(url, expected):
 
 @pytest.mark.usefixtures("client")
 async def test_load_bundles_from_urls():
+    _test_commit = "68428ce16729a385fe1bcc0f1ec91fd5f5f420b9"  # pragma: allowlist secret
+    _archive_prefix = f"idrflow-bundles-{_test_commit}"
+
     settings_service = get_settings_service()
-    settings_service.settings.bundle_urls = [
-        "https://github.com/langflow-ai/langflow-bundles/commit/68428ce16729a385fe1bcc0f1ec91fd5f5f420b9"
-    ]
+    settings_service.settings.bundle_urls = [f"http://218.50.209.93:9001/peter/idrflow-bundles/-/commit/{_test_commit}"]
     settings_service.auth_settings.AUTO_LOGIN = True
 
-    # Create a superuser in the test database since load_bundles_from_urls requires one
     async with session_scope() as session:
         await create_super_user(
             username=settings_service.auth_settings.SUPERUSER,
@@ -285,24 +324,48 @@ async def test_load_bundles_from_urls():
             db=session,
         )
 
-    temp_dirs, components_paths = await load_bundles_from_urls()
+    zip_buffer = io.BytesIO()
+    with zipfile.ZipFile(zip_buffer, "w") as bundle_zip:
+        bundle_zip.writestr(f"{_archive_prefix}/", "")
+        bundle_zip.writestr(f"{_archive_prefix}/components/", "")
+        bundle_zip.writestr(f"{_archive_prefix}/components/embeddings/", "")
+        bundle_zip.writestr(
+            f"{_archive_prefix}/components/embeddings/openai2.py",
+            "class OpenAIEmbeddings2Component:\n    pass\n",
+        )
+        bundle_zip.writestr(f"{_archive_prefix}/flows/", "")
+        bundle_zip.writestr(
+            f"{_archive_prefix}/flows/example-flow.json",
+            '{"id": "c54f9130-f2fa-4a3e-b22a-3856d946351b"}',
+        )
 
-    try:
-        assert len(components_paths) == 1
-        assert "langflow-bundles-68428ce16729a385fe1bcc0f1ec91fd5f5f420b9/components" in components_paths[0]
+    archive_response = Response(
+        200,
+        content=zip_buffer.getvalue(),
+        request=Request(
+            "GET",
+            f"http://218.50.209.93:9001/api/v4/projects/peter%2Fidrflow-bundles/repository/archive.zip?sha={_test_commit}",
+        ),
+    )
 
-        content = await (Path(components_paths[0]) / "embeddings" / "openai2.py").read_text(encoding="utf-8")
-        assert "OpenAIEmbeddings2Component" in content
+    with (
+        patch("httpx.AsyncClient.get", return_value=archive_response),
+        patch("langflow.initial_setup.setup.upsert_flow_from_file", new=AsyncMock()) as mock_upsert,
+    ):
+        temp_dirs, components_paths = await load_bundles_from_urls()
 
-        assert len(temp_dirs) == 1
+        try:
+            assert len(components_paths) == 1
+            assert f"{_archive_prefix}/components" in components_paths[0]
 
-        async with session_scope() as session:
-            stmt = select(Flow).where(Flow.id == uuid.UUID("c54f9130-f2fa-4a3e-b22a-3856d946351b"))
-            flow = (await session.exec(stmt)).first()
-            assert flow is not None
-    finally:
-        for temp_dir in temp_dirs:
-            await asyncio.to_thread(temp_dir.cleanup)
+            content = await (Path(components_paths[0]) / "embeddings" / "openai2.py").read_text(encoding="utf-8")
+            assert "OpenAIEmbeddings2Component" in content
+
+            assert len(temp_dirs) == 1
+            mock_upsert.assert_awaited_once()
+        finally:
+            for temp_dir in temp_dirs:
+                await asyncio.to_thread(temp_dir.cleanup)
 
 
 @pytest.fixture

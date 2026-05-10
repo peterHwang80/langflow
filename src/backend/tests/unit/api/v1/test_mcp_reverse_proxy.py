@@ -1,8 +1,7 @@
 """Tests for MCP reverse proxy support (root_path / X-Forwarded-Prefix).
 
-Covers the fix for https://github.com/langflow-ai/langflow/issues/9797 where MCP
-SSE transport breaks when Langflow sits behind a reverse proxy that adds a URL
-prefix (basePath).
+Covers the reverse-proxy regression where MCP SSE transport breaks when
+Langflow sits behind a reverse proxy that adds a URL prefix (basePath).
 """
 
 import pytest

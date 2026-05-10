@@ -11,8 +11,7 @@ const baseUrl = process.env.BASE_URL
   ? `${process.env.BASE_URL.replace(/\/?$/, "/")}`
   : "/idrflow/";
 
-// Upstream reference: idrflow tracks the langflow-ai/langflow upstream project.
-// The canonical source repository now lives in GitLab under peter/idrflow, so the
+// The canonical source repository lives in GitLab under peter/idrflow, so the
 // Docusaurus repository metadata reflects that namespace/project pairing.
 /** @type {import('@docusaurus/types').Config} */
 const config = {

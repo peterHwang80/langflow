@@ -21,9 +21,11 @@ describe("getWidgetCode", () => {
       const code = getWidgetCode(baseOptions);
 
       expect(code).toContain(
-        "idrflow embedded chat package is not published yet.",
+        "http://218.50.209.93:9001/peter/idrflow-embedded-chat",
       );
-      expect(code).toContain("approved idrflow-owned embed bundle");
+      expect(code).toContain(
+        "Publish-ready package coordinates are not available yet",
+      );
       expect(code).toContain("<idrflow-chat");
       expect(code).toContain("</idrflow-chat>");
       expect(code).toContain("<!--");

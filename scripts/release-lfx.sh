@@ -67,7 +67,7 @@ done
 
 # Check if we're in the right directory
 if [ ! -f "src/lfx/pyproject.toml" ]; then
-    print_error "This script must be run from the root of the langflow repository"
+    print_error "This script must be run from the root of the idrflow repository"
     exit 1
 fi
 
@@ -203,19 +203,19 @@ else
     echo "   git push origin HEAD"
     echo "   git push origin $TAG_NAME"
     echo ""
-    echo "2. Go to GitHub Actions and run the 'LFX Release' workflow:"
-    echo "   https://github.com/langflow-ai/langflow/actions/workflows/release-lfx.yml"
+    echo "2. Go to the idrflow GitLab project and run the release pipeline/job:"
+    echo "   http://218.50.209.93:9001/peter/idrflow/-/pipelines"
     echo ""
     echo "3. Enter version: $NEW_VERSION"
     echo ""
     echo "4. Select options:"
     echo "   - Publish to PyPI: Yes"
     echo "   - Build Docker images: Yes"
-    echo "   - Create GitHub release: Yes"
+    echo "   - Create GitLab release: Yes"
     echo ""
     echo "The workflow will:"
     echo "- Run tests on all Python versions"
     echo "- Build and publish to PyPI"
     echo "- Build and push Docker images (standard and alpine)"
-    echo "- Create a GitHub release with artifacts"
+    echo "- Create a GitLab release with artifacts"
 fi

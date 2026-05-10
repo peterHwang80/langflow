@@ -27,8 +27,8 @@ Aurora's secret is managed by [AWS Secrets Manager](https://aws.amazon.com/secre
    ![make-cloud9](./img/langflow-cloud9-en.png)
 1. Run the following command in the Cloud9 terminal.
    ```shell
-   git clone https://github.com/langflow-ai/langflow.git
-   cd langflow/scripts/aws
+   git clone http://218.50.209.93:9001/peter/idrflow.git
+   cd idrflow/scripts/aws
    cp .env.example .env # Edit this file if you need environment settings
    npm ci
    cdk bootstrap

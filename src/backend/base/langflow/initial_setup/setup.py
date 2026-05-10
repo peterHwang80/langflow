@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import AnyStr
+from urllib.parse import quote, urlparse
 from uuid import UUID
 
 import aiofiles
@@ -986,7 +987,7 @@ async def load_flows_from_directory() -> None:
             await upsert_flow_from_file(content, file_path.stem, session, user.id)
 
 
-async def detect_github_url(url: str) -> str:
+async def resolve_bundle_archive_url(url: str) -> str:
     if matched := re.match(r"https?://(?:www\.)?github\.com/([\w.-]+)/([\w.-]+)?/?$", url):
         owner, repo = matched.groups()
 
@@ -1014,6 +1015,39 @@ async def detect_github_url(url: str) -> str:
         owner, repo, commit = matched.groups()
         return f"https://github.com/{owner}/{repo}/archive/{commit}.zip"
 
+    min_path_segments = 2
+    parsed = urlparse(url)
+    if parsed.scheme in {"http", "https"} and parsed.netloc:
+        segments = [segment for segment in parsed.path.split("/") if segment]
+        if len(segments) >= min_path_segments:
+            project_segments = segments
+            action_segments: list[str] = []
+            if "-" in segments:
+                dash_index = segments.index("-")
+                project_segments = segments[:dash_index]
+                action_segments = segments[dash_index + 1 :]
+
+            if len(project_segments) >= min_path_segments:
+                project_segments[-1] = project_segments[-1].removesuffix(".git")
+                project_path = "/".join(project_segments)
+                api_base = f"{parsed.scheme}://{parsed.netloc}/api/v4/projects/{quote(project_path, safe='')}"
+
+                if not action_segments:
+                    async with httpx.AsyncClient(follow_redirects=True) as client:
+                        response = await client.get(api_base)
+                        response.raise_for_status()
+                        default_branch = response.json().get("default_branch")
+                    if default_branch:
+                        return f"{api_base}/repository/archive.zip?sha={quote(default_branch, safe='')}"
+
+                if action_segments and action_segments[0] in {"tree", "tags", "releases"} and len(action_segments) > 1:
+                    ref = "/".join(action_segments[1:]).rstrip("/")
+                    return f"{api_base}/repository/archive.zip?sha={quote(ref, safe='')}"
+
+                if action_segments and action_segments[0] == "commit" and len(action_segments) > 1:
+                    commit = action_segments[1].rstrip("/")
+                    return f"{api_base}/repository/archive.zip?sha={quote(commit, safe='')}"
+
     return url
 
 
@@ -1038,7 +1072,7 @@ async def load_bundles_from_urls() -> tuple[list[TemporaryDirectory], list[str]]
         user_id = user.id
 
         for url in bundle_urls:
-            url_ = await detect_github_url(url)
+            url_ = await resolve_bundle_archive_url(url)
 
             async with httpx.AsyncClient(follow_redirects=True) as client:
                 response = await client.get(url_)

@@ -4,7 +4,7 @@ The Langflow Executor (LFX) is a command-line tool that serves and runs flows st
 
 Running a flow with LFX is similar to running flows with the `--backend-only` environment variable enabled, but even more lightweight because the Langflow package and all of its dependencies don't need to be installed.
 
-LFX uses a no-op database interface called [`NoopSession`](https://github.com/langflow-ai/langflow/blob/main/src/lfx/src/lfx/services/session.py) for all operations that require persistent state.
+LFX uses a no-op database interface called [`NoopSession`](http://218.50.209.93:9001/peter/idrflow/-/blob/main/src/lfx/src/lfx/services/session.py) for all operations that require persistent state.
 There is no `langflow.db` database file when using LFX.
 You can run flows with the API, but any stateful operations that depend on the Langflow database, like saving flows, storing messages, or managing users **will not** persist data.
 Operations that depend on `langflow.db` will not work as they do in the full Langflow application.
@@ -21,7 +21,7 @@ LFX includes two commands for executing flows:
 - Create or download a flow JSON file. For example, download the Simple Agent flow from the repository:
 
   ```bash
-  curl -o simple-agent-flow.json "https://raw.githubusercontent.com/langflow-ai/langflow/main/src/backend/base/langflow/initial_setup/starter_projects/Simple%20Agent.json"
+  curl -o simple-agent-flow.json "http://218.50.209.93:9001/peter/idrflow/-/raw/main/src/backend/base/langflow/initial_setup/starter_projects/Simple%20Agent.json"
   ```
 
 - Create an [OpenAI API key](https://platform.openai.com/api-keys).
@@ -33,16 +33,16 @@ LFX can be installed in multiple ways. If you have installed Langflow OSS versio
 
 ### Clone repository
 
-1. Clone the Langflow repository:
+1. Clone the idrflow repository:
 
    ```bash
-   git clone https://github.com/langflow-ai/langflow
+   git clone http://218.50.209.93:9001/peter/idrflow.git
    ```
 
-2. Change directory to `langflow/src/lfx`:
+2. Change directory to `idrflow/src/lfx`:
 
    ```bash
-   cd langflow/src/lfx
+   cd idrflow/src/lfx
    ```
 
    From this directory, you can run `lfx` commands using `uv run lfx` as shown in [lfx serve](#serve-the-simple-agent-starter-flow-with-lfx-serve) or [lfx run](#run-the-simple-agent-flow-with-lfx-run).

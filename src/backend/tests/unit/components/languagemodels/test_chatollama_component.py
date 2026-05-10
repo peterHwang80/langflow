@@ -705,8 +705,8 @@ class TestChatOllamaComponent(ComponentTestBaseWithoutClient):
     def test_build_model_with_pydantic_model_json_schema(self, mock_chat_ollama, component_class, default_kwargs):
         """Test that the format field works with a schema generated from Pydantic's model_json_schema() method.
 
-        This test reproduces the exact use case described in issue #7122:
-        https://github.com/langflow-ai/langflow/issues/7122
+        This test reproduces the exact schema-driven formatting case that
+        previously failed for users.
         """
         from pydantic import BaseModel, Field
 

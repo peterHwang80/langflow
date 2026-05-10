@@ -19,7 +19,7 @@ idrflow is open source (MIT). Run locally with `uv run langflow run` (Python 3.1
 
 ## Source code
 
-- [Upstream Langflow repository](https://github.com/langflow-ai/langflow): Source-code reference for the current Langflow-compatible runtime
+- [Upstream Langflow repository](http://218.50.209.93:9001/peter/idrflow): Source-code reference for the current Langflow-compatible runtime
 
 ## Brand status
 

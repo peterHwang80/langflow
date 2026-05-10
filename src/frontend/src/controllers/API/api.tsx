@@ -98,13 +98,7 @@ function ApiInterceptor() {
     );
 
     const isAuthorizedURL = (url) => {
-      const authorizedDomains = [
-        // TODO: replace these upstream example sources once idrflow-owned examples are published.
-        "https://raw.githubusercontent.com/langflow-ai/langflow_examples/main/examples",
-        "https://api.github.com/repos/langflow-ai/langflow_examples/contents/examples",
-        "https://api.github.com/repos/langflow-ai/langflow",
-        "auto_login",
-      ];
+      const authorizedDomains: string[] = [];
 
       const authorizedEndpoints = ["auto_login"];
 

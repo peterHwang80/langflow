@@ -21,8 +21,9 @@ export default function getWidgetCode({
   const safeFlowId = escapeHtmlAttribute(flowId ?? "");
   const safeHostUrl = escapeHtmlAttribute(`${protocol}//${host}`);
 
-  return `<!-- idrflow embedded chat package is not published yet.
-Replace this placeholder with your approved idrflow-owned embed bundle and web component. -->
+  return `<!-- idrflow embedded chat package source lives in:
+http://218.50.209.93:9001/peter/idrflow-embedded-chat
+Publish-ready package coordinates are not available yet, so this placeholder stays commented out. -->
 <!--
   <idrflow-chat
     window_title="${safeFlowName}"

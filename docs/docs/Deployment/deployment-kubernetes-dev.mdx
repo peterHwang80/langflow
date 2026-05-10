@@ -6,7 +6,7 @@ slug: /deployment-kubernetes-dev
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-The [idrflow integrated development environment (IDE) Helm chart](https://github.com/langflow-ai/langflow-helm-charts/tree/main/charts/langflow-ide) is designed to provide a complete environment for developers to create, test, and debug their flows. It includes both the idrflow API and visual editor.
+The [idrflow integrated development environment (IDE) Helm chart](http://218.50.209.93:9001/peter/idrflow-helm-charts/-/tree/main/charts/langflow-ide) is designed to provide a complete environment for developers to create, test, and debug their flows. It includes both the idrflow API and visual editor.
 
 ## Prerequisites
 
@@ -32,17 +32,17 @@ This example uses [Minikube](https://minikube.sigs.k8s.io/docs/start/), but you 
 
 ## Install the idrflow IDE Helm chart
 
-1. Add the repository to Helm, and then update it:
+1. Clone the Helm charts source repository:
 
 	```shell
-	helm repo add langflow https://langflow-ai.github.io/langflow-helm-charts
-	helm repo update
+	git clone http://218.50.209.93:9001/peter/idrflow-helm-charts.git
+	cd idrflow-helm-charts
 	```
 
 2. Install idrflow with the default options in the `langflow` namespace:
 
 	```shell
-	helm install langflow-ide langflow/langflow-ide -n langflow --create-namespace
+	helm install langflow-ide ./charts/langflow-ide -n langflow --create-namespace
 	```
 
 3. Check the status of the pods:
@@ -74,7 +74,7 @@ Now you can do the following:
 
 ## Modify your idrflow IDE deployment
 
-You can modify the idrflow IDE Helm chart's [`values.yaml`](https://github.com/langflow-ai/langflow-helm-charts/blob/main/charts/langflow-ide/values.yaml) file to customize your deployment.
+You can modify the idrflow IDE Helm chart's [`values.yaml`](http://218.50.209.93:9001/peter/idrflow-helm-charts/-/blob/main/charts/langflow-ide/values.yaml) file to customize your deployment.
 The following sections describe some common modifications.
 
 If you need to set secrets, Kubernetes secrets are recommended.
@@ -183,4 +183,4 @@ langflow:
 
 * [Best practices for idrflow on Kubernetes](/deployment-prod-best-practices)
 * [Deploy the idrflow production environment on Kubernetes](/deployment-kubernetes-prod)
-* [idrflow Helm Charts repository](https://github.com/langflow-ai/langflow-helm-charts)
+* [idrflow Helm Charts repository](http://218.50.209.93:9001/peter/idrflow-helm-charts)

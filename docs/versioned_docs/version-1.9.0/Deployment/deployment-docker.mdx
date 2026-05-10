@@ -35,7 +35,7 @@ For more control over the configuration, see [Clone the repo and run the idrflow
 
 ## Clone the repo and run the idrflow Docker container {#clone}
 
-Cloning the upstream Langflow repository and using Docker Compose gives you more control over your configuration, allowing you to customize environment variables, use a persistent PostgreSQL database service (instead of the default SQLite database), and include custom dependencies.
+Cloning the idrflow repository and using Docker Compose gives you more control over your configuration, allowing you to customize environment variables, use a persistent PostgreSQL database service (instead of the default SQLite database), and include custom dependencies.
 
 The default deployment with Docker Compose includes the following:
 
@@ -117,7 +117,7 @@ Unlike the previous sections that use pre-built images, this method builds a cus
 
     ```bash
     # Download an example flow
-    wget https://raw.githubusercontent.com/langflow-ai/langflow-helm-charts/refs/heads/main/examples/flows/basic-prompting-hello-world.json
+    wget http://218.50.209.93:9001/peter/idrflow-helm-charts/-/raw/main/examples/flows/basic-prompting-hello-world.json
 
     # Or copy your own flow file
     cp /path/to/your/flow.json .

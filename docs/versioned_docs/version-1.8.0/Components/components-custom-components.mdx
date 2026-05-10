@@ -123,7 +123,7 @@ def __dir__() -> list[str]:
     return list(__all__)
 ```
 
-For an additional example of lazy loading, see the [FAISS component](https://github.com/langflow-ai/langflow/blob/main/src/lfx/src/lfx/components/FAISS/__init__.py).
+For an additional example of lazy loading, see the [FAISS component](http://218.50.209.93:9001/peter/idrflow/-/blob/main/src/lfx/src/lfx/components/FAISS/__init__.py).
 
 </details>
 
@@ -241,9 +241,9 @@ The `BoolInput` creates a boolean toggle that's enabled by default with `value=T
 The `DropdownInput` provides a selection menu with three predefined options: "Fast", "Safe", and "Experimental".
 The `value="Safe"` sets "Safe" as the default selection, and you access the user's choice with `self.mode`.
 
-For a list of all available parameters, see the [BaseInputMixin definition](https://github.com/langflow-ai/langflow/blob/main/src/lfx/src/lfx/inputs/input_mixin.py) in the idrflow codebase.
+For a list of all available parameters, see the [BaseInputMixin definition](http://218.50.209.93:9001/peter/idrflow/-/blob/main/src/lfx/src/lfx/inputs/input_mixin.py) in the idrflow codebase.
 
-For a list of all available input types, see the [input type definitions](https://github.com/langflow-ai/langflow/blob/main/src/lfx/src/lfx/inputs/inputs.py) in the idrflow codebase.
+For a list of all available input types, see the [input type definitions](http://218.50.209.93:9001/peter/idrflow/-/blob/main/src/lfx/src/lfx/inputs/inputs.py) in the idrflow codebase.
 
 ```python
 from lfx.io import StrInput, DataInput, MultilineInput, IntInput, BoolInput, DropdownInput, FileInput, CodeInput, ModelInput, HandleInput, Output
@@ -280,7 +280,7 @@ The `Output` creates a connector point in the visual editor labeled **DataFrame 
 
 The `build_df` method processes data and returns a `DataFrame`. The `-> DataFrame` type annotation helps idrflow validate connections and provides color-coding in the visual editor. You can also set `self.status` to show progress messages in the UI.
 
-For a complete list of all available parameters, see the [Output class definition](https://github.com/langflow-ai/langflow/blob/main/src/lfx/src/lfx/template/field/base.py) in the idrflow codebase. Common parameters include:
+For a complete list of all available parameters, see the [Output class definition](http://218.50.209.93:9001/peter/idrflow/-/blob/main/src/lfx/src/lfx/template/field/base.py) in the idrflow codebase. Common parameters include:
 
 **Additional return types:**
 * **`Message`**: Structured chat messages
